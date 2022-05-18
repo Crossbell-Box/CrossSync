@@ -5,12 +5,17 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    Congratulate: typeof import('./src/pages/init/Finish.vue')['default']
+    CreateProfile: typeof import('./src/pages/init/CreateProfile.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
+    Finish: typeof import('./src/pages/init/Finish.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
-    Index: typeof import('./src/components/pages/Index.vue')['default']
-    IndexPage: typeof import('./src/components/pages/IndexPage.vue')['default']
-    Popup: typeof import('./src/components/pages/Popup.vue')['default']
-    Profile: typeof import('./src/components/pages/Profile.vue')['default']
+    Home: typeof import('./src/pages/main/Home.vue')['default']
+    Index: typeof import('./src/pages/init/Index.vue')['default']
+    IndexPage: typeof import('./src/pages/IndexPage.vue')['default']
+    Intro: typeof import('./src/pages/init/Intro.vue')['default']
+    Popup: typeof import('./src/pages/Popup.vue')['default']
+    Profile: typeof import('./src/pages/init/Profile.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

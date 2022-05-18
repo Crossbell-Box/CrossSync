@@ -3,6 +3,7 @@ import Index from './Index.vue';
 import IndexPage from './components/pages/Index.vue';
 import ProfilePage from './components/pages/Profile.vue';
 import { createRouter, createWebHistory } from 'vue-router';
+import './index.css';
 
 const app = createApp(Index);
 

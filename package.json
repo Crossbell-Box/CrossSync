@@ -12,6 +12,10 @@
         "**/*": "prettier --write --ignore-unknown"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-svg-core": "^6.1.1",
+        "@fortawesome/free-brands-svg-icons": "^6.1.1",
+        "@fortawesome/free-solid-svg-icons": "^6.1.1",
+        "@fortawesome/vue-fontawesome": "^3.0.0-5",
         "element-plus": "^2.2.0",
         "vue": "^3.2.25",
         "vue-router": "^4.0.15"
@@ -20,6 +24,7 @@
         "@vitejs/plugin-vue": "^2.3.3",
         "autoprefixer": "^10.4.7",
         "husky": "^8.0.1",
+        "less": "^4.1.2",
         "lint-staged": "^12.4.1",
         "postcss": "^8.4.13",
         "prettier": "2.6.2",

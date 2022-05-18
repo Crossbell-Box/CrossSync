@@ -20,6 +20,7 @@ declare module '@vue/runtime-core' {
     Intro: typeof import('./src/pages/init/Intro.vue')['default']
     Popup: typeof import('./src/pages/Popup.vue')['default']
     Profile: typeof import('./src/components/pages/Profile.vue')['default']
+    Profiles: typeof import('./src/components/Profiles.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

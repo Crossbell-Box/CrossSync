@@ -23,6 +23,9 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
 import { ElMessage } from 'element-plus';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const handle = ref('');
 
@@ -61,7 +64,9 @@ const check = () => {
     });
 };
 
-const mint = () => {};
+const mint = () => {
+    router.push('/profiles');
+};
 </script>
 
 <style></style>

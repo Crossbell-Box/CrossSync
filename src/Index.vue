@@ -1,6 +1,6 @@
 <template>
     <div class="absolute left-8 top-8">
-        <img class="inline-block rounded-full" width="50" src="./assets/logo.jpeg" />
+        <router-link to="/"><img class="inline-block rounded-full" width="50" src="./assets/logo.jpeg" /></router-link>
     </div>
     <router-view></router-view>
     <div class="absolute bottom-8 text-slate-400">@ Natural Selection Labs</div>

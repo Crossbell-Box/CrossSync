@@ -1,41 +1,33 @@
 import { createApp } from 'vue';
 import Index from './Index.vue';
 
-import IndexPage from './pages/init/Index.vue';
-import ProfilePage from './pages/init/Profile.vue';
-import IntroPage from './pages/init/Intro.vue';
-import CreateProfilePage from './pages/init/CreateProfile.vue';
-import FinishPage from './pages/init/Finish.vue';
-import HomePage from './pages/main/Home.vue';
-import DetailedNotePage from './pages/main/Detail.vue';
+import IndexPage from './pages/Index.vue';
+import MintPage from './pages/Mint.vue';
+import ProfilePage from './pages/Profile.vue';
+import HomePage from './pages/Home.vue';
+import NotePage from './pages/Note.vue';
 
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
+
+import 'element-plus/dist/index.css';
 import './index.css';
 
 const app = createApp(Index);
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes: [
         {
             path: '/',
             component: IndexPage,
         },
         {
+            path: '/mint',
+            component: MintPage,
+        },
+        {
             path: '/profile',
             component: ProfilePage,
-        },
-        {
-            path: '/intro',
-            component: IntroPage,
-        },
-        {
-            path: '/create-profile',
-            component: CreateProfilePage,
-        },
-        {
-            path: '/finish',
-            component: FinishPage,
         },
         {
             path: '/home',
@@ -43,7 +35,7 @@ const router = createRouter({
         },
         {
             path: '/note/:id',
-            component: DetailedNotePage,
+            component: NotePage,
         },
     ],
 });

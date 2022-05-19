@@ -4,14 +4,19 @@
         <p>You have 2 profiles, choose one to continue</p>
         <Profile
             class="profile mt-4 cursor-pointer mb-5"
-            v-for="profile in profiles.list"
+            v-for="profile in profiles"
             :profile="profile"
             :key="profile.username"
             @click="choose"
         />
         <p>
-            You are logged in as <b>0xC8b...8944</b>, you can also
-            <el-button text bg type="primary">switch account</el-button>
+            You are logged in as <b>{{ address }}</b
+            >, you can also
+            <el-popconfirm title="Are you sure to logout and choose another account?" @confirm="switchAccount">
+                <template #reference>
+                    <el-button text bg type="primary">switch account</el-button>
+                </template>
+            </el-popconfirm>
         </p>
     </div>
 </template>
@@ -19,24 +24,44 @@
 <script setup lang="ts">
 import Profile from '../components/Profiles.vue';
 import { useRouter } from 'vue-router';
+import { useStore } from '@/common/store';
+import { ref } from 'vue';
+import { disconnect } from '@/common/wallet';
 
 const router = useRouter();
+const store = useStore();
 
-const profiles = {
-    total: 2,
-    list: [
-        {
-            username: 'unidata',
-        },
-        {
-            username: 'diygod',
-        },
-    ],
+const address = ref('0xC8b...8944');
+
+const profiles = [
+    {
+        username: 'unidata',
+    },
+    {
+        username: 'diygod',
+    },
+];
+
+const choose = async () => {
+    await next();
 };
 
-const choose = () => {
-    router.push('/home');
+const next = async () => {
+    await router.push('/home');
 };
+
+const switchAccount = async () => {
+    await disconnect();
+    await store.dispatch('reset');
+    await router.push('/');
+};
+
+(async () => {
+    const userAddress = await store.state.provider?.getSigner().getAddress();
+    if (userAddress) {
+        address.value = `${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
+    }
+})();
 </script>
 
 <style>

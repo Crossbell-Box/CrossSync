@@ -36,6 +36,10 @@ export const store = createStore<State>({
                 await state.crossbell.contract?.connect();
             }
         },
+        async reset({ state }) {
+            state.provider = undefined;
+            state.crossbell.contract = undefined;
+        },
     },
 });
 

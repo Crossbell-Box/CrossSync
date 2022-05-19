@@ -30,7 +30,7 @@ const connect = async (force = true) => {
         try {
             const provider = await w3mConnect(force);
             if (provider) {
-                await initState(provider);
+                await store.dispatch('setProviderAndConnectContract', provider);
                 await next();
             }
         } catch (e) {
@@ -38,12 +38,6 @@ const connect = async (force = true) => {
         }
     }
     isConnecting.value = false;
-};
-
-const initState = async (provider: any) => {
-    await store.dispatch('setProviderAndConnectContract', provider);
-    const userAddress = await store.state.provider?.getSigner().getAddress();
-    console.log('Connect Wallet:', userAddress);
 };
 
 const next = async () => {

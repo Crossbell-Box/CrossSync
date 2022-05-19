@@ -2,7 +2,7 @@
     <div class="absolute left-8 top-8">
         <router-link to="/"><img class="inline-block rounded-full" width="50" src="./assets/logo.jpeg" /></router-link>
     </div>
-    <router-view></router-view>
+    <router-view />
     <div class="absolute bottom-8 text-slate-400">@ Natural Selection Labs</div>
 </template>
 
@@ -16,6 +16,8 @@ const store = useStore();
     const provider = await w3mConnect(false);
     if (provider) {
         await store.dispatch('setProviderAndConnectContract', provider);
+        const userAddress = await store.state.provider?.getSigner().getAddress();
+        console.log('Connect Wallet:', userAddress);
     }
 })();
 </script>

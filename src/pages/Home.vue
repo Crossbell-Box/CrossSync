@@ -23,15 +23,23 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import Profile from '../components/Profiles.vue';
 import { useRouter } from 'vue-router';
+import { useStore } from '@/common/store';
 
 const router = useRouter();
+const store = useStore();
 
-const profile = {
-    username: 'unidata',
-};
+const profile = ref({
+    avatars: ['https://http.cat/204.jpg'],
+    name: 'name',
+    username: 'handle',
+    bio:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' +
+        'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    websites: ['unidata.app', 'example.com'],
+});
 
 const count = ref(20);
 const load = () => {
@@ -41,6 +49,21 @@ const load = () => {
 const profileClick = () => {
     router.push('/profiles');
 };
+
+onMounted(async () => {
+    const contract = store.state.crossbell.contract;
+    const userAddress = await store.state.provider?.getSigner().getAddress();
+    if (contract && userAddress) {
+        const pProfileID = (await contract.getPrimaryProfileId(userAddress)).data;
+        const pProfile = (await contract.getProfile(pProfileID)).data;
+        // todo: how to update rendered?
+        profile.value = {
+            name: pProfile.metadata?.name || pProfile.handle,
+            username: pProfile.handle,
+        };
+        console.log('Profile loaded', pProfile);
+    }
+});
 </script>
 
 <style></style>

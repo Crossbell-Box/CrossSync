@@ -9,17 +9,18 @@
 <script setup lang="ts">
 import { connect as w3mConnect } from '@/common/wallet';
 import { useStore } from '@/common/store';
+import { onMounted } from 'vue';
 
 const store = useStore();
 
-(async () => {
+onMounted(async () => {
     const provider = await w3mConnect(false);
     if (provider) {
         await store.dispatch('setProviderAndConnectContract', provider);
         const userAddress = await store.state.provider?.getSigner().getAddress();
         console.log('Connect Wallet:', userAddress);
     }
-})();
+});
 </script>
 
 <style>

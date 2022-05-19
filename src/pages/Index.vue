@@ -15,7 +15,7 @@
 import { useRouter } from 'vue-router';
 import { connect as w3mConnect } from '@/common/wallet';
 import { useStore } from '@/common/store';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const router = useRouter();
 const store = useStore();
@@ -66,7 +66,9 @@ const next = async () => {
     }
 };
 
-connect(false);
+onMounted(() => {
+    connect(false);
+});
 </script>
 
 <style></style>

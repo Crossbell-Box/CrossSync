@@ -50,9 +50,16 @@ const next = async () => {
             console.log('No primary profile, go to mint');
             await router.push('/mint');
         } else {
-            // Just login
             console.log('Found primary profile with ID', primaryprofileID);
-            await router.push('/home');
+            const primaryProfile = (await contract.getProfile(primaryprofileID)).data;
+            if (!primaryProfile.metadata) {
+                // No metadata, go to profiles
+                console.log('No metadata found, go to profiles selection');
+                await router.push('/profiles');
+            } else {
+                // Just login
+                await router.push('/home');
+            }
         }
     } else {
         console.error('CONTRACT IS INVALID');

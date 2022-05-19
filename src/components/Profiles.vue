@@ -3,30 +3,40 @@
         <div class="banner">
             <img :src="profile.banners?.[0]" />
         </div>
-        <div class="info">
-            <div class="avatar" v-if="profile.avatars"><img :src="profile.avatars?.[0]" /></div>
-            <div class="text">
-                <div class="name">
-                    {{ profile.name || profile.username }}
+        <div class="info flex flex-col gap-4">
+            <div class="text flex flex-row gap-2">
+                <div class="avatar flex w-16 h-16 self-center" v-if="profile.avatars">
+                    <img class="flex w-full h-full" :src="profile.avatars?.[0]" />
+                </div>
+                <div class="name flex-grow self-center flex flex-col">
+                    <span>
+                        {{ profile.name || profile.username }}
+                    </span>
                     <span class="username" v-if="profile.username">{{ profile.username }}</span>
                 </div>
+            </div>
+            <div class="text">
                 <div class="bio" v-if="profile.bio">{{ profile.bio }}</div>
-                <div class="websites" v-if="profile.websites">
-                    <ul>
-                        <li v-for="website in profile.websites" :key="website">
-                            <a target="_blank" :href="website">
-                                <font-awesome-icon icon="link" />
-                                {{ website.replace(/https?:\/\//, '') }}
-                            </a>
-                        </li>
-                        <li v-for="account in profile.connected_accounts" :key="account">
-                            <a target="_blank" :href="account.url">
-                                <font-awesome-icon :icon="['fab', account.platform.toLowerCase()]" />
-                                {{ `${account.platform}: ${account.identity}` }}
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+            </div>
+            <div class="websites" v-if="profile.websites?.length">
+                <ul class="flex flex-row gap-4">
+                    <li v-for="website in profile.websites" :key="website" class="flex">
+                        <a target="_blank" :href="website">
+                            <font-awesome-icon icon="link" />
+                            {{ website.replace(/https?:\/\//, '') }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="accounts" v-if="profile.connected_accounts?.length">
+                <ul class="flex flex-row gap-4">
+                    <li v-for="account in profile.connected_accounts" :key="account">
+                        <a target="_blank" :href="account.url">
+                            <font-awesome-icon :icon="['fab', account.platform.toLowerCase()]" />
+                            {{ `${account.platform}: ${account.identity}` }}
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
     </el-card>
@@ -71,8 +81,8 @@ const profile = ref(props.profile);
         padding: 20px 10px;
 
         .avatar {
-            width: 150px;
-            height: 150px;
+            //width: 150px;
+            //height: 150px;
             margin-right: 40px;
 
             img {
@@ -82,10 +92,10 @@ const profile = ref(props.profile);
         }
 
         .text {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
+            //flex: 1;
+            //display: flex;
+            //justify-content: center;
+            //flex-direction: column;
 
             .name {
                 font-weight: bold;
@@ -125,7 +135,7 @@ const profile = ref(props.profile);
 
             li {
                 display: inline-block;
-                margin-right: 20px;
+                //margin-right: 20px;
                 background: rgba(200, 200, 200, 0.5);
                 padding: 5px 10px;
                 line-height: 16px;

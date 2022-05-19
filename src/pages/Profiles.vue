@@ -39,6 +39,15 @@ const profiles = ref([
     {
         username: 'diygod',
     },
+    {
+        avatars: ['https://http.cat/204.jpg'],
+        name: 'name',
+        username: 'handle',
+        bio:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' +
+            'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        websites: ['unidata.app', 'example.com'],
+    },
 ]);
 
 const choose = async () => {

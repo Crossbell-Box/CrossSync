@@ -17,14 +17,29 @@ import { useStore } from '@/common/store';
 const router = useRouter();
 const store = useStore();
 
-const connect = async () => {
-    const provider = await w3mConnect();
+const connect = async (force = true) => {
+    try {
+        const provider = await w3mConnect(force);
+        if (provider) {
+            await initState(provider);
+            next();
+        }
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+const initState = async (provider: any) => {
     store.commit('setProvider', provider);
     const userAddress = await store.state.provider?.getSigner().getAddress();
     console.log('Connect Wallet:', userAddress);
+};
 
+const next = () => {
     router.push('/mint');
 };
+
+connect(false);
 </script>
 
 <style></style>

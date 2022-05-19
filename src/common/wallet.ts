@@ -15,11 +15,27 @@ const providerOptions = {
 };
 
 const web3Modal = new Web3Modal({
-    network: 'mainnet', // optional
+    network: 'crossbell', // optional
     cacheProvider: true, // optional
     providerOptions, // required
 });
 
-export async function connect() {
-    return await web3Modal.connect();
+export async function connect(force = false) {
+    if (force) {
+        return await web3Modal.connect();
+    } else {
+        if (web3Modal.cachedProvider) {
+            try {
+                return await web3Modal.connect();
+            } catch (e) {
+                console.log(e);
+                return null;
+            }
+        }
+        return null;
+    }
+}
+
+export async function disconnect() {
+    await web3Modal.clearCachedProvider();
 }

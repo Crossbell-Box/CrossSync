@@ -31,7 +31,8 @@ import { useStore } from '@/common/store';
 const router = useRouter();
 const store = useStore();
 
-const profile = ref({
+const profile = ref<any>({
+    // todo: type
     avatars: ['https://http.cat/204.jpg'],
     name: 'name',
     username: 'handle',
@@ -56,12 +57,13 @@ onMounted(async () => {
     if (contract && userAddress) {
         const pProfileID = (await contract.getPrimaryProfileId(userAddress)).data;
         const pProfile = (await contract.getProfile(pProfileID)).data;
-        // todo: how to update rendered?
         profile.value = {
             name: pProfile.metadata?.name || pProfile.handle,
             username: pProfile.handle,
         };
         console.log('Profile loaded', pProfile);
+    } else {
+        console.log('No contract or user address');
     }
 });
 </script>

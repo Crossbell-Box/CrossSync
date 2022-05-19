@@ -52,7 +52,7 @@ const props = defineProps({
     },
 });
 
-const profile = ref(props.profile);
+// const profile = ref(props.profile);
 </script>
 
 <style lang="less" scoped>

@@ -4,7 +4,9 @@
             <img class="inline-block rounded-full" width="150" src="../assets/logo.jpeg" />
             <h1 class="text-4xl font-bold my-5">Welcome to CrossSync! 👋</h1>
             <p class="my-5 text-slate-400">Here are some introductions to CrossSync and Crossbell...</p>
-            <el-button type="primary" round size="large" class="text-xl" @click="connect">Connect Wallet</el-button>
+            <el-button type="primary" :loading="isConnecting" round size="large" class="text-xl" @click="connect"
+                >Connect Wallet</el-button
+            >
         </div>
     </div>
 </template>
@@ -13,20 +15,29 @@
 import { useRouter } from 'vue-router';
 import { connect as w3mConnect } from '@/common/wallet';
 import { useStore } from '@/common/store';
+import { ref } from 'vue';
 
 const router = useRouter();
 const store = useStore();
+const isConnecting = ref(false);
 
 const connect = async (force = true) => {
-    try {
-        const provider = await w3mConnect(force);
-        if (provider) {
-            await initState(provider);
-            await next();
+    isConnecting.value = true;
+    // If already connected, do nothing
+    if (store.state.provider) {
+        await next();
+    } else {
+        try {
+            const provider = await w3mConnect(force);
+            if (provider) {
+                await initState(provider);
+                await next();
+            }
+        } catch (e) {
+            console.log(e);
         }
-    } catch (e) {
-        console.log(e);
     }
+    isConnecting.value = false;
 };
 
 const initState = async (provider: any) => {

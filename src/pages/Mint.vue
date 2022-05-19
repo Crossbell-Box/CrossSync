@@ -13,8 +13,8 @@
                 />
             </el-form-item>
             <el-form-item>
-                <el-button type="secondary" @click="check">Check Availability</el-button>
-                <el-button type="primary" @click="mint">Mint!</el-button>
+                <el-button type="secondary" :loading="isChecking" @click="check">Check Availability</el-button>
+                <el-button type="primary" :loading="isMinting" :disabled="!mintable" @click="mint">Mint!</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -24,17 +24,17 @@
 import { reactive, ref } from 'vue';
 import { ElMessage } from 'element-plus';
 import { useRouter } from 'vue-router';
+import { useStore } from '@/common/store';
 
 const router = useRouter();
+const store = useStore();
 
-const handle = ref('');
+const mintable = ref(false);
+const isChecking = ref(false);
+const isMinting = ref(false);
 
-const validatePass = (rule: any, value: any, callback: any) => {
-    if (value === '') {
-        callback(new Error('Please input the password'));
-    } else {
-        callback();
-    }
+const validateHandle = (handle: string): boolean => {
+    return /^[a-z0-9_\\-]{1,31}$/.test(handle);
 };
 
 const ruleForm = reactive({
@@ -46,7 +46,7 @@ const rules = reactive({
         {
             validator: (rule: any, value: any, callback: any) => {
                 console.log(value);
-                if (/^[a-z0-9_\\-]{1,31}$/.test(value)) {
+                if (validateHandle(value)) {
                     callback();
                 } else {
                     callback(new Error());
@@ -57,15 +57,49 @@ const rules = reactive({
     ],
 });
 
-const check = () => {
-    ElMessage({
-        message: 'To be continued...',
-        type: 'warning',
-    });
+const check = async () => {
+    isChecking.value = true;
+    if (!validateHandle(ruleForm.handle)) {
+        ElMessage.error('Invalid handle');
+        isChecking.value = false;
+        return;
+    }
+    const state = store.state;
+    const contract = state.crossbell.contract;
+    if (contract) {
+        // Check if handle is available
+        const profile = (await contract.getProfileByHandle(ruleForm.handle)).data;
+        if (parseInt(profile.profileId, 10) !== 0) {
+            // Invalid handle
+            ElMessage.error('Oops, this handle has already been taken...');
+        } else {
+            // Valid handle
+            ElMessage.success('This handle is available!');
+            mintable.value = true;
+        }
+    }
+    isChecking.value = false;
 };
 
-const mint = () => {
-    router.push('/profiles');
+const mint = async () => {
+    isMinting.value = true;
+    const state = store.state;
+    const contract = state.crossbell.contract;
+    const userAddress = await store.state.provider?.getSigner().getAddress();
+    if (contract && userAddress) {
+        // todo: select user profile
+        try {
+            await contract.createProfile(userAddress, ruleForm.handle, '');
+            await next();
+        } catch (e) {
+            console.log(e);
+        }
+    }
+    isMinting.value = false;
+};
+
+const next = async () => {
+    await router.push('/profiles');
 };
 </script>
 

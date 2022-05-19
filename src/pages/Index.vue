@@ -11,10 +11,18 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
+import { connect as w3mConnect } from '@/common/wallet';
+import { useStore } from '@/common/store';
 
 const router = useRouter();
+const store = useStore();
 
-const connect = () => {
+const connect = async () => {
+    const provider = await w3mConnect();
+    store.commit('setProvider', provider);
+    const userAddress = await store.state.provider?.getSigner().getAddress();
+    console.log('Connect Wallet:', userAddress);
+
     router.push('/mint');
 };
 </script>

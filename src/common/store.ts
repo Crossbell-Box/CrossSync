@@ -23,11 +23,18 @@ export const store = createStore<State>({
         },
     },
     mutations: {
-        async setProvider(state, provider) {
+        setProvider(state, provider) {
             state.provider = new ethers.providers.Web3Provider(provider);
             const contract = new Contract(provider);
-            await contract.connect();
             state.crossbell.contract = markRaw(contract);
+        },
+    },
+    actions: {
+        async setProviderAndConnectContract({ commit, state }, provider) {
+            if (provider) {
+                commit('setProvider', provider);
+                await state.crossbell.contract?.connect();
+            }
         },
     },
 });

@@ -30,7 +30,7 @@ const connect = async (force = true) => {
 };
 
 const initState = async (provider: any) => {
-    store.commit('setProvider', provider);
+    await store.dispatch('setProviderAndConnectContract', provider);
     const userAddress = await store.state.provider?.getSigner().getAddress();
     console.log('Connect Wallet:', userAddress);
 };

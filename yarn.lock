@@ -1816,6 +1816,15 @@ crossbell.js@0.3.0:
     ethers "^5.6.3"
     ts-mixer "^6.0.1"
 
+crossbell.js@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/crossbell.js/-/crossbell.js-0.5.2.tgz#a426c47ab4bc384a75c5329d923e4fab1894328d"
+  integrity sha512-VG0L6ESO+md0dZ/E49b8S08yZSxJFEIWjbyY0ObTfv5ZTwQdRFe2xXwEPefPQ8kzG9Q3poN3ZnzWc0mdZfaOmg==
+  dependencies:
+    ethers "^5.6.3"
+    ts-mixer "^6.0.1"
+    undici "^5.2.0"
+
 css-color-keywords@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/css-color-keywords/-/css-color-keywords-1.0.0.tgz#fea2616dc676b2962686b3af8dbdbe180b244e05"
@@ -4483,6 +4492,11 @@ unbox-primitive@^1.0.2:
     has-bigints "^1.0.2"
     has-symbols "^1.0.3"
     which-boxed-primitive "^1.0.2"
+
+undici@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/undici/-/undici-5.2.0.tgz#18c5bd59f8f1b1ed8dcc9dca2f754c44ec994059"
+  integrity sha512-XY6+NS3WH9b3TKOHeNz2CjR+qrVz/k4fO9g3etPpLozRvULoQmZ1+dk9JbIz40ehn27xzFk4jYVU2MU3Nle62A==
 
 unidata.js@^0.1.0:
   version "0.1.0"

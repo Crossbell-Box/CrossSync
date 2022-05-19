@@ -22,7 +22,7 @@ const connect = async (force = true) => {
         const provider = await w3mConnect(force);
         if (provider) {
             await initState(provider);
-            next();
+            await next();
         }
     } catch (e) {
         console.log(e);
@@ -35,8 +35,23 @@ const initState = async (provider: any) => {
     console.log('Connect Wallet:', userAddress);
 };
 
-const next = () => {
-    router.push('/mint');
+const next = async () => {
+    const userAddress = await store.state.provider?.getSigner().getAddress();
+    const contract = store.state.crossbell.contract;
+    if (userAddress && contract) {
+        const primaryprofileID = (await contract.getPrimaryProfileId(userAddress)).data;
+        if (parseInt(primaryprofileID) === 0) {
+            // No primary profile, go to mint
+            console.log('No primary profile, go to mint');
+            await router.push('/mint');
+        } else {
+            // Just login
+            console.log('Found primary profile with ID', primaryprofileID);
+            await router.push('/home');
+        }
+    } else {
+        console.error('CONTRACT IS INVALID');
+    }
 };
 
 connect(false);

@@ -5,6 +5,7 @@ import { ethers } from 'ethers';
 interface State {
     address?: string;
     profiles?: Profiles;
+    handle?: string;
 }
 
 export const key: InjectionKey<Store<State>> = Symbol();
@@ -13,6 +14,7 @@ export const store = createStore<State>({
     state: {
         address: undefined,
         profiles: undefined,
+        handle: localStorage.getItem('handle') || '',
     },
     mutations: {},
     actions: {
@@ -24,22 +26,20 @@ export const store = createStore<State>({
             }
         },
         async getProfiles({ state }) {
-            const crossbellProfiles = await window.unidata!.profiles.get({
+            state.profiles = await window.unidata!.profiles.get({
                 source: 'Crossbell Profile',
                 identity: state.address!,
             });
-            const ensProfiles = await window.unidata!.profiles.get({
-                source: 'ENS',
-                identity: state.address!,
-            });
-            state.profiles = {
-                total: crossbellProfiles.total + ensProfiles.total,
-                list: [...crossbellProfiles.list, ...ensProfiles.list],
-            };
+        },
+        async chooseProfile({ state }, handle) {
+            state.handle = handle;
+            localStorage.setItem('handle', handle);
         },
         async reset({ state }) {
             state.address = undefined;
             state.profiles = undefined;
+            localStorage.removeItem('handle');
+            state.handle = undefined;
         },
     },
 });

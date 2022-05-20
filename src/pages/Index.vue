@@ -47,10 +47,8 @@ const next = async () => {
     const profiles = store.state.profiles;
     if (!profiles?.list.length) {
         await router.push('/mint');
-    } else if (!profiles?.list.find((p) => p.source === 'Crossbell Profile')) {
-        await router.push('/profiles');
     } else {
-        await router.push('/home');
+        await router.push('/profiles');
     }
 };
 

@@ -1,6 +1,6 @@
 <template>
     <div class="w-80 mr-12 min-h-full pt-28 flex flex-col">
-        <Profile class="mb-0 rounded-br-none cursor-pointer" :profile="profile" @click="profileClick" />
+        <Profile class="mb-0 rounded-br-none cursor-pointer" :profile="profile" @click="profileClick" :size="'small'" />
         <el-menu class="flex-1">
             <el-menu-item index="2" @click="settingsClick">
                 <span>Settings</span>
@@ -38,8 +38,11 @@ const init = async () => {
     if (!store.state.profiles?.list.length) {
         await router.push('/mint');
     }
+    if (!store.state.handle) {
+        await router.push('/profiles');
+    }
 
-    profile.value = store.state.profiles!.list[0];
+    profile.value = store.state.profiles!.list.find((profile) => profile.username === store.state.handle);
 };
 
 init();

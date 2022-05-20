@@ -5,6 +5,7 @@ import MintPage from '../pages/Mint.vue';
 import ProfilesPage from '../pages/Profiles.vue';
 import HomePage from '../pages/Home.vue';
 import NotePage from '../pages/Note.vue';
+import SettingsPage from '../pages/Settings.vue';
 
 export const router = createRouter({
     history: createWebHashHistory(),
@@ -28,6 +29,10 @@ export const router = createRouter({
         {
             path: '/note/:id',
             component: NotePage,
+        },
+        {
+            path: '/settings',
+            component: SettingsPage,
         },
     ],
 });

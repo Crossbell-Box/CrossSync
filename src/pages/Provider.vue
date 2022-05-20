@@ -7,12 +7,15 @@ import { connect as w3mConnect } from '@/common/wallet';
 import { useStore } from '@/common/store';
 import { useRouter } from 'vue-router';
 import Unidata from 'unidata.js';
+import { ElLoading } from 'element-plus';
 
 const router = useRouter();
-
 const store = useStore();
 
 const init = async () => {
+    const loading = ElLoading.service({
+        lock: true,
+    });
     const provider = await w3mConnect(false);
     if (provider) {
         window.unidata = new Unidata({
@@ -22,6 +25,7 @@ const init = async () => {
     } else {
         await router.push('/');
     }
+    loading.close();
 };
 
 await init();

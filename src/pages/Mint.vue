@@ -1,8 +1,8 @@
 <template>
     <div>
         <h1 class="text-4xl font-bold my-5">Mint Your Crossbell Profile</h1>
-        <div v-if="ensList.length > 0">
-            <p>We've reserved your ENS name for you, click to claim it for free!</p>
+        <div v-if="ensList.length > 0 || ensLoading" v-loading="ensLoading">
+            <p>We've reserved your ENS name, only you can claim it, click to claim it for free!</p>
             <el-button
                 text
                 bg
@@ -25,7 +25,7 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="secondary" :loading="isChecking" @click="check">Check Availability</el-button>
-                <el-button type="primary" :loading="isMinting" :disabled="!mintable" @click="mint">Mint!</el-button>
+                <el-button type="primary" :loading="isMinting" @click="mint">Mint!</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -41,9 +41,9 @@ const router = useRouter();
 const store = useStore();
 
 const ensList = ref<string[]>([]);
-const mintable = ref(false);
 const isChecking = ref(false);
 const isMinting = ref(false);
+const ensLoading = ref(true);
 
 const validateHandle = (handle: string): boolean => {
     return /^[a-z0-9_\\-]{1,31}$/.test(handle);
@@ -84,41 +84,43 @@ const check = async () => {
         platform: 'Crossbell',
     });
 
+    isChecking.value = false;
+
     if (profiles?.list.length) {
         ElMessage.error('Oops, this handle has already been taken...');
+        return false;
     } else {
         ElMessage.success('This handle is available!');
-        mintable.value = true;
+        return true;
     }
-
-    isChecking.value = false;
 };
 
 const mint = async () => {
-    isMinting.value = true;
+    if (await check()) {
+        isMinting.value = true;
 
-    await window.unidata?.profiles.set(
-        {
-            source: 'Crossbell Profile',
-            identity: store.state.address!,
-            platform: 'Ethereum',
-        },
-        {
-            username: ruleForm.handle,
-        },
-    );
+        await window.unidata?.profiles.set(
+            {
+                source: 'Crossbell Profile',
+                identity: store.state.address!,
+                platform: 'Ethereum',
+            },
+            {
+                username: ruleForm.handle,
+            },
+        );
 
-    isMinting.value = false;
-    await next();
+        isMinting.value = false;
+        await next();
+    }
 };
 
 const claimENS = async (ens: string) => {
     isMinting.value = true;
 
-    // todo: how ?
+    ruleForm.handle = ens.replace(/\.eth$/, '');
 
     isMinting.value = false;
-    await next();
 };
 
 const next = async () => {
@@ -126,12 +128,13 @@ const next = async () => {
 };
 
 const initENS = async () => {
-    const profiles = store.state.profiles?.list;
-    if (profiles) {
-        ensList.value = profiles
-            .filter((profile) => profile.source === 'ENS' && profile.metadata)
-            .map((profile) => profile.metadata!.proof);
-    }
+    ensList.value = (
+        await window.unidata?.profiles.get({
+            source: 'ENS',
+            identity: store.state.address!,
+        })
+    ).list.map((profile) => profile.username!);
+    ensLoading.value = false;
 };
 
 initENS();

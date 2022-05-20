@@ -5,9 +5,17 @@
             <h1 class="flex text-4xl font-bold my-5 py-4">Settings</h1>
             <div class="flex flex-col">
                 <el-col class="flex flex-col gap-3">
-                    <el-card shadow="hover" class="cursor-pointer" @click="toEditProfile">
+                    <el-card shadow="hover" class="cursor-pointer" @click="switchProfile">
                         <div class="flex flex-row" style="justify-content: space-between">
                             <div class="flex">Switch Profile</div>
+                            <div class="flex w-4">
+                                <ArrowRight />
+                            </div>
+                        </div>
+                    </el-card>
+                    <el-card shadow="hover" class="cursor-pointer" @click="switchAccount">
+                        <div class="flex flex-row" style="justify-content: space-between">
+                            <div class="flex">Switch Account</div>
                             <div class="flex w-4">
                                 <ArrowRight />
                             </div>
@@ -30,8 +38,23 @@ import { ElMessageBox } from 'element-plus';
 const router = useRouter();
 const store = useStore();
 
-const toEditProfile = () => {
+if (store.state.address) {
+    if (!store.state.profiles?.list.length) {
+        router.push('/mint');
+    } else if (!store.state.handle) {
+        router.push('/profiles');
+    }
+} else {
+    router.push('/');
+}
+
+const switchProfile = () => {
     router.push('/profiles');
+};
+
+const switchAccount = async () => {
+    await store.dispatch('reset');
+    await router.push('/');
 };
 </script>
 

@@ -2,25 +2,14 @@
     <div class="absolute left-8 top-8">
         <router-link to="/"><img class="inline-block rounded-full" width="50" src="./assets/logo.jpeg" /></router-link>
     </div>
-    <router-view />
+    <Suspense>
+        <Provider />
+    </Suspense>
     <div class="absolute bottom-8 text-slate-400">@ Natural Selection Labs</div>
 </template>
 
 <script setup lang="ts">
-import { connect as w3mConnect } from '@/common/wallet';
-import { useStore } from '@/common/store';
-import { onMounted } from 'vue';
-
-const store = useStore();
-
-onMounted(async () => {
-    const provider = await w3mConnect(false);
-    if (provider) {
-        await store.dispatch('setProviderAndConnectContract', provider);
-        const userAddress = await store.state.provider?.getSigner().getAddress();
-        console.log('Connect Wallet:', userAddress);
-    }
-});
+import Provider from './pages/Provider.vue';
 </script>
 
 <style>

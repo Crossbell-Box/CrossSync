@@ -7,15 +7,7 @@
                 <el-col class="flex flex-col gap-3">
                     <el-card shadow="hover" class="cursor-pointer" @click="toEditProfile">
                         <div class="flex flex-row" style="justify-content: space-between">
-                            <div class="flex">Edit Profile</div>
-                            <div class="flex w-4">
-                                <ArrowRight />
-                            </div>
-                        </div>
-                    </el-card>
-                    <el-card shadow="hover" class="cursor-pointer" @click="logout">
-                        <div class="flex flex-row" style="justify-content: space-between">
-                            <div class="flex">Logout</div>
+                            <div class="flex">Switch Profile</div>
                             <div class="flex w-4">
                                 <ArrowRight />
                             </div>
@@ -40,20 +32,6 @@ const store = useStore();
 
 const toEditProfile = () => {
     router.push('/profiles');
-};
-
-const logout = () => {
-    ElMessageBox.confirm('Are you sure to logout?', 'Logout', {
-        confirmButtonText: 'Yes',
-        cancelButtonText: 'No',
-        type: 'warning',
-    })
-        .then(async () => {
-            await disconnect();
-            await store.dispatch('reset');
-            await router.push('/');
-        })
-        .catch(() => {});
 };
 </script>
 

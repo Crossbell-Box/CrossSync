@@ -57,7 +57,7 @@ const rules = reactive({
     handle: [
         {
             validator: (rule: any, value: any, callback: any) => {
-                console.log(value);
+                // console.log(value);
                 if (validateHandle(value)) {
                     callback();
                 } else {

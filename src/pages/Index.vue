@@ -17,6 +17,7 @@ import { connect as w3mConnect } from '@/common/wallet';
 import { useStore } from '@/common/store';
 import { ref } from 'vue';
 import Unidata from 'unidata.js';
+import { ElMessage } from 'element-plus';
 
 const router = useRouter();
 const store = useStore();
@@ -34,8 +35,8 @@ const connect = async (force = true) => {
             await store.dispatch('getAddress', provider);
             await next();
         }
-    } catch (e) {
-        console.log(e);
+    } catch (e: any) {
+        ElMessage.error('Failed to connect: ' + e.message);
     }
 
     isConnecting.value = false;

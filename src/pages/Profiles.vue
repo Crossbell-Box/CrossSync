@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-loading="loading">
         <h1 class="text-4xl font-bold my-5">Choose Your Profile</h1>
         <p>You have {{ profiles.length }} profiles, choose one to continue</p>
         <ProfileCard
@@ -34,27 +34,33 @@ const store = useStore();
 
 const address = `${store.state.address!.slice(0, 6)}...${store.state.address!.slice(-4)}`;
 const profiles = ref<Profile[]>([]);
+const loading = ref(false);
 
 const choose = async (p: Profile) => {
-    ElMessage.info('Setting up your profile...');
-    const res = await window.unidata!.profiles.set(
-        {
-            source: 'Crossbell Profile',
-            identity: store.state.address!,
-            platform: 'Ethereum',
-            action: 'update',
-        },
-        {
-            ...p,
-            username: undefined,
-        },
-    );
-    if (res.code === 0) {
-        ElMessage.success('Profile updated');
-        await next();
-    } else {
-        ElMessage.error('Failed to update profile: ' + res.message);
+    loading.value = true;
+    try {
+        const res = await window.unidata!.profiles.set(
+            {
+                source: 'Crossbell Profile',
+                identity: store.state.address!,
+                platform: 'Ethereum',
+                action: 'update',
+            },
+            {
+                ...p,
+                username: undefined,
+            },
+        );
+        if (res.code === 0) {
+            ElMessage.success('Profile updated');
+            await next();
+        } else {
+            ElMessage.error('Failed to update profile: ' + res.message);
+        }
+    } catch (e: any) {
+        ElMessage.error('Failed to update profile: ' + e.message);
     }
+    loading.value = false;
 };
 
 const next = async () => {

@@ -7,7 +7,7 @@
             v-for="profile in profiles"
             :profile="profile"
             :key="profile.username"
-            @click="choose"
+            @click="choose(profile)"
         />
         <p>
             You are logged in as <b>{{ address }}</b
@@ -27,6 +27,7 @@ import { useRouter } from 'vue-router';
 import { useStore } from '@/common/store';
 import { ref } from 'vue';
 import { disconnect } from '@/common/wallet';
+import { ElMessage } from 'element-plus';
 
 const router = useRouter();
 const store = useStore();
@@ -34,8 +35,26 @@ const store = useStore();
 const address = `${store.state.address!.slice(0, 6)}...${store.state.address!.slice(-4)}`;
 const profiles = ref<Profile[]>([]);
 
-const choose = async () => {
-    await next();
+const choose = async (p: Profile) => {
+    ElMessage.info('Setting up your profile...');
+    const res = await window.unidata!.profiles.set(
+        {
+            source: 'Crossbell Profile',
+            identity: store.state.address!,
+            platform: 'Ethereum',
+            action: 'update',
+        },
+        {
+            ...p,
+            username: undefined,
+        },
+    );
+    if (res.code === 0) {
+        ElMessage.success('Profile updated');
+        await next();
+    } else {
+        ElMessage.error('Failed to update profile: ' + res.message);
+    }
 };
 
 const next = async () => {

@@ -49,6 +49,14 @@ const next = async () => {
         await router.push('/profiles');
     }
 };
+
+const init = () => {
+    if (store.state.address) {
+        next();
+    }
+};
+
+init();
 </script>
 
 <style></style>

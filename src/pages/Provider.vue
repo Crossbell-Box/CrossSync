@@ -12,15 +12,19 @@ const router = useRouter();
 
 const store = useStore();
 
-const provider = await w3mConnect(false);
-if (provider) {
-    window.unidata = new Unidata({
-        ethereumProvider: provider,
-    });
-    await store.dispatch('getAddress', provider);
-} else {
-    await router.push('/');
-}
+const init = async () => {
+    const provider = await w3mConnect(false);
+    if (provider) {
+        window.unidata = new Unidata({
+            ethereumProvider: provider,
+        });
+        await store.dispatch('getAddress', provider);
+    } else {
+        await router.push('/');
+    }
+};
+
+await init();
 </script>
 
 <style></style>

@@ -2,7 +2,7 @@
     <div>
         <h1 class="text-4xl font-bold my-5">Choose Your Profile</h1>
         <p>You have {{ profiles.length }} profiles, choose one to continue</p>
-        <Profile
+        <ProfileCard
             class="profile mt-4 cursor-pointer mb-5"
             v-for="profile in profiles"
             :profile="profile"
@@ -22,33 +22,17 @@
 </template>
 
 <script setup lang="ts">
-import Profile from '../components/Profiles.vue';
+import ProfileCard from '../components/Profiles.vue';
 import { useRouter } from 'vue-router';
 import { useStore } from '@/common/store';
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { disconnect } from '@/common/wallet';
 
 const router = useRouter();
 const store = useStore();
 
 const address = `${store.state.address!.slice(0, 6)}...${store.state.address!.slice(-4)}`;
-const profiles = ref([
-    {
-        username: 'unidata',
-    },
-    {
-        username: 'diygod',
-    },
-    {
-        avatars: ['https://http.cat/204.jpg'],
-        name: 'name',
-        username: 'handle',
-        bio:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' +
-            'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        websites: ['unidata.app', 'example.com'],
-    },
-]);
+const profiles = ref<Profile[]>([]);
 
 const choose = async () => {
     await next();
@@ -63,6 +47,15 @@ const switchAccount = async () => {
     await store.dispatch('reset');
     await router.push('/');
 };
+
+const init = async () => {
+    const pProfiles = store.state.profiles?.list;
+    if (pProfiles?.length) {
+        profiles.value = pProfiles;
+    }
+};
+
+init();
 </script>
 
 <style>

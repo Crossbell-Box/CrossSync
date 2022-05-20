@@ -1,8 +1,19 @@
 <template>
     <div>
         <h1 class="text-4xl font-bold my-5">Mint Your Crossbell Profile</h1>
-        <p>We've reserved your ENS name for you, click to claim it for free!</p>
-        <el-button text bg type="primary" class="mt-2 mb-4">diygod.eth</el-button>
+        <div v-if="ensList.length > 0">
+            <p>We've reserved your ENS name for you, click to claim it for free!</p>
+            <el-button
+                text
+                bg
+                type="primary"
+                class="mt-2 mb-4"
+                v-for="ens in ensList"
+                :key="ens"
+                @click="claimENS(ens)"
+                >{{ ens }}</el-button
+            >
+        </div>
         <el-form :model="ruleForm" status-icon :rules="rules" label-width="50px">
             <el-form-item label="Handle" prop="handle" class="my-8" size="large">
                 <el-input
@@ -29,6 +40,7 @@ import { useStore } from '@/common/store';
 const router = useRouter();
 const store = useStore();
 
+const ensList = ref<string[]>([]);
 const mintable = ref(false);
 const isChecking = ref(false);
 const isMinting = ref(false);
@@ -72,7 +84,7 @@ const check = async () => {
         platform: 'Crossbell',
     });
 
-    if (profiles.list.length) {
+    if (profiles?.list.length) {
         ElMessage.error('Oops, this handle has already been taken...');
     } else {
         ElMessage.success('This handle is available!');
@@ -100,9 +112,29 @@ const mint = async () => {
     await next();
 };
 
+const claimENS = async (ens: string) => {
+    isMinting.value = true;
+
+    // todo: how ?
+
+    isMinting.value = false;
+    await next();
+};
+
 const next = async () => {
     await router.push('/profiles');
 };
+
+const initENS = async () => {
+    const profiles = store.state.profiles?.list;
+    if (profiles) {
+        ensList.value = profiles
+            .filter((profile) => profile.source === 'ENS' && profile.metadata)
+            .map((profile) => profile.metadata!.proof);
+    }
+};
+
+initENS();
 </script>
 
 <style></style>

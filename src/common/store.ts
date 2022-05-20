@@ -1,6 +1,5 @@
 import { createStore, Store, useStore as baseUseStore } from 'vuex';
 import { InjectionKey, markRaw } from 'vue';
-import Unidata from 'unidata.js';
 import { ethers } from 'ethers';
 
 interface State {
@@ -17,18 +16,26 @@ export const store = createStore<State>({
     },
     mutations: {},
     actions: {
-        async getAddress({ commit, state }, provider) {
+        async getAddress({ dispatch, state }, provider) {
             provider = new ethers.providers.Web3Provider(provider);
             if (provider) {
                 state.address = await provider.getSigner().getAddress();
-                await store.dispatch('getProfiles');
+                await dispatch('getProfiles');
             }
         },
-        async getProfiles({ commit, state }, provider) {
-            state.profiles = await window.unidata?.profiles.get({
+        async getProfiles({ state }) {
+            const crossbellProfiles = await window.unidata!.profiles.get({
                 source: 'Crossbell Profile',
                 identity: state.address!,
             });
+            const ensProfiles = await window.unidata!.profiles.get({
+                source: 'ENS',
+                identity: state.address!,
+            });
+            state.profiles = {
+                total: crossbellProfiles.total + ensProfiles.total,
+                list: [...crossbellProfiles.list, ...ensProfiles.list],
+            };
         },
         async reset({ state }) {
             state.address = undefined;

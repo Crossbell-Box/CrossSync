@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import Profile from '../components/Profiles.vue';
 import { useRouter } from 'vue-router';
 import { useStore } from '@/common/store';
@@ -31,16 +31,7 @@ import { useStore } from '@/common/store';
 const router = useRouter();
 const store = useStore();
 
-const profile = ref<any>({
-    // todo: type
-    avatars: ['https://http.cat/204.jpg'],
-    name: 'name',
-    username: 'handle',
-    bio:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' +
-        'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    websites: ['unidata.app', 'example.com'],
-});
+const profile = ref<any>({});
 
 const count = ref(20);
 const load = () => {
@@ -51,21 +42,11 @@ const profileClick = () => {
     router.push('/profiles');
 };
 
-onMounted(async () => {
-    const contract = store.state.crossbell.contract;
-    const userAddress = await store.state.provider?.getSigner().getAddress();
-    if (contract && userAddress) {
-        const pProfileID = (await contract.getPrimaryProfileId(userAddress)).data;
-        const pProfile = (await contract.getProfile(pProfileID)).data;
-        profile.value = {
-            name: pProfile.metadata?.name || pProfile.handle,
-            username: pProfile.handle,
-        };
-        console.log('Profile loaded', pProfile);
-    } else {
-        console.log('No contract or user address');
-    }
-});
+if (!store.state.profiles?.list.length) {
+    router.push('/mint');
+}
+
+profile.value = store.state.profiles!.list[0];
 </script>
 
 <style></style>

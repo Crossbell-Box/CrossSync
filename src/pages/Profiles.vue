@@ -31,7 +31,7 @@ import { disconnect } from '@/common/wallet';
 const router = useRouter();
 const store = useStore();
 
-const address = ref('...');
+const address = `${store.state.address!.slice(0, 6)}...${store.state.address!.slice(-4)}`;
 const profiles = ref([
     {
         username: 'unidata',
@@ -63,13 +63,6 @@ const switchAccount = async () => {
     await store.dispatch('reset');
     await router.push('/');
 };
-
-onMounted(async () => {
-    const userAddress = await store.state.provider?.getSigner().getAddress();
-    if (userAddress) {
-        address.value = `${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
-    }
-});
 </script>
 
 <style>

@@ -15,7 +15,8 @@
 import { useRouter } from 'vue-router';
 import { connect as w3mConnect } from '@/common/wallet';
 import { useStore } from '@/common/store';
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
+import Unidata from 'unidata.js';
 
 const router = useRouter();
 const store = useStore();
@@ -23,52 +24,31 @@ const isConnecting = ref(false);
 
 const connect = async (force = true) => {
     isConnecting.value = true;
-    // If already connected, do nothing
-    if (store.state.provider) {
-        await next();
-    } else {
-        try {
-            const provider = await w3mConnect(force);
-            if (provider) {
-                await store.dispatch('setProviderAndConnectContract', provider);
-                await next();
-            }
-        } catch (e) {
-            console.log(e);
+
+    try {
+        const provider = await w3mConnect(force);
+        if (provider) {
+            window.unidata = new Unidata({
+                ethereumProvider: provider,
+            });
+            await store.dispatch('getAddress', provider);
+            await next();
         }
+    } catch (e) {
+        console.log(e);
     }
+
     isConnecting.value = false;
 };
 
 const next = async () => {
-    const userAddress = await store.state.provider?.getSigner().getAddress();
-    const contract = store.state.crossbell.contract;
-    if (userAddress && contract) {
-        const primaryprofileID = (await contract.getPrimaryProfileId(userAddress)).data;
-        if (parseInt(primaryprofileID) === 0) {
-            // No primary profile, go to mint
-            console.log('No primary profile, go to mint');
-            await router.push('/mint');
-        } else {
-            console.log('Found primary profile with ID', primaryprofileID);
-            const primaryProfile = (await contract.getProfile(primaryprofileID)).data;
-            if (!primaryProfile.metadata) {
-                // No metadata, go to profiles
-                console.log('No metadata found, go to profiles selection');
-                await router.push('/profiles');
-            } else {
-                // Just login
-                await router.push('/home');
-            }
-        }
+    const profiles = store.state.profiles;
+    if (!profiles?.list.length) {
+        await router.push('/mint');
     } else {
-        console.error('CONTRACT IS INVALID');
+        await router.push('/profiles');
     }
 };
-
-onMounted(() => {
-    connect(false);
-});
 </script>
 
 <style></style>

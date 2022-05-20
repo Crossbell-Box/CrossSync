@@ -59,43 +59,45 @@ const rules = reactive({
 
 const check = async () => {
     isChecking.value = true;
+
     if (!validateHandle(ruleForm.handle)) {
         ElMessage.error('Invalid handle');
         isChecking.value = false;
         return;
     }
-    const state = store.state;
-    const contract = state.crossbell.contract;
-    if (contract) {
-        // Check if handle is available
-        const profile = (await contract.getProfileByHandle(ruleForm.handle)).data;
-        if (parseInt(profile.profileId, 10) !== 0) {
-            // Invalid handle
-            ElMessage.error('Oops, this handle has already been taken...');
-        } else {
-            // Valid handle
-            ElMessage.success('This handle is available!');
-            mintable.value = true;
-        }
+
+    const profiles = await window.unidata?.profiles.get({
+        source: 'Crossbell Profile',
+        identity: ruleForm.handle,
+        platform: 'Crossbell',
+    });
+
+    if (profiles.list.length) {
+        ElMessage.error('Oops, this handle has already been taken...');
+    } else {
+        ElMessage.success('This handle is available!');
+        mintable.value = true;
     }
+
     isChecking.value = false;
 };
 
 const mint = async () => {
     isMinting.value = true;
-    const state = store.state;
-    const contract = state.crossbell.contract;
-    const userAddress = await store.state.provider?.getSigner().getAddress();
-    if (contract && userAddress) {
-        // todo: select user profile
-        try {
-            await contract.createProfile(userAddress, ruleForm.handle, '');
-            await next();
-        } catch (e) {
-            console.log(e);
-        }
-    }
+
+    await window.unidata?.profiles.set(
+        {
+            source: 'Crossbell Profile',
+            identity: store.state.address!,
+            platform: 'Ethereum',
+        },
+        {
+            username: ruleForm.handle,
+        },
+    );
+
     isMinting.value = false;
+    await next();
 };
 
 const next = async () => {

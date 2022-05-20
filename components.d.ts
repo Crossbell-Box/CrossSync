@@ -15,6 +15,7 @@ declare module '@vue/runtime-core' {
     ElPopconfirm: typeof import('element-plus/es')['ElPopconfirm']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     InfiniteScroll: typeof import('element-plus/es')['ElInfiniteScroll']
+    Loading: typeof import('element-plus/es')['ElLoadingDirective']
     Profiles: typeof import('./src/components/Profiles.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

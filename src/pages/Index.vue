@@ -29,6 +29,7 @@ const connect = async (force = true) => {
     try {
         const provider = await w3mConnect(force);
         if (provider) {
+            ElMessage.success('Wallet connected successfully, start system initializing...');
             window.unidata = new Unidata({
                 ethereumProvider: provider,
             });

@@ -25,10 +25,17 @@ import ProfileCard from '../components/Profiles.vue';
 import { useRouter } from 'vue-router';
 import { useStore } from '@/common/store';
 import { ref } from 'vue';
-import { disconnect } from '@/common/wallet';
 
 const router = useRouter();
 const store = useStore();
+
+if (store.state.address) {
+    if (!store.state.profiles?.list.length) {
+        router.push('/mint');
+    }
+} else {
+    router.push('/');
+}
 
 const address = `${store.state.address!.slice(0, 6)}...${store.state.address!.slice(-4)}`;
 const loading = ref(false);
@@ -41,7 +48,6 @@ const choose = async (profile: Profile) => {
 };
 
 const switchAccount = async () => {
-    await disconnect();
     await store.dispatch('reset');
     await router.push('/');
 };

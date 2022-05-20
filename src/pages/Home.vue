@@ -21,7 +21,15 @@ import Sidebar from '@/components/Sidebar.vue';
 const router = useRouter();
 const store = useStore();
 
-const profile = ref<any>({});
+if (store.state.address) {
+    if (!store.state.profiles?.list.length) {
+        router.push('/mint');
+    } else if (!store.state.handle) {
+        router.push('/profiles');
+    }
+} else {
+    router.push('/');
+}
 
 const count = ref(20);
 const load = () => {

@@ -34,16 +34,5 @@ const helpClick = () => {
     // router.push('/help');
 };
 
-const init = async () => {
-    if (!store.state.profiles?.list.length) {
-        await router.push('/mint');
-    }
-    if (!store.state.handle) {
-        await router.push('/profiles');
-    }
-
-    profile.value = store.state.profiles!.list.find((profile) => profile.username === store.state.handle);
-};
-
-init();
+profile.value = store.state.profiles!.list.find((profile) => profile.username === store.state.handle);
 </script>

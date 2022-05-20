@@ -1,6 +1,7 @@
 import { createStore, Store, useStore as baseUseStore } from 'vuex';
 import { InjectionKey, markRaw } from 'vue';
 import { ethers } from 'ethers';
+import { disconnect } from '@/common/wallet';
 
 interface State {
     address?: string;
@@ -36,6 +37,7 @@ export const store = createStore<State>({
             localStorage.setItem('handle', handle);
         },
         async reset({ state }) {
+            await disconnect();
             state.address = undefined;
             state.profiles = undefined;
             localStorage.removeItem('handle');

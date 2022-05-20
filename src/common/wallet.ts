@@ -6,7 +6,6 @@ const providerOptions = {
         package: WalletConnectProvider,
         options: {
             rpc: {
-                1: 'https://cloudflare-eth.com',
                 3737: 'https://rpc.crossbell.io',
             },
             bridge: 'https://wcrv2.rss3.dev',

@@ -19,8 +19,19 @@ import { ref } from 'vue';
 import Unidata from 'unidata.js';
 import { ElMessage } from 'element-plus';
 
-const router = useRouter();
 const store = useStore();
+const router = useRouter();
+
+if (store.state.address) {
+    if (!store.state.profiles?.list.length) {
+        router.push('/mint');
+    } else if (!store.state.handle) {
+        router.push('/profiles');
+    } else {
+        router.push('/home');
+    }
+}
+
 const isConnecting = ref(false);
 
 const connect = async (force = true) => {
@@ -34,7 +45,7 @@ const connect = async (force = true) => {
                 ethereumProvider: provider,
             });
             await store.dispatch('getAddress', provider);
-            await next();
+            await router.push('/mint');
         }
     } catch (e: any) {
         ElMessage.error('Failed to connect: ' + e.message);
@@ -42,23 +53,6 @@ const connect = async (force = true) => {
 
     isConnecting.value = false;
 };
-
-const next = async () => {
-    const profiles = store.state.profiles;
-    if (!profiles?.list.length) {
-        await router.push('/mint');
-    } else {
-        await router.push('/profiles');
-    }
-};
-
-const init = () => {
-    if (store.state.address) {
-        next();
-    }
-};
-
-init();
 </script>
 
 <style></style>

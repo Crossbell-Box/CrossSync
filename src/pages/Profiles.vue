@@ -5,11 +5,9 @@
             <span class="align-middle"
                 >You are logged in as <b>{{ address }}</b>
             </span>
-            <el-popconfirm title="Are you sure to logout and choose another account?" @confirm="switchAccount">
-                <template #reference>
-                    <el-button class="align-middle ml-2" text bg type="primary">switch account</el-button>
-                </template>
-            </el-popconfirm>
+            <el-button class="align-middle ml-2" text bg type="primary" @click="switchAccount"
+                >switch account</el-button
+            >
             <span class="align-middle"> , you have {{ profiles.length }} profiles, choose one to continue</span>
         </p>
         <ProfileCard

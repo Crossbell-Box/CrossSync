@@ -1,7 +1,7 @@
 <template>
     <Header />
     <div>
-        <h1 class="text-4xl font-bold my-5">Mint Your Crossbell Profile</h1>
+        <h1 class="text-4xl font-bold my-5">Mint Your Crossbell Profile 👾</h1>
         <p class="mb-8">
             <span class="align-middle"
                 >You are logged in as <b>{{ address }}</b>
@@ -10,7 +10,7 @@
                 >switch account</el-button
             >
             <span class="align-middle" v-if="profiles.length">
-                , you have {{ profiles.length }} profile{{ profiles.length > 1 ? 's' : '' }} ({{
+                , you already have {{ profiles.length }} profile{{ profiles.length > 1 ? 's' : '' }} ({{
                     profiles.map((profile) => '@' + profile.username).join(' ')
                 }})</span
             >
@@ -26,17 +26,32 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="secondary" :loading="isChecking" @click="check">Check Availability</el-button>
-                <el-button type="primary" :loading="isMinting" @click="mint">Mint!</el-button>
-                <el-button text bg type="primary" @click="skip" v-if="profiles.length">skip</el-button>
+                <el-button type="primary" :loading="isChecking" @click="dialog">I've decided!</el-button>
+            </el-form-item>
+            <el-form-item>
+                <el-button text bg type="primary" @click="skip" v-if="profiles.length"
+                    >I don't want to mint, just go to the next step</el-button
+                >
             </el-form-item>
         </el-form>
-        <p class="mt-8">
-            <b>🎉 ENS Events:</b> We've reserved your ENS name, only you can claim it, click to claim it for free!
+        <p class="mt-14" v-loading="ensLoading">
+            <b>🎉 ENS Event:</b> We've reserved your ENS name, only you can claim it, click to claim it for free!
         </p>
         <el-button text bg type="primary" class="mt-2 mb-4" v-for="ens in ensList" :key="ens" @click="claimENS(ens)">{{
             ens
         }}</el-button>
     </div>
+    <el-dialog v-model="dialogVisible" title="Tweet to continue" width="31%">
+        <p class="mb-4">
+            Congratulations! This handle <b>{{ ruleForm.handle }}</b> is available to mint!
+        </p>
+        <p class="mb-4">
+            Before continue, please tell your Twitter followers you are syncing your tweets to blockchain and truly
+            owning your tweet!
+        </p>
+        <el-button type="primary" @click="tweet">Tweet</el-button>
+        <el-button type="primary" :disabled="mintDisabled" :loading="isMinting" @click="mint">Mint!</el-button>
+    </el-dialog>
 </template>
 
 <script setup lang="ts">
@@ -57,6 +72,8 @@ const ensList = ref<string[]>([]);
 const isChecking = ref(false);
 const isMinting = ref(false);
 const ensLoading = ref(true);
+const dialogVisible = ref(false);
+const mintDisabled = ref(true);
 
 const validateHandle = (handle: string): boolean => {
     return /^[a-z0-9_\\-]{1,31}$/.test(handle);
@@ -120,24 +137,37 @@ const check = async () => {
     }
 };
 
-const mint = async () => {
+const tweet = () => {
+    const text = encodeURIComponent(
+        `#OwnMyTweets I'm proudly syncing my Tweet to blockchain and truly owning my tweet!`,
+    );
+    window.open(`https://twitter.com/intent/tweet?text=${text}&via=CrossSync&url=https://crosssync.app`);
+    setTimeout(() => {
+        mintDisabled.value = false;
+    }, 3000);
+};
+
+const dialog = async () => {
     if (await check()) {
-        isMinting.value = true;
-
-        await window.unidata?.profiles.set(
-            {
-                source: 'Crossbell Profile',
-                identity: store.state.address!,
-                platform: 'Ethereum',
-            },
-            {
-                username: ruleForm.handle,
-            },
-        );
-
-        isMinting.value = false;
-        await next();
+        dialogVisible.value = true;
     }
+};
+
+const mint = async () => {
+    isMinting.value = true;
+    await window.unidata?.profiles.set(
+        {
+            source: 'Crossbell Profile',
+            identity: store.state.address!,
+            platform: 'Ethereum',
+        },
+        {
+            username: ruleForm.handle,
+        },
+    );
+
+    isMinting.value = false;
+    await next();
 };
 
 const claimENS = async (ens: string) => {

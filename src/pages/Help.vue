@@ -1,5 +1,5 @@
 <template>
-    <div class="flex w-full h-full px-8">
+    <div class="flex w-full h-full px-8 max-w-screen-lg">
         <Sidebar />
         <div class="flex-1 flex flex-col">
             <h1 class="flex text-4xl font-bold my-5 py-4">Help</h1>

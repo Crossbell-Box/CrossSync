@@ -1,4 +1,5 @@
 <template>
+    <Header />
     <div>
         <h1 class="text-4xl font-bold my-5">Mint Your Crossbell Profile</h1>
         <p class="mb-8">
@@ -43,6 +44,7 @@ import { reactive, ref } from 'vue';
 import { ElMessage } from 'element-plus';
 import { useRouter } from 'vue-router';
 import { useStore } from '@/common/store';
+import Header from '@/components/Header.vue';
 
 const router = useRouter();
 const store = useStore();

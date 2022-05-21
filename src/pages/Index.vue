@@ -1,4 +1,5 @@
 <template>
+    <Header />
     <div class="text-center w-full h-full flex items-center justify-center">
         <div class="pb-8">
             <img class="inline-block rounded-full" width="150" src="../assets/logo.jpeg" />
@@ -18,6 +19,7 @@ import { useStore } from '@/common/store';
 import { ref } from 'vue';
 import Unidata from 'unidata.js';
 import { ElMessage } from 'element-plus';
+import Header from '@/components/Header.vue';
 
 const store = useStore();
 const router = useRouter();

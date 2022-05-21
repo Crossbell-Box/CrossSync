@@ -6,6 +6,7 @@ import ProfilesPage from '../pages/Profiles.vue';
 import HomePage from '../pages/Home.vue';
 import NotePage from '../pages/Note.vue';
 import SettingsPage from '../pages/Settings.vue';
+import HelpPage from '../pages/Help.vue';
 
 export const router = createRouter({
     history: createWebHashHistory(),
@@ -33,6 +34,10 @@ export const router = createRouter({
         {
             path: '/settings',
             component: SettingsPage,
+        },
+        {
+            path: '/help',
+            component: HelpPage,
         },
     ],
 });

@@ -21,6 +21,14 @@
                             </div>
                         </div>
                     </el-card>
+                    <el-card shadow="hover" class="cursor-pointer">
+                        <div class="flex flex-row" style="justify-content: space-between">
+                            <div class="flex">Syncing</div>
+                            <div class="flex">
+                                <el-switch v-model="isSyncing" @change="setSyncing" />
+                            </div>
+                        </div>
+                    </el-card>
                 </el-col>
             </div>
         </div>
@@ -34,9 +42,12 @@ import Sidebar from '@/components/Sidebar.vue';
 import { ArrowRight } from '@element-plus/icons-vue';
 import { disconnect } from '@/common/wallet';
 import { ElMessageBox } from 'element-plus';
+import { ref } from 'vue';
 
 const router = useRouter();
 const store = useStore();
+
+const isSyncing = ref(store.state.settings.syncing);
 
 if (store.state.address) {
     if (!store.state.profiles?.list.length) {
@@ -55,6 +66,10 @@ const switchProfile = () => {
 const switchAccount = async () => {
     await store.dispatch('reset');
     await router.push('/');
+};
+
+const setSyncing = () => {
+    store.dispatch('setSyncing', isSyncing.value);
 };
 </script>
 

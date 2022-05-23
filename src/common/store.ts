@@ -7,15 +7,25 @@ interface State {
     address?: string;
     profiles?: Profiles;
     handle?: string;
+    settings: {
+        syncing: boolean;
+    };
 }
 
 export const key: InjectionKey<Store<State>> = Symbol();
+
+const savedSettings = localStorage.getItem('settings');
 
 export const store = createStore<State>({
     state: {
         address: undefined,
         profiles: undefined,
         handle: localStorage.getItem('handle') || '',
+        settings: savedSettings
+            ? JSON.parse(savedSettings)
+            : {
+                  syncing: false,
+              },
     },
     mutations: {},
     actions: {
@@ -40,8 +50,15 @@ export const store = createStore<State>({
             await disconnect();
             state.address = undefined;
             state.profiles = undefined;
-            localStorage.removeItem('handle');
             state.handle = undefined;
+            localStorage.removeItem('handle');
+        },
+        saveSettings({ state }) {
+            localStorage.setItem('settings', JSON.stringify(state.settings));
+        },
+        setSyncing({ commit, dispatch, state }, syncing: boolean) {
+            state.settings.syncing = syncing;
+            dispatch('saveSettings');
         },
     },
 });

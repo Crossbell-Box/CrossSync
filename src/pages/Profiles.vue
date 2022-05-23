@@ -31,7 +31,7 @@ import Header from '@/components/Header.vue';
 const router = useRouter();
 const store = useStore();
 
-if (store.state.address) {
+if (store.state.settings.address) {
     if (!store.state.profiles?.list.length) {
         router.push('/mint');
     }
@@ -39,12 +39,14 @@ if (store.state.address) {
     router.push('/');
 }
 
-const address = `${store.state.address!.slice(0, 6)}...${store.state.address!.slice(-4)}`;
+const address = `${store.state.settings.address!.slice(0, 6)}...${store.state.settings.address!.slice(-4)}`;
 const loading = ref(false);
 
 const choose = async (profile: Profile) => {
     loading.value = true;
-    await store.dispatch('chooseProfile', profile.username);
+    await store.dispatch('setSettings', {
+        handle: profile.username,
+    });
     loading.value = false;
     await router.push('/home');
 };

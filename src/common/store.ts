@@ -1,6 +1,5 @@
 import { createStore, Store, useStore as baseUseStore } from 'vuex';
 import { InjectionKey, markRaw } from 'vue';
-import { ethers } from 'ethers';
 import { disconnect } from '@/common/wallet';
 import { getBucket } from '@extend-chrome/storage';
 
@@ -28,32 +27,14 @@ export const store = createStore<State>({
     },
     mutations: {},
     actions: {
-        async getAddress({ dispatch, state }, provider) {
-            provider = new ethers.providers.Web3Provider(provider);
-            if (provider) {
-                const address = await provider.getSigner().getAddress();
-                state.settings.address = address;
-                await bucket.set({
-                    address: address,
-                });
-                await dispatch('getProfiles');
-            }
-        },
-        async getProfiles({ state }) {
-            if (state.settings.address) {
+        async setSettings({ state }, settings: Partial<Settings>) {
+            if (settings.address && settings.address !== state.settings.address) {
                 state.profiles = await window.unidata!.profiles.get({
                     source: 'Crossbell Profile',
-                    identity: state.settings.address,
+                    identity: settings.address,
                 });
             }
-        },
-        async chooseProfile({ state }, handle) {
-            state.settings.handle = handle;
-            await bucket.set({
-                handle: handle,
-            });
-        },
-        async setSettings({ state }, settings: Partial<Settings>) {
+
             state.settings = Object.assign(state.settings, settings);
             await bucket.set(settings);
         },
@@ -64,12 +45,6 @@ export const store = createStore<State>({
                 syncing: true,
             };
             await bucket.clear();
-        },
-        async setSyncing({ commit, dispatch, state }, syncing: boolean) {
-            state.settings.syncing = syncing;
-            await bucket.set({
-                syncing: syncing,
-            });
         },
     },
 });

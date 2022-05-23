@@ -8,6 +8,7 @@ import { useStore } from '@/common/store';
 import { useRouter } from 'vue-router';
 import Unidata from 'unidata.js';
 import { ElLoading } from 'element-plus';
+import { ethers } from 'ethers';
 
 const router = useRouter();
 const store = useStore();
@@ -21,7 +22,11 @@ const init = async () => {
         window.unidata = new Unidata({
             ethereumProvider: provider,
         });
-        await store.dispatch('getAddress', provider);
+        const web3Provider = new ethers.providers.Web3Provider(provider);
+        const address = await web3Provider.getSigner().getAddress();
+        await store.dispatch('setSettings', {
+            address: address,
+        });
     } else {
         await router.push('/');
     }

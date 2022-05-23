@@ -20,6 +20,7 @@ import { ref } from 'vue';
 import Unidata from 'unidata.js';
 import { ElMessage } from 'element-plus';
 import Header from '@/components/Header.vue';
+import { ethers } from 'ethers';
 
 const store = useStore();
 const router = useRouter();
@@ -46,7 +47,11 @@ const connect = async (force = true) => {
             window.unidata = new Unidata({
                 ethereumProvider: provider,
             });
-            await store.dispatch('getAddress', provider);
+            const web3Provider = new ethers.providers.Web3Provider(provider);
+            const address = await web3Provider.getSigner().getAddress();
+            await store.dispatch('setSettings', {
+                address: address,
+            });
             await router.push('/mint');
         }
     } catch (e: any) {

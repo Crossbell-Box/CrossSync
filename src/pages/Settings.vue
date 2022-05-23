@@ -49,10 +49,10 @@ const store = useStore();
 
 const isSyncing = ref(store.state.settings.syncing);
 
-if (store.state.address) {
+if (store.state.settings.address) {
     if (!store.state.profiles?.list.length) {
         router.push('/mint');
-    } else if (!store.state.handle) {
+    } else if (!store.state.settings.handle) {
         router.push('/profiles');
     }
 } else {
@@ -68,8 +68,10 @@ const switchAccount = async () => {
     await router.push('/');
 };
 
-const setSyncing = () => {
-    store.dispatch('setSyncing', isSyncing.value);
+const setSyncing = async () => {
+    await store.dispatch('setSettings', {
+        syncing: isSyncing.value,
+    });
 };
 </script>
 

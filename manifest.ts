@@ -32,6 +32,7 @@ const manifest: ManifestV3Export = {
             matches: ['https://twitter.com/*'],
         },
     ],
+    permissions: ['storage'],
 };
 
 export default manifest;

@@ -24,10 +24,10 @@ import Header from '@/components/Header.vue';
 const store = useStore();
 const router = useRouter();
 
-if (store.state.address) {
+if (store.state.settings.address) {
     if (!store.state.profiles?.list.length) {
         router.push('/mint');
-    } else if (!store.state.handle) {
+    } else if (!store.state.settings.handle) {
         router.push('/profiles');
     } else {
         router.push('/home');

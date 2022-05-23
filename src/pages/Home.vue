@@ -21,10 +21,10 @@ import Sidebar from '@/components/Sidebar.vue';
 const router = useRouter();
 const store = useStore();
 
-if (store.state.address) {
+if (store.state.settings.address) {
     if (!store.state.profiles?.list.length) {
         router.push('/mint');
-    } else if (!store.state.handle) {
+    } else if (!store.state.settings.handle) {
         router.push('/profiles');
     }
 } else {

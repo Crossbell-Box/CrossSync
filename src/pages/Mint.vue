@@ -64,7 +64,7 @@ import Header from '@/components/Header.vue';
 const router = useRouter();
 const store = useStore();
 
-if (!store.state.address) {
+if (!store.state.settings.address) {
     router.push('/');
 }
 
@@ -79,7 +79,7 @@ const validateHandle = (handle: string): boolean => {
     return /^[a-z0-9_\\-]{1,31}$/.test(handle);
 };
 
-const address = `${store.state.address!.slice(0, 6)}...${store.state.address!.slice(-4)}`;
+const address = `${store.state.settings.address!.slice(0, 6)}...${store.state.settings.address!.slice(-4)}`;
 const profiles = store.state.profiles?.list || [];
 
 const switchAccount = async () => {
@@ -158,7 +158,7 @@ const mint = async () => {
     await window.unidata?.profiles.set(
         {
             source: 'Crossbell Profile',
-            identity: store.state.address!,
+            identity: store.state.settings.address!,
             platform: 'Ethereum',
         },
         {
@@ -186,7 +186,7 @@ const initENS = async () => {
     ensList.value = (
         await window.unidata?.profiles.get({
             source: 'ENS',
-            identity: store.state.address!,
+            identity: store.state.settings.address!,
         })
     ).list.map((profile) => profile.username!);
     ensLoading.value = false;

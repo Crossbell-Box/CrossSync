@@ -44,7 +44,7 @@ const helpClick = () => {
 };
 
 profile.value =
-    store.state.profiles!.list.find((profile) => profile.username === store.state.handle) ||
+    store.state.profiles!.list.find((profile) => profile.username === store.state.settings.handle) ||
     store.state.profiles!.list[0]; // As a fallback, use the first profile
 </script>
 

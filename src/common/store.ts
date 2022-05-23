@@ -2,63 +2,74 @@ import { createStore, Store, useStore as baseUseStore } from 'vuex';
 import { InjectionKey, markRaw } from 'vue';
 import { ethers } from 'ethers';
 import { disconnect } from '@/common/wallet';
+import { getBucket } from '@extend-chrome/storage';
+
+interface Settings {
+    syncing: boolean;
+    address?: string;
+    handle?: string;
+}
+
+export const bucket = getBucket<Settings>('settings', 'sync');
 
 interface State {
-    address?: string;
     profiles?: Profiles;
-    handle?: string;
-    settings: {
-        syncing: boolean;
-    };
+    settings: Settings;
 }
 
 export const key: InjectionKey<Store<State>> = Symbol();
 
-const savedSettings = localStorage.getItem('settings');
-
 export const store = createStore<State>({
     state: {
-        address: undefined,
         profiles: undefined,
-        handle: localStorage.getItem('handle') || '',
-        settings: savedSettings
-            ? JSON.parse(savedSettings)
-            : {
-                  syncing: true,
-              },
+        settings: await bucket.get({
+            syncing: true,
+        }),
     },
     mutations: {},
     actions: {
         async getAddress({ dispatch, state }, provider) {
             provider = new ethers.providers.Web3Provider(provider);
             if (provider) {
-                state.address = await provider.getSigner().getAddress();
+                const address = await provider.getSigner().getAddress();
+                state.settings.address = address;
+                await bucket.set({
+                    address: address,
+                });
                 await dispatch('getProfiles');
             }
         },
         async getProfiles({ state }) {
-            state.profiles = await window.unidata!.profiles.get({
-                source: 'Crossbell Profile',
-                identity: state.address!,
-            });
+            if (state.settings.address) {
+                state.profiles = await window.unidata!.profiles.get({
+                    source: 'Crossbell Profile',
+                    identity: state.settings.address,
+                });
+            }
         },
         async chooseProfile({ state }, handle) {
-            state.handle = handle;
-            localStorage.setItem('handle', handle);
+            state.settings.handle = handle;
+            await bucket.set({
+                handle: handle,
+            });
+        },
+        async setSettings({ state }, settings: Partial<Settings>) {
+            state.settings = Object.assign(state.settings, settings);
+            await bucket.set(settings);
         },
         async reset({ state }) {
             await disconnect();
-            state.address = undefined;
             state.profiles = undefined;
-            state.handle = undefined;
-            localStorage.removeItem('handle');
+            state.settings = {
+                syncing: true,
+            };
+            await bucket.clear();
         },
-        saveSettings({ state }) {
-            localStorage.setItem('settings', JSON.stringify(state.settings));
-        },
-        setSyncing({ commit, dispatch, state }, syncing: boolean) {
+        async setSyncing({ commit, dispatch, state }, syncing: boolean) {
             state.settings.syncing = syncing;
-            dispatch('saveSettings');
+            await bucket.set({
+                syncing: syncing,
+            });
         },
     },
 });

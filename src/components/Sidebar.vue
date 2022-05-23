@@ -5,7 +5,7 @@
             class="menu mb-0 rounded-br-none cursor-pointer"
             :profile="profile"
             @click="profileClick"
-            :size="'small'"
+            size="small"
         />
         <el-card shadow="hover" class="menu cursor-pointer mt-4" @click="settingsClick">
             <div class="flex flex-row" style="justify-content: space-between">
@@ -43,7 +43,9 @@ const helpClick = () => {
     router.push('/help');
 };
 
-profile.value = store.state.profiles!.list.find((profile) => profile.username === store.state.handle);
+profile.value =
+    store.state.profiles!.list.find((profile) => profile.username === store.state.handle) ||
+    store.state.profiles!.list[0]; // As a fallback, use the first profile
 </script>
 
 <style scoped>

@@ -21,8 +21,6 @@
 </template>
 
 <script setup lang="ts">
-import { watchEffect, ref, getCurrentInstance } from 'vue';
-
 const props = defineProps({
     profile: {
         type: Object,
@@ -33,7 +31,7 @@ const props = defineProps({
     },
 });
 
-const profile = ref(props.profile);
+// const profile = ref(props.profile);
 </script>
 
 <style lang="less" scoped>

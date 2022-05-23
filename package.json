@@ -1,5 +1,6 @@
 {
     "name": "crosssync",
+    "description": "Welcome to CrossSync! 👋",
     "private": true,
     "version": "0.0.0",
     "scripts": {
@@ -30,6 +31,7 @@
         "web3modal": "^1.9.7"
     },
     "devDependencies": {
+        "@crxjs/vite-plugin": "^1.0.5",
         "@tailwindcss/line-clamp": "^0.4.0",
         "@types/chrome": "^0.0.188",
         "@vitejs/plugin-vue": "^2.3.3",

@@ -5,6 +5,9 @@ import Components from 'unplugin-vue-components/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 import path from 'path';
 import nodePolyfills from 'rollup-plugin-polyfill-node';
+import { crx } from '@crxjs/vite-plugin';
+import manifest from './manifest';
+
 const production = process.env.NODE_ENV === 'production';
 
 export default defineConfig({
@@ -37,5 +40,8 @@ export default defineConfig({
             nodePolyfills({
                 include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js')],
             }),
+        crx({
+            manifest,
+        }),
     ],
 });

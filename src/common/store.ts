@@ -24,7 +24,7 @@ export const store = createStore<State>({
         settings: savedSettings
             ? JSON.parse(savedSettings)
             : {
-                  syncing: false,
+                  syncing: true,
               },
     },
     mutations: {},

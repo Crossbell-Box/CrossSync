@@ -23,10 +23,15 @@ const init = async () => {
             ethereumProvider: provider,
         });
         const web3Provider = new ethers.providers.Web3Provider(provider);
-        const address = await web3Provider.getSigner().getAddress();
-        await store.dispatch('setSettings', {
-            address: address,
-        });
+        try {
+            const address = await web3Provider.getSigner().getAddress();
+            await store.dispatch('setSettings', {
+                address: address,
+            });
+        } catch (e) {
+            // Failed to get address (wallet not connected?)
+            await store.dispatch('reset');
+        }
     } else {
         await router.push('/');
     }

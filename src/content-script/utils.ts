@@ -5,7 +5,7 @@ const maxCount = 10000 / interval;
 export function observe(selector: string, callback: (ele: Element) => void) {
     let observer: MutationObserver;
     let cache: Element;
-    const cbk = (result: Element) => {
+    const cb = (result: Element) => {
         if (result !== cache) {
             cache = result;
             callback(result);
@@ -15,7 +15,7 @@ export function observe(selector: string, callback: (ele: Element) => void) {
         let currentCount = 0;
         const result = document.querySelector(selector);
         if (result) {
-            cbk(result);
+            cb(result);
         } else {
             if (observer) {
                 observer.disconnect();
@@ -25,7 +25,7 @@ export function observe(selector: string, callback: (ele: Element) => void) {
                     const result = document.querySelector(selector);
                     if (result) {
                         observer.disconnect();
-                        cbk(result);
+                        cb(result);
                     } else if (currentCount > maxCount) {
                         observer.disconnect();
                     } else {

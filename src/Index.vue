@@ -9,6 +9,10 @@ import Provider from './pages/Provider.vue';
 </script>
 
 <style>
+body {
+    font-size: 100%;
+}
+
 html,
 body,
 #app {

@@ -25,7 +25,7 @@
                 />
             </el-form-item>
             <el-form-item>
-                <el-button type="secondary" :loading="isChecking" @click="check">Check Availability</el-button>
+                <el-button type="default" :loading="isChecking" @click="check">Check Availability</el-button>
                 <el-button type="primary" :loading="isChecking" @click="dialog">I've decided!</el-button>
             </el-form-item>
             <el-form-item>

@@ -2,6 +2,7 @@ import { createStore, Store, useStore as baseUseStore } from 'vuex';
 import { InjectionKey, markRaw } from 'vue';
 import { disconnect } from '@/common/wallet';
 import { getBucket } from '@extend-chrome/storage';
+import Unidata from 'unidata.js';
 
 interface Settings {
     syncing: boolean;
@@ -10,6 +11,13 @@ interface Settings {
 }
 
 export const bucket = getBucket<Settings>('settings', 'sync');
+
+const settings = Object.assign(
+    {
+        syncing: true,
+    },
+    await bucket.get(),
+);
 
 interface State {
     profiles?: Profiles;
@@ -20,10 +28,13 @@ export const key: InjectionKey<Store<State>> = Symbol();
 
 export const store = createStore<State>({
     state: {
-        profiles: undefined,
-        settings: await bucket.get({
-            syncing: true,
-        }),
+        settings: settings,
+        profiles: settings.address
+            ? await new Unidata().profiles.get({
+                  source: 'Crossbell Profile',
+                  identity: settings.address,
+              })
+            : undefined,
     },
     mutations: {},
     actions: {

@@ -1,5 +1,5 @@
 import { createStore, Store, useStore as baseUseStore } from 'vuex';
-import { InjectionKey, markRaw } from 'vue';
+import { InjectionKey } from 'vue';
 import { disconnect } from '@/common/wallet';
 import { getBucket } from '@extend-chrome/storage';
 import Unidata from 'unidata.js';

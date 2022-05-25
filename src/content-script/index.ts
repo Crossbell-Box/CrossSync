@@ -1,5 +1,5 @@
-import { observe } from '../common/utils';
-import '../common/locationChange';
+import { observe } from '@/common/utils';
+import '@/common/locationChange';
 
 import hooks from './hooks/twitter';
 

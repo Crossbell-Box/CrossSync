@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import Index from './Index.vue';
+import ElementPlus from 'element-plus';
 
 import 'element-plus/dist/index.css';
 import './index.css';
@@ -19,4 +20,5 @@ const app = createApp(Index);
 app.component('font-awesome-icon', FontAwesomeIcon);
 app.use(router);
 app.use(store, key);
+app.use(ElementPlus);
 app.mount('#app');

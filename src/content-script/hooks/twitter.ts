@@ -1,8 +1,11 @@
 import { createApp } from 'vue';
+import ElementPlus from 'element-plus';
 
-import SyncToggleButton from '../components/SyncToggle.vue';
+import SyncToggleButton from '@/components/SyncToggle.vue';
 
 const syncToggleApp = createApp(SyncToggleButton);
+syncToggleApp.use(ElementPlus);
+
 const mountSyncToggleApp = (el: Element) => {
     if (el && el.parentNode) {
         // console.log(el);

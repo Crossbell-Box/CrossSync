@@ -1,10 +1,14 @@
 // What if user clicks something and our element disappears?
-document.addEventListener('click', () => {
-    setTimeout(() => {
-        // Location changed
-        window.dispatchEvent(new Event('locationchange'));
-    }, 100);
-});
+document.addEventListener(
+    'click',
+    () => {
+        setTimeout(() => {
+            // Location changed
+            window.dispatchEvent(new Event('locationchange'));
+        }, 100);
+    },
+    true,
+);
 
 // Learn more about this hack from https://stackoverflow.com/a/52809105/1986338
 history.pushState = ((f) =>

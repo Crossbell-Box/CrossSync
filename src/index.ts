@@ -2,8 +2,8 @@ import { createApp } from 'vue';
 import Index from './Index.vue';
 import ElementPlus from 'element-plus';
 
-import 'element-plus/dist/index.css';
-import './index.css';
+import './css/lib.css';
+import './css/font.css';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';

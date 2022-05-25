@@ -1,7 +1,9 @@
-import { observe } from './utils';
-import './locationChange';
+import { observe } from '../common/utils';
+import '../common/locationChange';
 
 import hooks from './hooks/twitter';
+
+import '../css/lib.css';
 
 (async () => {
     switch (new URL(window.location.href).host) {

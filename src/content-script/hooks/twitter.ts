@@ -1,16 +1,21 @@
-import { createApp } from 'vue';
+import { createApp, App } from 'vue';
 import ElementPlus from 'element-plus';
 
 import SyncToggleButton from '@/components/SyncToggle.vue';
 
-const syncToggleApp = createApp(SyncToggleButton);
-syncToggleApp.use(ElementPlus);
+let syncToggleApp: App<Element> | null = null;
+let crossSyncToggleEl: HTMLDivElement;
 
 const mountSyncToggleApp = (el: Element) => {
     if (el && el.parentNode) {
-        // console.log(el);
-        const crossSyncToggleEl = document.createElement('div');
-        syncToggleApp.mount(crossSyncToggleEl);
+        if (!syncToggleApp) {
+            syncToggleApp = createApp(SyncToggleButton);
+            syncToggleApp.use(ElementPlus);
+
+            crossSyncToggleEl = document.createElement('div');
+            syncToggleApp.mount(crossSyncToggleEl);
+        }
+
         el.parentNode.insertBefore(crossSyncToggleEl, el);
     }
 };

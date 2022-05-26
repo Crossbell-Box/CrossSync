@@ -1,7 +1,7 @@
 <template>
     <div class="absolute left-8 top-8">
         <router-link to="/">
-            <img class="inline-block rounded-full align-middle" width="50" height="50" src="../assets/logo.png" />
+            <img class="inline-block rounded-full align-middle" width="50" height="50" src="../assets/logo.svg" />
         </router-link>
     </div>
     <div class="absolute bottom-8 text-slate-400 text-sm -translate-x-1/2 left-1/2">

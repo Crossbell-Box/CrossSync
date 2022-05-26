@@ -25,7 +25,7 @@
                         <div class="flex flex-row" style="justify-content: space-between">
                             <div class="flex">Syncing</div>
                             <div class="flex">
-                                <el-switch class="switch" v-model="isSyncing" @change="setSyncing" />
+                                <el-switch class="switch h-6" v-model="isSyncing" @change="setSyncing" />
                             </div>
                         </div>
                     </el-card>
@@ -75,8 +75,4 @@ const setSyncing = async () => {
 };
 </script>
 
-<style>
-.switch {
-    @apply h-6 !important;
-}
-</style>
+<style></style>

@@ -1,7 +1,10 @@
 <template>
-    <img width="150" src="./assets/logo.jpeg" />
+    <Suspense>
+        <PopupPage />
+    </Suspense>
 </template>
 
-<script setup lang="ts"></script>
-
+<script setup lang="ts">
+import PopupPage from './pages/Popup.vue';
+</script>
 <style></style>

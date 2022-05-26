@@ -21,7 +21,7 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
-import Profile from '../components/Profiles.vue';
+import Profile from '@/components/Profiles.vue';
 import { useRouter } from 'vue-router';
 import { useStore } from '@/common/store';
 import Header from '@/components/Header.vue';

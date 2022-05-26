@@ -5,6 +5,16 @@
         <link rel="icon" href="/logo.jpeg" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>CrossSync</title>
+        <script type="module">
+            import process from 'process';
+            import { Buffer } from 'buffer';
+            import EventEmitter from 'events';
+
+            window.Buffer = Buffer;
+            window.process = process;
+            window.EventEmitter = EventEmitter;
+            window.global = window;
+        </script>
     </head>
     <body>
         <div id="app"></div>

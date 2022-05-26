@@ -11,9 +11,14 @@
             <p v-if="profiles.length">
                 You already have {{ profiles.length }} profile{{ profiles.length > 1 ? 's' : '' }}
             </p>
-            <el-button v-for="profile in profiles" :key="profile.username" text bg type="primary" class="mt-2 mb-4"
-                >@{{ profile.username }}</el-button
-            >
+            <ProfileCard
+                class="mt-4 cursor-pointer mb-5"
+                v-for="profile in profiles"
+                :profile="profile"
+                :key="profile.username"
+                size="mini"
+                @click="choose(profile)"
+            />
         </div>
         <el-form :model="ruleForm" status-icon :rules="rules" label-width="50px">
             <el-form-item label="Handle" prop="handle" class="my-8" size="large">
@@ -71,6 +76,7 @@ import { reactive, ref } from 'vue';
 import { ElMessage } from 'element-plus';
 import { useRouter } from 'vue-router';
 import { useStore } from '@/common/store';
+import ProfileCard from '@/components/Profiles.vue';
 
 const router = useRouter();
 const store = useStore();
@@ -100,6 +106,13 @@ const switchAccount = async () => {
 
 const skip = async () => {
     await router.push('/profiles');
+};
+
+const choose = async (profile: Profile) => {
+    await store.dispatch('setSettings', {
+        handle: profile.username,
+    });
+    await router.push('/home');
 };
 
 const ruleForm = reactive({

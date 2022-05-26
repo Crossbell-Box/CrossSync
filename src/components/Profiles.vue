@@ -1,18 +1,35 @@
 <template>
-    <el-card class="profile-card" shadow="hover">
-        <div class="info" :class="size === 'small' ? ['p-0'] : ['py-5', 'px-3']">
-            <div class="avatar" v-if="profile.avatars"><img :src="profile.avatars?.[0]" /></div>
-            <div class="text">
-                <div class="name" :class="size === 'small' ? ['text-xl', 'line-clamp-1'] : ['text-2xl']">
+    <el-card class="relative" :class="size === 'mini' ? ['inline-flex', 'mr-4', 'profile-mini'] : []" shadow="hover">
+        <div class="info flex relative content-center items-center">
+            <div :class="size === 'mini' ? ['w-10', 'h-10', 'mr-2'] : ['w-20', 'h-20', 'mr-5']" v-if="profile.avatars">
+                <img class="rounded-full" :src="profile.avatars?.[0]" />
+            </div>
+            <div class="flex content-center flex-col">
+                <div
+                    class="font-bold"
+                    :class="
+                        size === 'small' ? ['text-xl', 'line-clamp-1'] : size === 'mini' ? [] : ['text-2xl', 'mb-1']
+                    "
+                >
                     {{ profile.name || profile.username }}
                     <span
-                        class="username"
-                        :class="size === 'small' ? ['text-xs'] : ['text-sm']"
+                        class="username text-sm text-gray-500"
+                        :class="
+                            size === 'small'
+                                ? ['text-xs', 'ml-2']
+                                : size === 'mini'
+                                ? ['block', 'text-xs']
+                                : ['text-sm', 'ml-2']
+                        "
                         v-if="profile.username"
                         >{{ profile.username }}</span
                     >
                 </div>
-                <div class="bio" v-if="profile.bio" :class="size === 'small' ? ['line-clamp-3'] : []">
+                <div
+                    class="text-sm text-gray-400"
+                    v-if="profile.bio && size !== 'mini'"
+                    :class="size === 'small' ? ['line-clamp-3'] : []"
+                >
                     {{ profile.bio }}
                 </div>
             </div>
@@ -34,56 +51,14 @@ const props = defineProps({
 // const profile = ref(props.profile);
 </script>
 
-<style lang="less" scoped>
-.profile-card {
-    position: relative;
-
-    .info {
-        display: flex;
-        z-index: 2;
-        position: relative;
-        background: rgba(255, 255, 255, 0.7);
-        -webkit-backdrop-filter: blur(10px);
-        backdrop-filter: blur(5px);
-        border-radius: 35px;
-
-        .avatar {
-            width: 100px;
-            height: 100px;
-            margin-right: 20px;
-
-            img {
-                width: 100%;
-                border-radius: 50%;
-            }
-        }
-
-        .text {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-
-            .name {
-                font-weight: bold;
-                margin-bottom: 5px;
-
-                .username {
-                    font-size: 14px;
-                    color: #999;
-                    margin-left: 10px;
-
-                    &:before {
-                        content: '@';
-                    }
-                }
-            }
-
-            .bio {
-                font-size: 14px;
-                color: #999;
-            }
-        }
+<style lang="less">
+.username {
+    &:before {
+        content: '@';
     }
+}
+
+.profile-mini .el-card__body {
+    @apply p-4;
 }
 </style>

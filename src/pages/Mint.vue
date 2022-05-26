@@ -1,19 +1,20 @@
 <template>
-    <div>
+    <div class="py-5">
         <h1 class="text-4xl font-bold my-5">Mint Your Crossbell Profile 👾</h1>
-        <p class="mb-8">
+        <div class="mb-8">
             <span class="align-middle"
                 >You are logged in as <b>{{ address }}</b>
             </span>
             <el-button class="align-middle ml-2" text bg type="primary" @click="switchAccount"
                 >switch account</el-button
             >
-            <span class="align-middle" v-if="profiles.length">
-                , you already have {{ profiles.length }} profile{{ profiles.length > 1 ? 's' : '' }} ({{
-                    profiles.map((profile) => '@' + profile.username).join(' ')
-                }})</span
+            <p v-if="profiles.length">
+                You already have {{ profiles.length }} profile{{ profiles.length > 1 ? 's' : '' }}
+            </p>
+            <el-button v-for="profile in profiles" :key="profile.username" text bg type="primary" class="mt-2 mb-4"
+                >@{{ profile.username }}</el-button
             >
-        </p>
+        </div>
         <el-form :model="ruleForm" status-icon :rules="rules" label-width="50px">
             <el-form-item label="Handle" prop="handle" class="my-8" size="large">
                 <el-input
@@ -33,12 +34,24 @@
                 >
             </el-form-item>
         </el-form>
-        <p class="mt-14" v-loading="ensLoading">
-            <b>🎉 ENS Event:</b> We've reserved your ENS name, only you can claim it, click to claim it for free!
-        </p>
-        <el-button text bg type="primary" class="mt-2 mb-4" v-for="ens in ensList" :key="ens" @click="claimENS(ens)">{{
-            ens
-        }}</el-button>
+        <div v-loading="ensLoading">
+            <p class="mt-14">
+                <b>🎉 ENS Event:</b> We've reserved your ENS name for you, only you can claim it, click to claim it for
+                free!
+            </p>
+            <el-button
+                v-if="ensList.length"
+                text
+                bg
+                type="primary"
+                class="mt-2 mb-4"
+                v-for="ens in ensList"
+                :key="ens"
+                @click="claimENS(ens)"
+                >{{ ens }}</el-button
+            >
+            <div v-else class="text-gray-400 text-sm leading-8 mt-2 mb-4">Sorry, we did not find your ENS name</div>
+        </div>
     </div>
     <el-dialog v-model="dialogVisible" title="Tweet to continue" width="31%">
         <p class="mb-4">

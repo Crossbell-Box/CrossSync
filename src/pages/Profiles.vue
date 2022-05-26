@@ -1,6 +1,6 @@
 <template>
-    <div v-loading="loading">
-        <h1 class="text-4xl font-bold my-5">Choose Your Profile</h1>
+    <div v-loading="loading" class="py-5">
+        <h2 class="text-4xl font-bold my-5">Choose Your Profile</h2>
         <p>
             <span class="align-middle"
                 >You are logged in as <b>{{ address }}</b>
@@ -17,11 +17,14 @@
             :key="profile.username"
             @click="choose(profile)"
         />
+        <el-button text bg type="primary" class="mt-2 mb-4" @click="router.push('/mint')"
+            >Or mint another one</el-button
+        >
     </div>
 </template>
 
 <script setup lang="ts">
-import ProfileCard from '../components/Profiles.vue';
+import ProfileCard from '@/components/Profiles.vue';
 import { useRouter } from 'vue-router';
 import { useStore } from '@/common/store';
 import { ref } from 'vue';

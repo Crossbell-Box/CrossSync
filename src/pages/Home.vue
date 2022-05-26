@@ -9,4 +9,8 @@
 import Sidebar from '@/components/Sidebar.vue';
 </script>
 
-<style></style>
+<style>
+#app {
+    height: 100%;
+}
+</style>

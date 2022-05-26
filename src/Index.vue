@@ -14,9 +14,12 @@ body {
 }
 
 html,
-body,
-#app {
+body {
     height: 100%;
+}
+
+#app {
+    min-height: 100%;
 }
 
 #app {

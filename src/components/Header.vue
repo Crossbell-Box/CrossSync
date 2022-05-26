@@ -5,7 +5,9 @@
         </router-link>
     </div>
     <div class="absolute bottom-8 text-slate-400 text-sm -translate-x-1/2 left-1/2">
-        <a href="https://github.com/NaturalSelectionLabs" target="_blank">@ Natural Selection Labs</a>
+        <a class="whitespace-nowrap" href="https://github.com/NaturalSelectionLabs" target="_blank"
+            >@ Natural Selection Labs</a
+        >
     </div>
 </template>
 

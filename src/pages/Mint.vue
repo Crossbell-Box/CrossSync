@@ -32,9 +32,7 @@
             <el-form-item>
                 <el-button type="default" :loading="isChecking" @click="check">Check Availability</el-button>
                 <el-button type="primary" :loading="isChecking" @click="dialog">I've decided!</el-button>
-            </el-form-item>
-            <el-form-item>
-                <el-button text bg type="primary" @click="skip" v-if="profiles.length"
+                <el-button text bg type="default" @click="skip" v-if="profiles.length"
                     >I don't want to mint, just go to the next step</el-button
                 >
             </el-form-item>

@@ -1,5 +1,4 @@
 <template>
-    <Header />
     <div v-loading="loading">
         <h1 class="text-4xl font-bold my-5">Choose Your Profile</h1>
         <p>
@@ -26,7 +25,6 @@ import ProfileCard from '../components/Profiles.vue';
 import { useRouter } from 'vue-router';
 import { useStore } from '@/common/store';
 import { ref } from 'vue';
-import Header from '@/components/Header.vue';
 
 const router = useRouter();
 const store = useStore();

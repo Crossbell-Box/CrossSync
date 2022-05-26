@@ -36,11 +36,11 @@ const profileClick = () => {
 };
 
 const settingsClick = () => {
-    router.push('/settings');
+    router.push('/home/settings');
 };
 
 const helpClick = () => {
-    router.push('/help');
+    router.push('/home/help');
 };
 
 profile.value =

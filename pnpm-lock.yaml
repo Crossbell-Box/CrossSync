@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-    '@crxjs/vite-plugin': ^1.0.5
+    '@crxjs/vite-plugin': ^1.0.6
     '@element-plus/icons-vue': 2.0.0-beta.0
     '@extend-chrome/storage': ^1.5.0
     '@fortawesome/fontawesome-svg-core': ^6.1.1
@@ -30,7 +30,7 @@ specifiers:
     stream-browserify: ^3.0.0
     tailwindcss: ^3.0.24
     typescript: ^4.7.2
-    unidata.js: ^0.3.0
+    unidata.js: ^0.4.0
     unplugin-auto-import: ^0.8.4
     unplugin-vue-components: ^0.19.5
     util: ^0.12.4
@@ -56,7 +56,7 @@ dependencies:
     lodash: 4.17.21
     metamask-extension-provider: 3.0.0
     process: 0.11.10
-    unidata.js: 0.3.0
+    unidata.js: 0.4.0
     util: 0.12.4
     vue: 3.2.36
     vue-router: 4.0.15_vue@3.2.36
@@ -64,7 +64,7 @@ dependencies:
     web3modal: 1.9.7
 
 devDependencies:
-    '@crxjs/vite-plugin': 1.0.5_vite@2.9.9
+    '@crxjs/vite-plugin': 1.0.6_vite@2.9.9
     '@tailwindcss/line-clamp': 0.4.0_tailwindcss@3.0.24
     '@types/chrome': 0.0.188
     '@vitejs/plugin-vue': 2.3.3_vite@2.9.9+vue@3.2.36
@@ -531,10 +531,10 @@ packages:
             '@babel/helper-validator-identifier': 7.16.7
             to-fast-properties: 2.0.0
 
-    /@crxjs/vite-plugin/1.0.5_vite@2.9.9:
+    /@crxjs/vite-plugin/1.0.6_vite@2.9.9:
         resolution:
             {
-                integrity: sha512-obT09LzbwQwym3rVNt+kyhKNqtI48ij0GpSvvf0lPc13a9T0Fk4elsuv+OugHpn5qFfJAdYG6+1EzBOJeZKITA==,
+                integrity: sha512-D+KzEq00PAMNlS448L0bHcE/HVh+u6qA1UlhFtpJyIuCJYBlS79uMAZxVEbr6ktwU0HtBqc4BulwtdJXZT0jGw==,
             }
         engines: { node: '>=14' }
         peerDependencies:
@@ -8318,10 +8318,10 @@ packages:
         engines: { node: '>=12.18' }
         dev: false
 
-    /unidata.js/0.3.0:
+    /unidata.js/0.4.0:
         resolution:
             {
-                integrity: sha512-vlHoAa50XjZMPFEKCoviyFTDpegSCI4d+vsNOXf/uzTvvASFsIc4cfLi1mfy0I3oApWTH6DhE0MpGHtqv+ntyw==,
+                integrity: sha512-jJMyO6b3mPk4AzfON5FfEmqKKTevdjWa2GqhZcVBg3owBXNseBAUmfuDvZz95ZMq2qZV6EoDx04Hu2DLRYcqqg==,
             }
         dependencies:
             '@urql/core': 2.5.0_graphql@16.5.0

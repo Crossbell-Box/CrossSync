@@ -4,20 +4,23 @@ import { disconnect } from '@/common/wallet';
 import { getBucket } from '@extend-chrome/storage';
 import Unidata from 'unidata.js';
 
-interface Settings {
+export interface Settings {
     syncing: boolean;
     address?: string;
     handle?: string;
 }
 
-export const bucket = getBucket<Settings>('settings', 'sync');
+const bucket = getBucket<Settings>('settings', 'sync');
 
-const settings = Object.assign(
-    {
-        syncing: true,
-    },
-    await bucket.get(),
-);
+export const getSettings = async () =>
+    Object.assign(
+        {
+            syncing: true,
+        },
+        await bucket.get(),
+    );
+
+const settings = await getSettings();
 
 interface State {
     profiles?: Profiles;

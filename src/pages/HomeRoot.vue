@@ -43,7 +43,6 @@ const load = async () => {
         });
         notes.value = notes.value.concat(result?.list || []);
         cursor = result?.cursor;
-        console.log(notes.value);
     }
 };
 

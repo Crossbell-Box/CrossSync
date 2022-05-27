@@ -9,6 +9,7 @@
         "sourceMap": true,
         "resolveJsonModule": true,
         "esModuleInterop": true,
+        "experimentalDecorators": true,
         "lib": ["esnext", "dom"],
         "skipLibCheck": true,
         "baseUrl": ".",

@@ -58,7 +58,7 @@
     </div>
     <el-dialog v-model="dialogVisible" title="Tweet to continue" width="31%">
         <p class="mb-4">
-            Congratulations! This handle <b>{{ ruleForm.handle }}</b> is available to mint!
+            🎉 Congratulations! This handle <b>{{ ruleForm.handle }}</b> is available to mint!
         </p>
         <p class="mb-4">
             Before continue, please tell your Twitter followers you are syncing your tweets to blockchain and truly

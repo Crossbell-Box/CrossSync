@@ -1,10 +1,10 @@
 import Main, { Hook } from '../index';
 import { createApp, App } from 'vue';
-import ElementPlus from 'element-plus';
+import ElementPlus, { ElMessage } from 'element-plus';
 import bind from 'bind-decorator';
 
 import { upload } from '@/common/ipfs';
-import { getSettings } from '@/common/store';
+import { getSettings, key, store } from '@/common/store';
 
 import SyncToggleButton from '@/components/SyncToggle.vue';
 
@@ -35,6 +35,7 @@ class TwitterHook {
             if (!syncToggleApp) {
                 syncToggleApp = createApp(SyncToggleButton);
                 syncToggleApp.use(ElementPlus);
+                syncToggleApp.use(store, key);
 
                 crossSyncToggleEl = document.createElement('div');
                 syncToggleApp.mount(crossSyncToggleEl);
@@ -69,6 +70,8 @@ class TwitterHook {
 
         if (handle && syncing) {
             this.main.xlog('info', 'Sync triggered.');
+
+            ElMessage.info('Sync posting, please wait for Wallet to open...');
 
             const username = (<HTMLAnchorElement>(
                 document.querySelector('main[role=main] a[role=link]')

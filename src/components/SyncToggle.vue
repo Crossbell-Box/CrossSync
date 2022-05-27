@@ -1,6 +1,10 @@
 <template>
-    <div class="cursor-pointer opacity-50 ml-4" :class="isSyncing ? [] : ['grayscale']" @click="toggleSyncing">
-        <span class="logo" v-html="logo"></span>
+    <div class="flex w-8 h-8 cursor-pointer">
+        <el-tooltip placement="top" :content="isSyncing ? 'Sync Enabled' : 'Sync Disabled'">
+            <div class="flex w-full h-full opacity-50" :class="isSyncing ? [] : ['grayscale']" @click="toggleSyncing">
+                <span class="flex w-full h-full items-center logo" v-html="logo" />
+            </div>
+        </el-tooltip>
     </div>
 </template>
 

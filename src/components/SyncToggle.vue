@@ -1,25 +1,29 @@
 <template>
-    <el-button
-        :type="isSyncing ? 'success' : 'default'"
-        :icon="isSyncing ? Check : Close"
-        circle
-        @click="toggleSyncing"
-    />
+    <div class="cursor-pointer opacity-50" :class="isSyncing ? [] : ['grayscale']" @click="toggleSyncing">
+        <span class="logo" v-html="logo"></span>
+    </div>
 </template>
 
 <script setup lang="ts">
-import { Check, Close } from '@element-plus/icons-vue';
-// import {useStore} from "@/common/store";
+import { bucket, getSettings } from '@/common/store';
 import { ref } from 'vue';
+import logo from '../assets/logo.svg?raw';
 
-// const store = useStore();
-
-// const isSyncing = ref(store.state.settings.syncing);
 const isSyncing = ref(true);
 const toggleSyncing = async () => {
-    isSyncing.value = !isSyncing.value;
-    // await store.dispatch('setSettings', {
-    //   syncing: isSyncing.value,
-    // });
+    const settings = await getSettings();
+    settings.syncing = !settings.syncing;
+    await bucket.set(settings);
 };
+
+bucket.valueStream.subscribe((values) => {
+    isSyncing.value = values.syncing;
+});
 </script>
+
+<style>
+.logo svg {
+    width: 36px;
+    height: 36px;
+}
+</style>

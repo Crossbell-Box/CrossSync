@@ -10,7 +10,7 @@ export interface Settings {
     handle?: string;
 }
 
-const bucket = getBucket<Settings>('settings', 'sync');
+export const bucket = getBucket<Settings>('settings', 'sync');
 
 export const getSettings = async () =>
     Object.assign(

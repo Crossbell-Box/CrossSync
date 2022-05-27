@@ -6,6 +6,17 @@
 
 <script setup lang="ts">
 import Provider from './pages/Provider.vue';
+import { useStore, bucket } from '@/common/store';
+
+const store = useStore();
+
+bucket.valueStream.subscribe((values) => {
+    if (values.syncing !== store.state.settings.syncing) {
+        store.dispatch('setSettings', {
+            syncing: values.syncing,
+        });
+    }
+});
 </script>
 
 <style>

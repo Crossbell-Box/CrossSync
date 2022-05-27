@@ -36,7 +36,7 @@
 import { useRouter } from 'vue-router';
 import { useStore } from '@/common/store';
 import { ArrowRight } from '@element-plus/icons-vue';
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 
 const router = useRouter();
 const store = useStore();
@@ -67,6 +67,10 @@ const setSyncing = async () => {
         syncing: isSyncing.value,
     });
 };
+
+watchEffect(() => {
+    isSyncing.value = store.state.settings.syncing;
+});
 </script>
 
 <style></style>

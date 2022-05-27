@@ -18,7 +18,7 @@
 import Profile from '@/components/Profiles.vue';
 // import {useRouter} from "vue-router";
 import { useStore } from '@/common/store';
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 
 // const router = useRouter();
 const store = useStore();
@@ -49,4 +49,8 @@ const init = async () => {
 };
 
 await init();
+
+watchEffect(() => {
+    isSyncing.value = store.state.settings.syncing;
+});
 </script>

@@ -71,7 +71,10 @@ class TwitterHook {
         if (handle && syncing) {
             this.main.xlog('info', 'Sync triggered.');
 
-            ElMessage.info('Sync posting, please wait for Wallet to open...');
+            const notice = ElMessage.info({
+                message: 'Sync posting, please wait for Wallet to open...',
+                duration: 0,
+            });
 
             const username = (<HTMLAnchorElement>(
                 document.querySelector('main[role=main] a[role=link]')
@@ -109,18 +112,27 @@ class TwitterHook {
 
             const unidata = await this.main.getUnidata();
             if (unidata) {
-                unidata.notes.set(
-                    {
-                        source: 'Crossbell Note',
-                        identity: handle,
-                        platform: 'Crossbell',
-                        action: 'add',
-                    },
-                    twitItem,
-                );
+                try {
+                    await unidata.notes.set(
+                        {
+                            source: 'Crossbell Note',
+                            identity: handle,
+                            platform: 'Crossbell',
+                            action: 'add',
+                        },
+                        twitItem,
+                    );
+                    ElMessage.success('Tweet posted! 🎉');
+                } catch (e) {
+                    this.main.xlog('error', 'Failed to post tweet.', e);
+                    ElMessage.error('Oops, failed to post tweet.');
+                }
             } else {
                 this.main.xlog('info', `Failed to get Unidata Instance.`);
+                ElMessage.error('Oops, Unidata Instance is not ready.');
             }
+
+            notice.close();
         }
     }
 }

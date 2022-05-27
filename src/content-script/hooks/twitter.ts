@@ -1,128 +1,109 @@
+import Main, { Hook } from '../index';
 import { createApp, App } from 'vue';
 import ElementPlus from 'element-plus';
+import Unidata from 'unidata.js';
 
 import { upload } from '@/common/ipfs';
 
 import SyncToggleButton from '@/components/SyncToggle.vue';
-// import {useStore} from "@/common/store";
 
 let syncToggleApp: App<Element> | null = null;
 let crossSyncToggleEl: HTMLDivElement;
 
-// const store = useStore();
+class TwitterHook {
+    hooks: Hook[];
+    main: Main;
+    unidata: Unidata;
 
-const CROSSSYNC_CONSOLE_LOG_FORMAT = {
-    prefix: 'color: #ffa500; font-weight: bold;',
-    info: 'color: #12a0ff;',
-    warn: 'color: #ffa500;',
-    error: 'color: #ff0000;',
-};
+    constructor(main: Main) {
+        this.main = main;
 
-const xlog = (type: 'info' | 'warn' | 'error', message: string, details?: any) => {
-    console.log(
-        `%c[CrossSync] %c[${type.toUpperCase()}] %c${message}`,
-        CROSSSYNC_CONSOLE_LOG_FORMAT.prefix,
-        CROSSSYNC_CONSOLE_LOG_FORMAT[type],
-        '',
-    );
-    if (details) {
-        console.log(details);
+        this.unidata = new Unidata();
+
+        this.hooks = [
+            {
+                selector:
+                    'div[data-testid="primaryColumn"] div[data-testid="tweetButtonInline"], div[data-testid="tweetButton"]',
+                callback: (el) => {
+                    this.mountSyncToggleApp(el);
+                    this.addSyncEv(el);
+                },
+            },
+        ];
     }
-};
 
-const mountSyncToggleApp = (el: Element) => {
-    if (el && el.parentNode) {
-        if (!syncToggleApp) {
-            syncToggleApp = createApp(SyncToggleButton);
-            syncToggleApp.use(ElementPlus);
+    private mountSyncToggleApp(el: Element) {
+        if (el && el.parentNode) {
+            if (!syncToggleApp) {
+                syncToggleApp = createApp(SyncToggleButton);
+                syncToggleApp.use(ElementPlus);
 
-            crossSyncToggleEl = document.createElement('div');
-            syncToggleApp.mount(crossSyncToggleEl);
+                crossSyncToggleEl = document.createElement('div');
+                syncToggleApp.mount(crossSyncToggleEl);
+            }
+
+            el.parentNode.insertBefore(crossSyncToggleEl, el);
         }
-
-        el.parentNode.insertBefore(crossSyncToggleEl, el);
+        this.main.xlog('info', 'Sync toggle button mounted.');
     }
-    xlog('info', 'Sync toggle button mounted.');
-};
 
-const syncPost = async () => {
-    // if (!store.state.settings.syncing) {
-    //     return;
-    // }
+    private addSyncEv(el: Element) {
+        const keyEvent = (ev: KeyboardEvent) => {
+            if (ev.key === 'Enter' && ev.ctrlKey) {
+                this.syncPost();
+            }
+        };
 
-    xlog('info', 'Sync triggered.');
+        document.removeEventListener('keydown', keyEvent);
+        document.addEventListener('keydown', keyEvent);
 
-    const username = (<HTMLAnchorElement>document.querySelector('main[role=main] a[role=link]'))?.pathname.replace(
-        '/',
-        '',
-    );
-    const tweet = (<HTMLElement>document.querySelector('[data-testid=tweetTextarea_0]'))?.innerText;
+        el.removeEventListener('click', this.syncPost); // if any, prevent multiple trigger
+        el.addEventListener('click', this.syncPost);
 
-    const tweetAttachmentElements = document.querySelectorAll(
-        '[data-testid="attachments"] img, [data-testid="attachments"] source',
-    );
-
-    const uploadedAttachments = await Promise.all(
-        Array.from(tweetAttachmentElements).map(async (attachment) => {
-            const result = await fetch((<HTMLImageElement | HTMLSourceElement>attachment).src);
-            const blob = await result.blob();
-            return {
-                address: [await upload(blob)],
-                mime_type: blob.type,
-                size_in_bytes: blob.size,
-            };
-        }),
-    );
-
-    const twitItem = {
-        tags: ['CrossSync', 'Twitter'],
-        authors: [
-            // `rss3://account:${store.state.settings.address}@ethereum`,
-            `rss3://account:${username}@twitter`,
-        ],
-        summary: {
-            content: tweet,
-            mime_type: 'text/plain',
-            size_in_bytes: tweet.length,
-        },
-        body: {
-            content: tweet,
-            mime_type: 'text/plain',
-            size_in_bytes: tweet.length,
-        },
-        attachments: uploadedAttachments,
-    };
-
-    xlog('info', 'Posting tweet...', twitItem);
-};
-
-const keyEvent = (ev: KeyboardEvent) => {
-    if (ev.key === 'Enter' && ev.ctrlKey) {
-        syncPost();
+        this.main.xlog('info', 'Key sync added.');
     }
-};
 
-const addSyncEv = (el: Element) => {
-    document.removeEventListener('keydown', keyEvent);
-    document.addEventListener('keydown', keyEvent);
+    private async syncPost() {
+        this.main.xlog('info', 'Sync triggered.');
 
-    el.removeEventListener('click', syncPost); // if any, prevent multiple trigger
-    el.addEventListener('click', syncPost);
+        const username = (<HTMLAnchorElement>document.querySelector('main[role=main] a[role=link]'))?.pathname.replace(
+            '/',
+            '',
+        );
+        const tweet = (<HTMLElement>document.querySelector('[data-testid=tweetTextarea_0]'))?.innerText;
 
-    xlog('info', 'Key sync added.');
-};
+        const tweetAttachmentElements = document.querySelectorAll(
+            '[data-testid="attachments"] img, [data-testid="attachments"] source',
+        );
 
-export const hooks: {
-    selector: string;
-    callback: (el: Element) => void;
-}[] = [
-    {
-        selector:
-            'div[data-testid="primaryColumn"] div[data-testid="tweetButtonInline"], div[data-testid="tweetButton"]',
-        callback: (el) => {
-            mountSyncToggleApp(el);
-            addSyncEv(el);
-        },
-    },
-];
-export default hooks;
+        const uploadedAttachments = await Promise.all(
+            Array.from(tweetAttachmentElements).map(async (attachment) => {
+                const result = await fetch((<HTMLImageElement | HTMLSourceElement>attachment).src);
+                const blob = await result.blob();
+                return {
+                    address: await upload(blob),
+                    mime_type: blob.type,
+                    size_in_bytes: blob.size,
+                };
+            }),
+        );
+
+        const twitItem = {
+            tags: ['CrossSync', 'Twitter'],
+            authors: [
+                // `rss3://account:${store.state.settings.address}@ethereum`,
+                `rss3://account:${username}@twitter`,
+            ],
+            body: {
+                content: tweet,
+                mime_type: 'text/plain',
+                size_in_bytes: tweet.length,
+            },
+            attachments: uploadedAttachments,
+        };
+
+        this.main.xlog('info', 'Posting tweet...', twitItem);
+    }
+}
+
+export default TwitterHook;

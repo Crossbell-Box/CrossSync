@@ -4,22 +4,34 @@
             <div class="w-10 h-10 mr-3"><img class="rounded-full" :src="profile.avatars?.[0]" /></div>
             <div>
                 <div class="mb-1">
-                    <span class="font-bold">{{ profile.name || profile.username }}</span>
-                    <span class="text-gray-500 ml-1" v-if="profile.username">@{{ profile.username }}</span>
-                    <span class="text-gray-500 mx-1"
-                        >· {{ moment.duration(moment().diff(note.date_created)).humanize() }}</span
-                    >
-                    <span v-if="note.tags?.indexOf('Twitter') !== -1" class="text-gray-500 mx-1"
-                        >· <img class="h-4 inline-block" src="../assets/twitter.svg"
-                    /></span>
+                    <span class="font-bold align-middle">{{ profile.name || profile.username }}</span>
+                    <span class="text-gray-500 ml-1 align-middle" v-if="profile.username">@{{ profile.username }}</span>
+                    <span class="text-gray-500 ml-1 align-middle"
+                        >· {{ moment.duration(moment().diff(note.date_created)).humanize() }} ·
+                    </span>
                     <a
-                        class="align-middle ml-1 text-sm"
+                        class="align-middle ml-2 text-sm"
                         target="_blank"
                         :href="url"
                         v-for="url in note.related_urls"
                         :key="url"
                     >
-                        <font-awesome-icon icon="link" />
+                        <img
+                            v-if="getHost(url) === 'twitter.com'"
+                            class="align-middle h-4 inline-block"
+                            src="../assets/twitter.svg"
+                        />
+                        <img
+                            v-else-if="getHost(url) === 'gateway.ipfs.io'"
+                            class="align-middle h-4 inline-block"
+                            src="../assets/ipfs.svg"
+                        />
+                        <img
+                            v-else-if="getHost(url) === 'scan.crossbell.io'"
+                            class="align-middle h-4 inline-block"
+                            src="../assets/crossbell.svg"
+                        />
+                        <font-awesome-icon v-else class="align-middle inline-block" icon="link" />
                     </a>
                 </div>
                 <h2 class="mb-2">
@@ -92,6 +104,14 @@ const props = defineProps({
 
 const note = props.note;
 const profile = props.profile;
+
+const getHost = (url: string) => {
+    try {
+        return new URL(url).hostname;
+    } catch (error) {
+        return null;
+    }
+};
 </script>
 
 <style lang="less" scoped></style>

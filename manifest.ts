@@ -29,10 +29,11 @@ const manifest: ManifestV3Export = {
     content_scripts: [
         {
             js: ['./src/content-script/index.ts'],
-            matches: ['https://twitter.com/*'],
+            matches: ['*://*.twitter.com/*'],
         },
     ],
-    permissions: ['storage'],
+    permissions: ['storage', 'webRequest'],
+    host_permissions: ['*://*.twitter.com/*'],
 };
 
 export default manifest;

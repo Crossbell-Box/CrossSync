@@ -30,7 +30,7 @@ const store = useStore();
 
 const profile = ref<any>({});
 
-const isSyncing = ref(store.state.settings.syncing);
+const isSyncing = ref(store.state.settings.syncing && !!store.state.settings.handle);
 
 const setSyncing = async () => {
     await store.dispatch('setSettings', {
@@ -56,6 +56,6 @@ const init = async () => {
 await init();
 
 watchEffect(() => {
-    isSyncing.value = store.state.settings.syncing;
+    isSyncing.value = store.state.settings.syncing && !!store.state.settings.handle;
 });
 </script>

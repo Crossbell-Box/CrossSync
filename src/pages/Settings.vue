@@ -41,7 +41,7 @@ import { ref, watchEffect } from 'vue';
 const router = useRouter();
 const store = useStore();
 
-const isSyncing = ref(store.state.settings.syncing);
+const isSyncing = ref(store.state.settings.syncing && !!store.state.settings.handle);
 
 if (store.state.settings.address) {
     if (!store.state.profiles?.list.length) {
@@ -69,7 +69,7 @@ const setSyncing = async () => {
 };
 
 watchEffect(() => {
-    isSyncing.value = store.state.settings.syncing;
+    isSyncing.value = store.state.settings.syncing && !!store.state.settings.handle;
 });
 </script>
 

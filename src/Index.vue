@@ -11,6 +11,9 @@ import { useStore, bucket } from '@/common/store';
 const store = useStore();
 
 bucket.valueStream.subscribe((values) => {
+    if (values.syncing === undefined) {
+        values.syncing = true;
+    }
     if (values.syncing !== store.state.settings.syncing) {
         store.dispatch('setSettings', {
             syncing: values.syncing,

@@ -13,7 +13,9 @@ const isSyncing = ref(true);
 const toggleSyncing = async () => {
     const settings = await getSettings();
     if (!settings.handle) {
-        // TODO
+        await chrome.runtime.sendMessage({
+            type: 'open-options',
+        });
     }
     settings.syncing = !settings.syncing;
     await bucket.set(settings);

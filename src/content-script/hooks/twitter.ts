@@ -63,9 +63,11 @@ class TwitterHook {
 
     @bind
     private async syncPost() {
-        const handle = (await getSettings()).handle;
+        const settings = await getSettings();
+        const handle = settings.handle;
+        const syncing = settings.syncing;
 
-        if (handle) {
+        if (handle && syncing) {
             this.main.xlog('info', 'Sync triggered.');
 
             const username = (<HTMLAnchorElement>(
@@ -116,8 +118,6 @@ class TwitterHook {
             } else {
                 this.main.xlog('info', `Failed to get Unidata Instance.`);
             }
-        } else {
-            this.main.xlog('info', `Didn't find handle, sync skipped.`);
         }
     }
 }

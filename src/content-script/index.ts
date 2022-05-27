@@ -1,3 +1,4 @@
+import '@/common/polyfill';
 import { observe } from '@/common/utils';
 import '@/common/locationChange';
 

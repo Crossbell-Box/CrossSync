@@ -1,3 +1,4 @@
+import '@/common/polyfill';
 import { createApp } from 'vue';
 import Popup from './Popup.vue';
 import ElementPlus from 'element-plus';

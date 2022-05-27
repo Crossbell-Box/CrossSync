@@ -1,3 +1,4 @@
+import '@/common/polyfill';
 import { createApp } from 'vue';
 import Index from './Index.vue';
 import ElementPlus from 'element-plus';

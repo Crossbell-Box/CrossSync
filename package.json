@@ -41,6 +41,7 @@
         "@crxjs/vite-plugin": "^1.0.6",
         "@tailwindcss/line-clamp": "^0.4.0",
         "@types/chrome": "^0.0.188",
+        "@types/lodash": "^4.14.182",
         "@types/markdown-it": "^12.2.3",
         "@vitejs/plugin-vue": "^2.3.3",
         "autoprefixer": "^10.4.7",

@@ -10,6 +10,7 @@ specifiers:
     '@fortawesome/vue-fontawesome': ^3.0.0-5
     '@tailwindcss/line-clamp': ^0.4.0
     '@types/chrome': ^0.0.188
+    '@types/lodash': ^4.14.182
     '@types/markdown-it': ^12.2.3
     '@vitejs/plugin-vue': ^2.3.3
     '@walletconnect/web3-provider': ^1.7.8
@@ -74,6 +75,7 @@ devDependencies:
     '@crxjs/vite-plugin': 1.0.6_vite@2.9.9
     '@tailwindcss/line-clamp': 0.4.0_tailwindcss@3.0.24
     '@types/chrome': 0.0.188
+    '@types/lodash': 4.14.182
     '@types/markdown-it': 12.2.3
     '@vitejs/plugin-vue': 2.3.3_vite@2.9.9+vue@3.2.36
     autoprefixer: 10.4.7_postcss@8.4.14
@@ -1518,7 +1520,6 @@ packages:
             {
                 integrity: sha512-/THyiqyQAP9AfARo4pF+aCGcyiQ94tX/Is2I7HofNRqoYLgN1PBoOWu2/zTA5zMxzP5EFutMtWtGAFRKUe961Q==,
             }
-        dev: false
 
     /@types/long/4.0.2:
         resolution:

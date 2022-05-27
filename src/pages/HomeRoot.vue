@@ -20,6 +20,12 @@
             <li v-for="note in notes" :key="note.id">
                 <Note :note="note" :profile="profile" />
             </li>
+            <li v-if="!loading && notes.length === 0">
+                <p class="text-center text-gray-500">
+                    <span class="align-middle">No notes yet... Try to </span>
+                    <el-button class="align-middle" text bg type="primary" @click="tweet">sync a tweet</el-button>
+                </p>
+            </li>
         </ul>
     </div>
 </template>
@@ -68,6 +74,13 @@ load();
 const profile =
     store.state.profiles!.list.find((profile) => profile.username === store.state.settings.handle) ||
     store.state.profiles!.list[0]; // As a fallback, use the first profile
+
+const tweet = () => {
+    const text = encodeURIComponent(
+        `#OwnMyTweets I'm proudly syncing my Tweet to blockchain and truly owning my tweet!`,
+    );
+    window.open(`https://twitter.com/intent/tweet?text=${text}&via=CrossSync&url=https://crosssync.app`);
+};
 </script>
 
 <style></style>

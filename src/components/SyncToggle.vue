@@ -1,5 +1,5 @@
 <template>
-    <div class="cursor-pointer opacity-50" :class="isSyncing ? [] : ['grayscale']" @click="toggleSyncing">
+    <div class="cursor-pointer opacity-50 ml-4" :class="isSyncing ? [] : ['grayscale']" @click="toggleSyncing">
         <span class="logo" v-html="logo"></span>
     </div>
 </template>

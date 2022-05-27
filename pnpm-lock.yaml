@@ -8,9 +8,10 @@ specifiers:
     '@fortawesome/free-brands-svg-icons': ^6.1.1
     '@fortawesome/free-solid-svg-icons': ^6.1.1
     '@fortawesome/vue-fontawesome': ^3.0.0-5
+    '@originjs/vite-plugin-commonjs': ^1.0.3
     '@tailwindcss/line-clamp': ^0.4.0
     '@types/chrome': ^0.0.188
-    '@types/lodash': ^4.14.182
+    '@types/lodash-es': ^4.17.6
     '@types/markdown-it': ^12.2.3
     '@vitejs/plugin-vue': ^2.3.3
     '@walletconnect/web3-provider': ^1.7.8
@@ -24,7 +25,7 @@ specifiers:
     husky: ^8.0.1
     less: ^4.1.2
     lint-staged: ^12.4.2
-    lodash: ^4.17.21
+    lodash-es: ^4.17.21
     markdown-it: ^13.0.1
     metamask-extension-provider: ^3.0.0
     moment: ^2.29.3
@@ -35,9 +36,9 @@ specifiers:
     stream-browserify: ^3.0.0
     tailwindcss: ^3.0.24
     typescript: ^4.7.2
-    unidata.js: ^0.4.1
+    unidata.js: ^0.4.2
     unplugin-auto-import: ^0.8.4
-    unplugin-vue-components: ^0.19.5
+    unplugin-vue-components: ^0.19.6
     util: ^0.12.4
     vite: ^2.9.9
     vue: ^3.2.36
@@ -59,12 +60,12 @@ dependencies:
     element-plus: 2.2.2_vue@3.2.36
     ethers: 5.6.8
     events: 3.3.0
-    lodash: 4.17.21
+    lodash-es: 4.17.21
     markdown-it: 13.0.1
     metamask-extension-provider: 3.0.0
     moment: 2.29.3
     process: 0.11.10
-    unidata.js: 0.4.1
+    unidata.js: 0.4.2
     util: 0.12.4
     vue: 3.2.36
     vue-router: 4.0.15_vue@3.2.36
@@ -73,9 +74,10 @@ dependencies:
 
 devDependencies:
     '@crxjs/vite-plugin': 1.0.6_vite@2.9.9
+    '@originjs/vite-plugin-commonjs': 1.0.3
     '@tailwindcss/line-clamp': 0.4.0_tailwindcss@3.0.24
     '@types/chrome': 0.0.188
-    '@types/lodash': 4.14.182
+    '@types/lodash-es': 4.17.6
     '@types/markdown-it': 12.2.3
     '@vitejs/plugin-vue': 2.3.3_vite@2.9.9+vue@3.2.36
     autoprefixer: 10.4.7_postcss@8.4.14
@@ -90,7 +92,7 @@ devDependencies:
     tailwindcss: 3.0.24
     typescript: 4.7.2
     unplugin-auto-import: 0.8.5_vite@2.9.9
-    unplugin-vue-components: 0.19.5_vite@2.9.9+vue@3.2.36
+    unplugin-vue-components: 0.19.6_vite@2.9.9+vue@3.2.36
     vite: 2.9.9_less@4.1.2
     vue-tsc: 0.34.16_typescript@4.7.2
 
@@ -1314,6 +1316,15 @@ packages:
             fastq: 1.13.0
         dev: true
 
+    /@originjs/vite-plugin-commonjs/1.0.3:
+        resolution:
+            {
+                integrity: sha512-KuEXeGPptM2lyxdIEJ4R11+5ztipHoE7hy8ClZt3PYaOVQ/pyngd2alaSrPnwyFeOW1UagRBaQ752aA1dTMdOQ==,
+            }
+        dependencies:
+            esbuild: 0.14.39
+        dev: true
+
     /@protobufjs/aspromise/1.1.2:
         resolution:
             {
@@ -1513,7 +1524,6 @@ packages:
             }
         dependencies:
             '@types/lodash': 4.14.182
-        dev: false
 
     /@types/lodash/4.14.182:
         resolution:
@@ -8414,10 +8424,10 @@ packages:
         engines: { node: '>=12.18' }
         dev: false
 
-    /unidata.js/0.4.1:
+    /unidata.js/0.4.2:
         resolution:
             {
-                integrity: sha512-z4Ds+J5xaCfV32HD/JUuStu11IB8HZS/Ah1COf0NXGJ7l9/j6nU2Sgxpxph2RU5OCMHZMKM/A4ald8MDo91CtA==,
+                integrity: sha512-J7o4tCAmuwmU5Y1ZH7f2HN7+EiKSL/OfUMvnPth5FmWEb0D9sErKHPsMDQIFRLvexH5Vy02BGB58Vkk00fVEDA==,
             }
         dependencies:
             '@urql/core': 2.5.0_graphql@16.5.0
@@ -8425,6 +8435,7 @@ packages:
             crossbell.js: 0.5.15
             ethers: 5.6.8
             graphql: 16.5.0
+            lodash-es: 4.17.21
             mime: 3.0.0
             web3.storage: 4.2.0
         transitivePeerDependencies:
@@ -8491,10 +8502,10 @@ packages:
             - webpack
         dev: true
 
-    /unplugin-vue-components/0.19.5_vite@2.9.9+vue@3.2.36:
+    /unplugin-vue-components/0.19.6_vite@2.9.9+vue@3.2.36:
         resolution:
             {
-                integrity: sha512-cIC+PdQEXmG+B1gmZGk4hws2xP+00C6pg3FD6ixEgRyW+WF+QXQW/60pc+hUhtDYs1PFE+23K3NY7yvYTnDDTA==,
+                integrity: sha512-APvrJ9Hpid1MLT0G4PWerMJgARhNw6dzz0pcCwCxaO2DR7VyvDacMqjOQNC6ukq7FSw3wzD8VH+9i3EFXwkGmw==,
             }
         engines: { node: '>=14' }
         peerDependencies:

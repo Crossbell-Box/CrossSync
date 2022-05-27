@@ -16,13 +16,13 @@
                         class="username text-sm text-gray-500"
                         :class="
                             size === 'small'
-                                ? ['text-xs', 'ml-2']
+                                ? ['text-xs', 'ml-1']
                                 : size === 'mini'
                                 ? ['block', 'text-xs']
-                                : ['text-sm', 'ml-2']
+                                : ['text-sm', 'ml-1']
                         "
                         v-if="profile.username"
-                        >{{ profile.username }}</span
+                        >@{{ profile.username }}</span
                     >
                 </div>
                 <div
@@ -52,12 +52,6 @@ const props = defineProps({
 </script>
 
 <style lang="less">
-.username {
-    &:before {
-        content: '@';
-    }
-}
-
 .profile-mini .el-card__body {
     @apply p-4;
 }

@@ -2,17 +2,17 @@
     <div class="w-80 mr-12 min-h-full pt-28 flex flex-col relative">
         <Header />
         <Profile
-            class="menu mb-0 rounded-br-none cursor-pointer"
+            class="mb-0 rounded-br-none cursor-pointer border-0"
             :profile="profile"
             @click="profileClick"
             size="small"
         />
-        <el-card shadow="hover" class="menu cursor-pointer mt-4" @click="settingsClick">
+        <el-card shadow="hover" class="cursor-pointer mt-4 border-0" @click="settingsClick">
             <div class="flex flex-row" style="justify-content: space-between">
                 <div class="flex">⚙️ Settings</div>
             </div>
         </el-card>
-        <el-card shadow="hover" class="menu cursor-pointer mt-2" @click="helpClick">
+        <el-card shadow="hover" class="cursor-pointer mt-2 border-0" @click="helpClick">
             <div class="flex flex-row" style="justify-content: space-between">
                 <div class="flex">🙋‍♀️ Help</div>
             </div>

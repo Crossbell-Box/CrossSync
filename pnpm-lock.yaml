@@ -34,7 +34,7 @@ specifiers:
     stream-browserify: ^3.0.0
     tailwindcss: ^3.0.24
     typescript: ^4.7.2
-    unidata.js: ^0.4.0
+    unidata.js: ^0.4.1
     unplugin-auto-import: ^0.8.4
     unplugin-vue-components: ^0.19.5
     util: ^0.12.4
@@ -63,7 +63,7 @@ dependencies:
     metamask-extension-provider: 3.0.0
     moment: 2.29.3
     process: 0.11.10
-    unidata.js: 0.4.0
+    unidata.js: 0.4.1
     util: 0.12.4
     vue: 3.2.36
     vue-router: 4.0.15_vue@3.2.36
@@ -2487,7 +2487,7 @@ packages:
                 integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==,
             }
         dependencies:
-            follow-redirects: 1.15.0
+            follow-redirects: 1.15.1
             form-data: 4.0.0
         transitivePeerDependencies:
             - debug
@@ -3268,10 +3268,10 @@ packages:
             which: 2.0.2
         dev: true
 
-    /crossbell.js/0.5.14:
+    /crossbell.js/0.5.15:
         resolution:
             {
-                integrity: sha512-Wwr19FKhXDPUc5r+vt7J0laoSEBYTawotoTJedgJCTRulQv9XA1FMhgPyUX8EslqmX4+L7JsdTCa20VhXwaTjA==,
+                integrity: sha512-Buh2MIvyqqWiQKqLi4iUwConp0LZqQpZyoICPjpfmkUDEEh6y7wW6POCwVzDfjyar4yXknbrVWYXU2RX7Z6UOQ==,
             }
         dependencies:
             ethers: 5.6.8
@@ -4587,10 +4587,10 @@ packages:
             path-exists: 4.0.0
         dev: false
 
-    /follow-redirects/1.15.0:
+    /follow-redirects/1.15.1:
         resolution:
             {
-                integrity: sha512-aExlJShTV4qOUOL7yF1U5tvLCB0xQuudbf6toyYA0E/acBNw71mvjFTnLaRp50aQaYocMR0a/RMMBIHeZnGyjQ==,
+                integrity: sha512-yLAMQs+k0b2m7cVxpS1VKJVvoz7SS9Td1zss3XRwXj+ZDH00RJgnuLx7E44wx02kQLrdM3aOOy+FpzS7+8OizA==,
             }
         engines: { node: '>=4.0' }
         peerDependencies:
@@ -8413,18 +8413,17 @@ packages:
         engines: { node: '>=12.18' }
         dev: false
 
-    /unidata.js/0.4.0:
+    /unidata.js/0.4.1:
         resolution:
             {
-                integrity: sha512-jJMyO6b3mPk4AzfON5FfEmqKKTevdjWa2GqhZcVBg3owBXNseBAUmfuDvZz95ZMq2qZV6EoDx04Hu2DLRYcqqg==,
+                integrity: sha512-z4Ds+J5xaCfV32HD/JUuStu11IB8HZS/Ah1COf0NXGJ7l9/j6nU2Sgxpxph2RU5OCMHZMKM/A4ald8MDo91CtA==,
             }
         dependencies:
             '@urql/core': 2.5.0_graphql@16.5.0
             axios: 0.27.2
-            crossbell.js: 0.5.14
+            crossbell.js: 0.5.15
             ethers: 5.6.8
             graphql: 16.5.0
-            lodash: 4.17.21
             mime: 3.0.0
             web3.storage: 4.2.0
         transitivePeerDependencies:

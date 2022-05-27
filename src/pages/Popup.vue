@@ -1,8 +1,13 @@
 <template>
-    <div class="w-80 h-56 flex flex-col">
+    <div class="w-80 flex flex-col">
         <div v-if="profile">
-            <Profile class="menu mb-0 rounded-br-none cursor-pointer" :profile="profile" size="small" @click="expand" />
-            <el-card shadow="hover" class="menu cursor-pointer mt-2">
+            <Profile
+                class="mb-0 rounded-br-none cursor-pointer border-0"
+                :profile="profile"
+                size="small"
+                @click="expand"
+            />
+            <el-card shadow="hover" class="menu cursor-pointer mt-2 border-0">
                 <div class="flex flex-row" style="justify-content: space-between">
                     <div class="flex">Syncing</div>
                     <div class="flex">

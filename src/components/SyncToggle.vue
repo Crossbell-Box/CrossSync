@@ -12,12 +12,18 @@ import logo from '../assets/logo.svg?raw';
 const isSyncing = ref(true);
 const toggleSyncing = async () => {
     const settings = await getSettings();
+    if (!settings.handle) {
+        // TODO
+    }
     settings.syncing = !settings.syncing;
     await bucket.set(settings);
 };
 
 bucket.valueStream.subscribe((values) => {
-    isSyncing.value = values.syncing;
+    if (values.syncing === undefined) {
+        values.syncing = true;
+    }
+    isSyncing.value = values.syncing && !!values.handle;
 });
 </script>
 

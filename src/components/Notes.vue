@@ -9,7 +9,7 @@
                     <span class="text-gray-500 mx-1"
                         >· {{ moment.duration(moment().diff(note.date_created)).humanize() }}</span
                     >
-                    <span v-if="note.tags.indexOf('Twitter') !== -1" class="text-gray-500 mx-1"
+                    <span v-if="note.tags?.indexOf('Twitter') !== -1" class="text-gray-500 mx-1"
                         >· <img class="h-4 inline-block" src="../assets/twitter.svg"
                     /></span>
                     <a
@@ -39,30 +39,32 @@
                         v-for="attachment in note.attachments"
                         :key="attachment.content || attachment.address"
                     >
-                        <video
-                            class="my-3"
-                            style="width: 100px; height: 100px"
-                            :src="attachment?.address"
-                            :fit="'cover'"
-                            v-if="attachment.mime_type?.split('/')[0] === 'video'"
-                            autoplay
-                            loop
-                            muted
-                        />
-                        <span
-                            class="my-3"
-                            style="width: 100px; height: 100px"
-                            :src="attachment?.address"
-                            :fit="'cover'"
-                            v-else-if="attachment.mime_type?.split('/')[0] === 'text'"
-                        ></span>
-                        <el-image
-                            class="my-3"
-                            style="width: 100px; height: 100px"
-                            :src="attachment?.address"
-                            :fit="'cover'"
-                            v-else
-                        />
+                        <a target="_blank" :href="attachment?.address">
+                            <video
+                                class="my-3"
+                                style="width: 100px; height: 100px"
+                                :src="attachment?.address"
+                                :fit="'cover'"
+                                v-if="attachment.mime_type?.split('/')[0] === 'video'"
+                                autoplay
+                                loop
+                                muted
+                            />
+                            <span
+                                class="my-3"
+                                style="width: 100px; height: 100px"
+                                :src="attachment?.address"
+                                :fit="'cover'"
+                                v-else-if="attachment.mime_type?.split('/')[0] === 'text'"
+                            ></span>
+                            <el-image
+                                class="my-3"
+                                style="width: 100px; height: 100px"
+                                :src="attachment?.address"
+                                :fit="'cover'"
+                                v-else
+                            />
+                        </a>
                     </el-col>
                 </el-row>
             </div>

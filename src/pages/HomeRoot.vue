@@ -1,7 +1,22 @@
 <template>
     <div class="flex-1 flex flex-col">
         <ul v-infinite-scroll="load" class="infinite-list flex-1" style="overflow: auto">
-            <h1 class="flex text-4xl font-bold my-5 py-4">Home</h1>
+            <li class="flex text-4xl font-bold my-5 py-4">Home</li>
+            <li v-for="(_, index) in Array(5)" :key="index" v-show="loading">
+                <el-skeleton animated>
+                    <template #template>
+                        <el-card class="relative border-0 hover:bg-gray-100" shadow="never">
+                            <div class="flex flex-row">
+                                <el-skeleton-item variant="circle" class="w-10 h-10 mr-3"></el-skeleton-item>
+                                <div class="flex-1">
+                                    <el-skeleton-item variant="p" class="w-64"></el-skeleton-item>
+                                    <el-skeleton-item variant="p" class="h-9 w-96"></el-skeleton-item>
+                                </div>
+                            </div>
+                        </el-card>
+                    </template>
+                </el-skeleton>
+            </li>
             <li v-for="note in notes" :key="note.id">
                 <Note :note="note" :profile="profile" />
             </li>
@@ -19,6 +34,7 @@ const router = useRouter();
 const store = useStore();
 
 const notes = ref<Note[]>([]);
+const loading = ref(true);
 
 if (store.state.settings.address) {
     if (!store.state.profiles?.list.length) {
@@ -43,8 +59,11 @@ const load = async () => {
         });
         notes.value = notes.value.concat(result?.list || []);
         cursor = result?.cursor;
+        loading.value = false;
     }
 };
+
+load();
 
 const profile =
     store.state.profiles!.list.find((profile) => profile.username === store.state.settings.handle) ||

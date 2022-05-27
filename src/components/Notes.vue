@@ -30,36 +30,38 @@
                 <div class="note-body" v-else>
                     {{ note.body?.content || note.summary?.content }}
                 </div>
-                <div
-                    class="note-media"
-                    v-for="attachment in note.attachments"
-                    :key="attachment.content || attachment.address"
-                >
-                    <video
-                        class="my-3"
-                        style="width: 100px; height: 100px"
-                        :src="attachment?.address"
-                        :fit="'cover'"
-                        v-if="attachment.mime_type?.split('/')[0] === 'video'"
-                        autoplay
-                        loop
-                        muted
-                    />
-                    <span
-                        class="my-3"
-                        style="width: 100px; height: 100px"
-                        :src="attachment?.address"
-                        :fit="'cover'"
-                        v-else-if="attachment.mime_type?.split('/')[0] === 'text'"
-                    ></span>
-                    <el-image
-                        class="my-3"
-                        style="width: 100px; height: 100px"
-                        :src="attachment?.address"
-                        :fit="'cover'"
-                        v-else
-                    />
-                </div>
+                <el-row :gutter="20">
+                    <el-col
+                        :span="6"
+                        v-for="attachment in note.attachments"
+                        :key="attachment.content || attachment.address"
+                    >
+                        <video
+                            class="my-3"
+                            style="width: 100px; height: 100px"
+                            :src="attachment?.address"
+                            :fit="'cover'"
+                            v-if="attachment.mime_type?.split('/')[0] === 'video'"
+                            autoplay
+                            loop
+                            muted
+                        />
+                        <span
+                            class="my-3"
+                            style="width: 100px; height: 100px"
+                            :src="attachment?.address"
+                            :fit="'cover'"
+                            v-else-if="attachment.mime_type?.split('/')[0] === 'text'"
+                        ></span>
+                        <el-image
+                            class="my-3"
+                            style="width: 100px; height: 100px"
+                            :src="attachment?.address"
+                            :fit="'cover'"
+                            v-else
+                        />
+                    </el-col>
+                </el-row>
             </div>
         </div>
     </el-card>

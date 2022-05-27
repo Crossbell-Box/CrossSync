@@ -91,10 +91,7 @@ class TwitterHook {
 
             const twitItem = {
                 tags: ['CrossSync', 'Twitter'],
-                authors: [
-                    // `rss3://account:${store.state.settings.address}@ethereum`,
-                    `rss3://account:${username}@twitter`,
-                ],
+                authors: [`csb://account:${username}@twitter`],
                 body: {
                     content: tweet,
                     mime_type: 'text/plain',
@@ -104,6 +101,21 @@ class TwitterHook {
             };
 
             this.main.xlog('info', 'Posting tweet...', twitItem);
+
+            const unidata = await this.main.getUnidata();
+            if (unidata) {
+                unidata.notes.set(
+                    {
+                        source: 'Crossbell Note',
+                        identity: handle,
+                        platform: 'Crossbell',
+                        action: 'add',
+                    },
+                    twitItem,
+                );
+            } else {
+                this.main.xlog('info', `Failed to get Unidata Instance.`);
+            }
         } else {
             this.main.xlog('info', `Didn't find handle, sync skipped.`);
         }

@@ -9,6 +9,9 @@
                     <span class="text-gray-500 mx-1"
                         >· {{ moment.duration(moment().diff(note.date_created)).humanize() }}</span
                     >
+                    <span v-if="note.tags.indexOf('Twitter') !== -1" class="text-gray-500 mx-1"
+                        >· <img class="h-4 inline-block" src="../assets/twitter.svg"
+                    /></span>
                     <a
                         class="align-middle ml-1 text-sm"
                         target="_blank"

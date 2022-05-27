@@ -1,6 +1,6 @@
 <template>
     <div class="flex w-8 h-8 cursor-pointer">
-        <el-tooltip placement="top" :content="isSyncing ? 'Sync Enabled' : 'Sync Disabled'">
+        <el-tooltip placement="top" :content="isSyncing ? 'CrossSync Enabled' : 'CrossSync Disabled'">
             <div class="flex w-full h-full opacity-50" :class="isSyncing ? [] : ['grayscale']" @click="toggleSyncing">
                 <span class="flex w-full h-full items-center logo" v-html="logo" />
             </div>

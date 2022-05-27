@@ -72,7 +72,7 @@ class TwitterHook {
             this.main.xlog('info', 'Sync triggered.');
 
             const notice = ElMessage.info({
-                message: 'Sync posting, please wait for Wallet to open...',
+                message: 'CrossSync is syncing your posting...',
                 duration: 0,
             });
 
@@ -122,14 +122,14 @@ class TwitterHook {
                         },
                         twitItem,
                     );
-                    ElMessage.success('Tweet posted! 🎉');
+                    ElMessage.success('CrossSync has successfully synced your posting to blockchain! 🎉');
                 } catch (e) {
-                    this.main.xlog('error', 'Failed to post tweet.', e);
-                    ElMessage.error('Oops, failed to post tweet.');
+                    this.main.xlog('error', 'Failed to post note.', e);
+                    ElMessage.error('CrossSync encountered a problem: Unidata failed to post note.');
                 }
             } else {
                 this.main.xlog('info', `Failed to get Unidata Instance.`);
-                ElMessage.error('Oops, Unidata Instance is not ready.');
+                ElMessage.error('CrossSync encountered a problem: Unidata instance is not ready.');
             }
 
             notice.close();

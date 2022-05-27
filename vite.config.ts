@@ -7,6 +7,7 @@ import path from 'path';
 import nodePolyfills from 'rollup-plugin-polyfill-node';
 import { crx } from '@crxjs/vite-plugin';
 import manifest from './manifest';
+import { viteCommonjs } from '@originjs/vite-plugin-commonjs';
 
 // const production = process.env.NODE_ENV === 'production';
 
@@ -31,6 +32,7 @@ export default defineConfig({
     },
     plugins: [
         vue(),
+        viteCommonjs(),
 
         // Diabled for crx compatibility issues
         //

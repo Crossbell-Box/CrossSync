@@ -1,4 +1,4 @@
-import { debounce } from 'lodash';
+import { debounce } from 'lodash-es';
 
 const interval = 200;
 const maxCount = 10000 / interval;

@@ -1,11 +1,12 @@
 import Main, { Hook } from '../index';
 import { createApp, App } from 'vue';
-import ElementPlus, { ElMessage } from 'element-plus';
+import ElementPlus, { ElMessage, MessageHandle } from 'element-plus';
 
 import { upload } from '@/common/ipfs';
 import { getSettings, key, store } from '@/common/store';
 
 import SyncToggleButton from '@/components/SyncToggle.vue';
+import type { NoteInput } from 'unidata.js/dist/types/notes';
 
 let syncToggleApp: App<Element> | null = null;
 let crossSyncToggleEl: HTMLDivElement;
@@ -27,8 +28,8 @@ class TwitterHook {
             },
         ];
 
-        let startPromise: Promise<Partial<Note>> | undefined;
-        let notice: ElMessage | undefined;
+        let startPromise: Promise<NoteInput> | undefined;
+        let notice: MessageHandle | undefined;
         chrome.runtime.onMessage.addListener(async (msg) => {
             if (msg.type === 'create-tweet-start') {
                 startPromise = new Promise(async (resolve) => {

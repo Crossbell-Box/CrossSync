@@ -1,7 +1,15 @@
 <template>
-    <div class="flex w-8 h-8 cursor-pointer">
+    <div class="flex cursor-pointer">
         <el-tooltip placement="top" :content="isSyncing ? 'CrossSync Enabled' : 'CrossSync Disabled'">
-            <div class="flex w-full h-full opacity-50" :class="isSyncing ? [] : ['grayscale']" @click="toggleSyncing">
+            <div
+                class="flex w-8 h-8"
+                :class="{
+                    grayscale: !isSyncing,
+                    'opacity-50': !available,
+                    'mr-2': available,
+                }"
+                @click="toggleSyncing"
+            >
                 <span class="flex w-full h-full items-center logo" v-html="logo" />
             </div>
         </el-tooltip>
@@ -14,6 +22,7 @@ import { ref } from 'vue';
 import logo from '../assets/logo.svg?raw';
 
 const isSyncing = ref(true);
+const available = ref(false);
 const toggleSyncing = async () => {
     const settings = await getSettings();
     if (!settings.handle) {
@@ -30,6 +39,21 @@ bucket.valueStream.subscribe((values) => {
         values.syncing = true;
     }
     isSyncing.value = values.syncing && !!values.handle;
+});
+
+const checkAvailable = () => {
+    const button = document.querySelector(
+        'div[data-testid="primaryColumn"] div[data-testid="tweetButtonInline"], div[data-testid="tweetButton"]',
+    );
+    available.value = !(button?.getAttribute('aria-disabled') === 'true');
+};
+
+checkAvailable();
+
+document.addEventListener('keydown', () => {
+    setTimeout(() => {
+        checkAvailable();
+    }, 0);
 });
 </script>
 

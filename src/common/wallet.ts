@@ -48,9 +48,7 @@ export async function connect(force = false) {
                 try {
                     return await web3Modal.connect();
                 } catch (e) {
-                    // console.log(e);
                     throw e;
-                    // return null;
                 }
             }
             return null;

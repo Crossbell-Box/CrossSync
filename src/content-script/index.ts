@@ -15,7 +15,7 @@ class CrossSyncContentScript {
     private unidata: Unidata | undefined;
 
     constructor() {
-        console.log('CorssSync Content Script is running');
+        this.xlog('info', 'CorssSync Content Script is running');
         this.initHooks();
     }
 

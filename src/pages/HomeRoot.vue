@@ -5,7 +5,7 @@
             <li v-for="(_, index) in Array(5)" :key="index" v-show="loading">
                 <el-skeleton animated>
                     <template #template>
-                        <el-card class="relative border-0 hover:bg-gray-100" shadow="never">
+                        <el-card class="relative border-0" shadow="never">
                             <div class="flex flex-row">
                                 <el-skeleton-item variant="circle" class="w-10 h-10 mr-3"></el-skeleton-item>
                                 <div class="flex-1">

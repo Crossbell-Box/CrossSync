@@ -1,7 +1,6 @@
 import Main, { Hook } from '../index';
 import { createApp, App } from 'vue';
 import ElementPlus, { ElMessage } from 'element-plus';
-import bind from 'bind-decorator';
 
 import { upload } from '@/common/ipfs';
 import { getSettings, key, store } from '@/common/store';

@@ -34,7 +34,7 @@ export default defineConfig({
         vue(),
         viteCommonjs(),
 
-        // Diabled for crx compatibility issues
+        // Disabled for crx compatibility issues
         //
         // AutoImport({
         //     resolvers: [ElementPlusResolver()],

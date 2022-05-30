@@ -4,6 +4,7 @@ import IndexPage from '../pages/Index.vue';
 import IndexRootPage from '../pages/IndexRoot.vue';
 import MintPage from '../pages/Mint.vue';
 import ProfilesPage from '../pages/Profiles.vue';
+import FaucetPage from '../pages/Faucet.vue';
 import HomePage from '../pages/Home.vue';
 import HomeRootPage from '../pages/HomeRoot.vue';
 import NotePage from '../pages/Note.vue';
@@ -28,6 +29,10 @@ export const router = createRouter({
                 {
                     path: 'profiles',
                     component: ProfilesPage,
+                },
+                {
+                    path: 'faucet',
+                    component: FaucetPage,
                 },
             ],
         },

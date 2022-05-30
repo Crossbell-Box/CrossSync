@@ -19,6 +19,7 @@ import { ref } from 'vue';
 import Unidata from 'unidata.js';
 import { ElMessage } from 'element-plus';
 import { ethers } from 'ethers';
+import { Contract } from 'crossbell.js';
 
 const store = useStore();
 const router = useRouter();
@@ -50,7 +51,14 @@ const connect = async (force = true) => {
             await store.dispatch('setSettings', {
                 address: address,
             });
-            await router.push('/mint');
+            const c = new Contract(provider);
+            await c.connect();
+            const balance = (await c.getBalance(address)).data;
+            if (parseInt(balance) < 0.02 * Math.pow(10, 18)) {
+                await router.push('/faucet');
+            } else {
+                await router.push('/mint');
+            }
         }
     } catch (e: any) {
         ElMessage.error('Failed to connect: ' + e.message);

@@ -38,21 +38,22 @@
             </el-form-item>
         </el-form>
         <div v-loading="ensLoading">
-            <p class="mt-14">
-                <b>🎉 ENS Event:</b> We've reserved your ENS name for you, only you can claim it, click to claim it for
-                free!
-            </p>
-            <el-button
-                v-if="ensList.length"
-                text
-                bg
-                type="primary"
-                class="mt-2 mb-4"
-                v-for="ens in ensList"
-                :key="ens"
-                @click="claimENS(ens)"
-                >{{ ens }}</el-button
-            >
+            <div v-if="ensList.length">
+                <p class="mt-14">
+                    <b>🎉 ENS Event:</b> We've reserved your ENS name for you, only you can claim it, click to claim it
+                    for free!
+                </p>
+                <el-button
+                    text
+                    bg
+                    type="primary"
+                    class="mt-2 mb-4"
+                    v-for="ens in ensList"
+                    :key="ens"
+                    @click="claimENS(ens)"
+                    >{{ ens }}</el-button
+                >
+            </div>
             <div v-else class="text-gray-400 text-sm leading-8 mt-2 mb-4">Sorry, we did not find your ENS name</div>
         </div>
     </div>
@@ -204,12 +205,16 @@ const next = async () => {
 };
 
 const initENS = async () => {
-    ensList.value = (
-        await window.unidata?.profiles.get({
-            source: 'ENS',
-            identity: store.state.settings.address!,
-        })
-    ).list.map((profile) => profile.username!);
+    try {
+        ensList.value = (
+            await window.unidata?.profiles.get({
+                source: 'ENS',
+                identity: store.state.settings.address!,
+            })
+        ).list.map((profile) => profile.username!);
+    } catch (e) {
+        // Failed to find ENS profiles.
+    }
     ensLoading.value = false;
 };
 

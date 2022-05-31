@@ -5,14 +5,14 @@ import { getBucket } from '@extend-chrome/storage';
 import Unidata from 'unidata.js';
 
 export interface Settings {
-    syncing: boolean;
+    syncing: boolean | string;
     address?: string;
     handle?: string;
 }
 
 export const bucket = getBucket<Settings>('settings', 'sync');
 
-export const getSettings = async () =>
+export const getSettings = async (): Promise<Settings> =>
     Object.assign(
         {
             syncing: true,

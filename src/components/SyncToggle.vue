@@ -1,10 +1,17 @@
 <template>
     <div class="flex cursor-pointer">
-        <el-tooltip placement="top" :content="isSyncing ? 'CrossSync Enabled' : 'CrossSync Disabled'">
+        <el-tooltip
+            placement="top"
+            :content="
+                typeof isSyncing === 'string' ? isSyncing : isSyncing ? 'CrossSync Enabled' : 'CrossSync Disabled'
+            "
+        >
             <div
                 class="flex w-8 h-8"
                 :class="{
-                    grayscale: !isSyncing,
+                    'fill-[#5088ff]': isSyncing === true,
+                    'fill-[#E6A23C]': typeof isSyncing === 'string', // or isSyncing !== !!isSyncing
+                    grayscale: isSyncing === false,
                     'opacity-50': !available,
                     'mr-2': available,
                 }"
@@ -21,7 +28,7 @@ import { bucket, getSettings } from '@/common/store';
 import { ref } from 'vue';
 import logo from '../assets/logo.svg?raw';
 
-const isSyncing = ref(true);
+const isSyncing = ref<boolean | string>('Loading...');
 const available = ref(false);
 const toggleSyncing = async () => {
     const settings = await getSettings();
@@ -30,15 +37,20 @@ const toggleSyncing = async () => {
             type: 'open-options',
         });
     }
-    settings.syncing = !settings.syncing;
+    if (typeof settings.syncing === 'string') {
+        settings.syncing = true;
+    } else {
+        settings.syncing = !settings.syncing;
+    }
     await bucket.set(settings);
 };
 
 bucket.valueStream.subscribe((values) => {
     if (values.syncing === undefined) {
+        console.log('Syncing is undefined');
         values.syncing = true;
     }
-    isSyncing.value = values.syncing && !!values.handle;
+    isSyncing.value = values.syncing;
 });
 
 const checkAvailable = () => {

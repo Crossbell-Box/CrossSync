@@ -3,7 +3,7 @@ import { createApp, App } from 'vue';
 import ElementPlus, { ElMessage, MessageHandle } from 'element-plus';
 
 import { upload } from '@/common/ipfs';
-import { getSettings, key, store } from '@/common/store';
+import { bucket, getSettings, key, store } from '@/common/store';
 
 import SyncToggleButton from '@/components/SyncToggle.vue';
 import type { NoteInput } from 'unidata.js/dist/types/notes';
@@ -22,7 +22,8 @@ class TwitterHook {
             {
                 selector:
                     'div[data-testid="primaryColumn"] div[data-testid="tweetButtonInline"], div[data-testid="tweetButton"]',
-                callback: (el) => {
+                callback: async (el) => {
+                    this.detectStatus();
                     this.mountSyncToggleApp(el);
                 },
             },
@@ -37,7 +38,7 @@ class TwitterHook {
                     const handle = settings.handle;
                     const syncing = settings.syncing;
 
-                    if (handle && syncing) {
+                    if (handle && syncing === true) {
                         this.main.xlog('info', 'Sync triggered.');
 
                         notice = ElMessage.info({
@@ -87,7 +88,7 @@ class TwitterHook {
                 const handle = settings.handle;
                 const syncing = settings.syncing;
 
-                if (handle && syncing) {
+                if (handle && syncing === true) {
                     if (startPromise) {
                         const note = await startPromise;
                         const link = document.querySelector('time')?.parentElement?.getAttribute('href');
@@ -125,6 +126,9 @@ class TwitterHook {
                 }
             }
         });
+
+        // Now working :(
+        window.ethereum?.on('accountsChanged', this.detectStatus);
     }
 
     private mountSyncToggleApp(el: Element) {
@@ -141,6 +145,39 @@ class TwitterHook {
             el.parentNode.insertBefore(crossSyncToggleEl, el);
         }
         this.main.xlog('info', 'Sync toggle button mounted.');
+    }
+
+    private async detectStatus() {
+        // Detect if account is changed or balance insufficient
+        this.main.xlog('info', 'Detect status...');
+        const settings = await getSettings();
+        // this.main.xlog('info', 'Settings is', settings);
+        const unidata = await this.main.getUnidata();
+        // this.main.xlog('info', 'Now address is: '+ this.main.address);
+        let newStatus = '';
+        if (settings.syncing !== false && settings.address) {
+            if (settings.address.toLowerCase() !== this.main.address?.toLowerCase()) {
+                newStatus = 'Address changed.';
+                // this.main.xlog('info', 'Old address: ', settings.address);
+                // this.main.xlog('info', 'Now address: ', this.main.address);
+                // } else if (unidata) { // Disabled for unidata.utils.contract is undefined
+                //     settings.syncing = true;
+                //     const balance = (await unidata.utils.contract.getBalance(this.main.address)).data;
+                //     if (parseInt(balance) < 0.0005 * Math.pow(10, 18)) {
+                //         newStatus = 'Balance might not enough.';
+                //     }
+            }
+            if (newStatus !== '') {
+                this.main.xlog('warn', newStatus);
+                settings.syncing = newStatus;
+                await bucket.set(settings);
+            } else {
+                if (typeof settings.syncing === 'string') {
+                    settings.syncing = true;
+                    await bucket.set(settings);
+                }
+            }
+        }
     }
 }
 

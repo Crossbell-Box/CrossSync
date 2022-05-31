@@ -13,6 +13,7 @@ export interface Hook {
 
 class CrossSyncContentScript {
     private unidata: Unidata | undefined;
+    address: string | undefined;
 
     constructor() {
         this.xlog('info', 'CorssSync Content Script is running');
@@ -36,13 +37,23 @@ class CrossSyncContentScript {
     async getUnidata() {
         if (!this.unidata) {
             try {
-                const provider = await w3mConnect();
+                const provider = await w3mConnect(); // Metamask
                 if (provider) {
+                    this.address = (
+                        await provider.request({
+                            method: 'eth_accounts',
+                        })
+                    )?.[0];
+                    // this.xlog('info', 'Init unidata with address: ', this.address);
                     this.unidata = new Unidata({
                         ethereumProvider: provider,
                     });
+                } else {
+                    this.xlog('warn', 'No provider');
                 }
-            } catch (e: any) {}
+            } catch (e: any) {
+                this.xlog('error', 'Failed to initialize Unidata', e);
+            }
         }
         return this.unidata;
     }
@@ -60,10 +71,8 @@ class CrossSyncContentScript {
             CROSSSYNC_CONSOLE_LOG_FORMAT.prefix,
             CROSSSYNC_CONSOLE_LOG_FORMAT[type],
             '',
+            details || '',
         );
-        if (details) {
-            console.log(details);
-        }
     }
 }
 

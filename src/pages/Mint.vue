@@ -1,5 +1,5 @@
 <template>
-    <div class="py-5">
+    <div class="py-5 w-full mx-16 max-w-3xl">
         <h1 class="text-4xl font-bold my-5">Mint Your Crossbell Profile 👾</h1>
         <div class="mb-8">
             <span class="align-middle"

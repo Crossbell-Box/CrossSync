@@ -29,6 +29,23 @@
                     show-word-limit
                 />
             </el-form-item>
+        </el-form>
+        <el-collapse class="mb-8">
+            <el-collapse-item title="Profile">
+                <el-form :model="profileForm" label-width="50px">
+                    <el-form-item label="Avatar" prop="avatar" class="my-8" size="large">
+                        <el-input v-model="profileForm.avatar" placeholder="Avatar URL (HTTPS or IPFS)" />
+                    </el-form-item>
+                    <el-form-item label="Name" prop="name" class="my-8" size="large">
+                        <el-input v-model="profileForm.name" placeholder="Enter your name" />
+                    </el-form-item>
+                    <el-form-item label="Bio" prop="bio" class="my-8" size="large">
+                        <el-input v-model="profileForm.bio" type="textarea" placeholder="Enter your bio" :rows="4" />
+                    </el-form-item>
+                </el-form>
+            </el-collapse-item>
+        </el-collapse>
+        <el-form>
             <el-form-item>
                 <el-button type="default" :loading="isChecking" @click="check">Check Availability</el-button>
                 <el-button type="primary" :loading="isChecking" @click="dialog">I've decided!</el-button>
@@ -118,6 +135,12 @@ const ruleForm = reactive({
     handle: '',
 });
 
+const profileForm = reactive({
+    name: '',
+    avatar: '',
+    bio: '',
+});
+
 const rules = reactive({
     handle: [
         {
@@ -185,6 +208,9 @@ const mint = async () => {
         },
         {
             username: ruleForm.handle,
+            avatars: profileForm.avatar ? [profileForm.avatar] : undefined,
+            name: profileForm.name ? profileForm.name : undefined,
+            bio: profileForm.bio ? profileForm.bio : undefined,
         },
     );
 

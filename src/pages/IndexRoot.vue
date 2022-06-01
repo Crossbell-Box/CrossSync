@@ -1,7 +1,9 @@
 <template>
     <div class="text-center w-full h-full flex items-center justify-center">
         <div class="pb-8">
-            <img class="inline-block rounded-full" width="150" src="../assets/logo.svg" />
+            <div class="inline-block rounded-full align-middle fill-[#5088ff] w-36 h-36">
+                <span class="flex w-full h-full items-center logo" v-html="logo" />
+            </div>
             <h1 class="text-4xl font-bold my-5">Welcome to CrossSync! 👋</h1>
             <p class="my-5 text-slate-400">Here are some introductions to CrossSync and Crossbell...</p>
             <el-button type="primary" :loading="isConnecting" round size="large" class="text-xl" @click="connect"
@@ -20,6 +22,7 @@ import Unidata from 'unidata.js';
 import { ElMessage } from 'element-plus';
 import { ethers } from 'ethers';
 import { Contract } from 'crossbell.js';
+import logo from '../assets/logo.svg?raw';
 
 const store = useStore();
 const router = useRouter();

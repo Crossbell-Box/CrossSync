@@ -32,9 +32,37 @@
         </el-form>
         <el-collapse class="mb-8">
             <el-collapse-item title="Profile">
-                <el-form :model="profileForm" label-width="50px">
-                    <el-form-item label="Avatar" prop="avatar" class="my-8" size="large">
-                        <el-input v-model="profileForm.avatar" placeholder="Avatar URL (HTTPS or IPFS)" />
+                <el-form :model="profileForm" status-icon :rules="profileRules" label-width="50px">
+                    <el-form-item label="Avatar" prop="avatar" class="my-8 items-center" size="large">
+                        <div class="flex flex-row gap-4 w-full" v-loading="isUploadingAvatar">
+                            <el-upload
+                                class="flex relative w-16 h-16 justify-center flex-shrink-0"
+                                accept="image/*"
+                                :autoUpload="false"
+                                :showFileList="false"
+                                @change="handleUpload"
+                            >
+                                <el-avatar class="absolute" :size="64" :src="avatarUri" />
+                                <el-icon class="absolute m-auto" :size="16" color="white">
+                                    <Plus />
+                                </el-icon>
+                            </el-upload>
+                            <el-input
+                                class="flex m-auto"
+                                v-model="profileForm.avatar"
+                                placeholder="Avatar URL (HTTPS or IPFS)"
+                                :disabled="avatarUriLocked"
+                            >
+                                <template #append>
+                                    <el-tooltip v-if="avatarUriLocked" content="Click to Unlock" placement="top">
+                                        <el-button :icon="Lock" @click="unLockAvatarUri" />
+                                    </el-tooltip>
+                                    <el-tooltip v-else content="Click to Lock" placement="top">
+                                        <el-button :icon="Unlock" @click="enLockAvatarUri" />
+                                    </el-tooltip>
+                                </template>
+                            </el-input>
+                        </div>
                     </el-form-item>
                     <el-form-item label="Name" prop="name" class="my-8" size="large">
                         <el-input v-model="profileForm.name" placeholder="Enter your name" />
@@ -89,10 +117,13 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
-import { ElMessage } from 'element-plus';
+import { ElMessage, UploadFile, UploadProps } from 'element-plus';
 import { useRouter } from 'vue-router';
 import { useStore } from '@/common/store';
 import ProfileCard from '@/components/Profiles.vue';
+import { Plus, Lock, Unlock } from '@element-plus/icons-vue';
+import { debounce } from 'lodash-es';
+import { upload } from '@/common/ipfs';
 
 const router = useRouter();
 const store = useStore();
@@ -107,6 +138,9 @@ const isMinting = ref(false);
 const ensLoading = ref(true);
 const dialogVisible = ref(false);
 const mintDisabled = ref(true);
+const isUploadingAvatar = ref(false);
+const avatarUri = ref('');
+const avatarUriLocked = ref(false);
 
 const validateHandle = (handle: string): boolean => {
     return /^[a-z0-9_\\-]{1,31}$/.test(handle);
@@ -155,6 +189,27 @@ const rules = reactive({
         },
     ],
 });
+
+const profileRules = reactive({
+    avatar: [
+        {
+            validator: debounce((rule: any, value: string, callback: any) => {
+                if (value.startsWith('https://') || value.startsWith('ipfs://') || value === '') {
+                    setAvatarUri(value);
+                    callback();
+                } else {
+                    avatarUri.value = '';
+                    callback(new Error());
+                }
+            }, 500),
+            trigger: 'change',
+        },
+    ],
+});
+
+const setAvatarUri = (uri: string) => {
+    avatarUri.value = uri.replace('ipfs://', 'https://cf-ipfs.com/ipfs/');
+};
 
 const check = async () => {
     isChecking.value = true;
@@ -242,6 +297,32 @@ const initENS = async () => {
         // Failed to find ENS profiles.
     }
     ensLoading.value = false;
+};
+
+const handleUpload = async (file: UploadFile) => {
+    // console.log(file);
+    if (file.raw) {
+        ElMessage.info('Start uploading avatar...');
+        isUploadingAvatar.value = true;
+        try {
+            const ipfsUri = await upload(file.raw);
+            ElMessage.success('Uploaded successfully!');
+            profileForm.avatar = ipfsUri;
+            setAvatarUri(ipfsUri);
+            enLockAvatarUri(); // Prevent change by mistake
+        } catch (e: any) {
+            ElMessage.error('Upload failed with error: ' + e.message);
+        }
+        isUploadingAvatar.value = false;
+    }
+};
+
+const unLockAvatarUri = () => {
+    avatarUriLocked.value = false;
+};
+
+const enLockAvatarUri = () => {
+    avatarUriLocked.value = true;
 };
 
 initENS();

@@ -3,7 +3,6 @@ import { observe } from '@/common/utils';
 import '@/common/locationChange';
 import { connect as w3mConnect } from '@/common/wallet';
 import Unidata from 'unidata.js';
-import TwitterHook from './hooks/twitter';
 
 import '../css/lib.css';
 
@@ -24,6 +23,7 @@ class CrossSyncContentScript {
     private async initHooks() {
         switch (new URL(window.location.href).host) {
             case 'twitter.com':
+                const TwitterHook = (await import('./hooks/twitter')).default;
                 new TwitterHook(this).hooks.forEach((h) => {
                     observe(h.selector, h.callback);
                 });

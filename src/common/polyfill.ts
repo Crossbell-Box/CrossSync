@@ -1,15 +1,8 @@
+import process from 'process';
 import { Buffer } from 'buffer';
+import EventEmitter from 'events';
 
 window.Buffer = Buffer;
-
+window.process = process;
+(<any>window).EventEmitter = EventEmitter;
 window.global = window;
-
-(<any>window).process = {
-    nextTick: (callback: any, ...args: any[]) => {
-        setTimeout(() => {
-            callback(...args);
-        }, 0);
-    },
-    version: '',
-    env: {},
-};

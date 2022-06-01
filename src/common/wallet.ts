@@ -1,16 +1,6 @@
 import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
-import { initializeProvider } from '@metamask/providers';
-import PortStream from 'extension-port-stream';
-
-// https://github.com/MetaMask/extension-provider/blob/master/config.json
-function getMetaMaskId() {
-    if (window.navigator.userAgent.indexOf('Firefox') > -1) {
-        return 'webextension@metamask.io';
-    } else {
-        return 'nkbihfbeogaeaoehlefnkodbefgpgknn';
-    }
-}
+import createMetaMaskProvider from 'metamask-extension-provider';
 
 const providerOptions = {
     walletconnect: {
@@ -30,18 +20,16 @@ const web3Modal = new Web3Modal({
     providerOptions, // required
 });
 
+let metaMaskProvider: ReturnType<typeof createMetaMaskProvider>;
+
 export async function connect(force = false) {
-    if (chrome?.runtime?.id) {
-        if (!window.ethereum) {
-            const metamaskPort: any = chrome.runtime.connect(getMetaMaskId());
-            const pluginStream: any = new PortStream(metamaskPort);
-            initializeProvider({
-                connectionStream: pluginStream,
-            });
+    if (window.chrome?.runtime?.id) {
+        if (!metaMaskProvider) {
+            metaMaskProvider = createMetaMaskProvider();
         }
 
         if (force) {
-            await window.ethereum.request({
+            await metaMaskProvider.request({
                 method: 'wallet_requestPermissions',
                 params: [
                     {
@@ -51,7 +39,7 @@ export async function connect(force = false) {
             });
         }
 
-        return window.ethereum;
+        return metaMaskProvider;
     } else {
         if (force) {
             return await web3Modal.connect();

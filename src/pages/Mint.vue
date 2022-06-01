@@ -205,6 +205,7 @@ const mint = async () => {
             source: 'Crossbell Profile',
             identity: store.state.settings.address!,
             platform: 'Ethereum',
+            action: 'add',
         },
         {
             username: ruleForm.handle,

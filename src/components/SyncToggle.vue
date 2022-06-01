@@ -50,7 +50,7 @@ bucket.valueStream.subscribe((values) => {
         console.log('Syncing is undefined');
         values.syncing = true;
     }
-    isSyncing.value = values.syncing;
+    isSyncing.value = values.syncing === true && !!values.handle;
 });
 
 const checkAvailable = () => {

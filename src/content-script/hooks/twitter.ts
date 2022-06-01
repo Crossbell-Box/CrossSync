@@ -127,8 +127,12 @@ class TwitterHook {
             }
         });
 
-        // Now working :(
-        window.ethereum?.on('accountsChanged', this.detectStatus);
+        try {
+            // Not working :(
+            window.ethereum?.on('accountsChanged', this.detectStatus);
+        } catch (e) {
+            this.main.xlog('error', 'Failed to add account change event listener.', e);
+        }
     }
 
     private mountSyncToggleApp(el: Element) {

@@ -7,32 +7,26 @@ import path from 'path';
 import nodePolyfills from 'rollup-plugin-polyfill-node';
 import { crx } from '@crxjs/vite-plugin';
 import manifest from './manifest';
-import { viteCommonjs } from '@originjs/vite-plugin-commonjs';
-
-// const production = process.env.NODE_ENV === 'production';
 
 export default defineConfig({
     build: {
         rollupOptions: {
-            plugins: [nodePolyfills()],
-        },
-        commonjsOptions: {
-            transformMixedEsModules: true,
+            plugins: [
+                nodePolyfills({
+                    include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js')],
+                }),
+            ],
         },
         target: 'esnext',
     },
     resolve: {
         alias: {
             '@': path.resolve(__dirname, 'src'),
-            process: 'process/browser',
             stream: 'stream-browserify',
-            zlib: 'browserify-zlib',
-            util: 'util',
         },
     },
     plugins: [
         vue(),
-        viteCommonjs(),
 
         // Disabled for crx compatibility issues
         //
@@ -42,10 +36,9 @@ export default defineConfig({
         // Components({
         //     resolvers: [ElementPlusResolver()],
         // }),
-        // !production &&
-        //     nodePolyfills({
-        //         include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js')],
-        //     }),
+        // nodePolyfills({
+        //     include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js')],
+        // }),
         crx({
             manifest,
             contentScripts: {

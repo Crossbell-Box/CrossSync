@@ -46,9 +46,7 @@ class TwitterHook {
                             duration: 0,
                         });
 
-                        let link = (<HTMLAnchorElement>document.querySelector('[data-testid="AppTabBar_Profile_Link"]'))
-                            ?.pathname;
-                        const username = link.split('/')[1];
+                        const username = this.getUsername();
 
                         const tweet = (<HTMLElement>document.querySelector('[data-testid=tweetTextarea_0]'))?.innerText;
 
@@ -127,12 +125,24 @@ class TwitterHook {
             }
         });
 
+        // Listen on MetaMask account change Event
         try {
             // Not working :(
+            this.main.xlog('info', 'Add MetaMask account change listener.');
             window.ethereum?.on('accountsChanged', this.detectStatus);
         } catch (e) {
             this.main.xlog('error', 'Failed to add account change event listener.', e);
         }
+
+        // Listen on route change Event
+        try {
+            this.main.xlog('info', 'Adding route change event listener.');
+            window.removeEventListener('locationchange', () => this.mountSyncOldTweets()); // Remove old (if any)
+            window.addEventListener('locationchange', () => this.mountSyncOldTweets()); // Add new
+        } catch (e) {
+            this.main.xlog('error', 'Failed to add route change event listener.', e);
+        }
+        this.mountSyncOldTweets(); // Init Run
     }
 
     private mountSyncToggleApp(el: Element) {
@@ -185,6 +195,60 @@ class TwitterHook {
                 }
             }
         }
+    }
+
+    private getUsername(): string {
+        const link = (<HTMLAnchorElement>document.querySelector('[data-testid="AppTabBar_Profile_Link"]'))?.pathname;
+        return link.split('/')[1];
+    }
+
+    private mountSyncOldTweets() {
+        // Only activate on Personal Timeline
+        const username = this.getUsername();
+        if (window.location.pathname !== `/${username}`) {
+            this.main.xlog('info', `Not on personal timeline (${username}).`);
+            return;
+        }
+
+        this.main.xlog('info', 'Mounting sync old tweets button...');
+
+        // All tweets
+        const allTweets = document.querySelectorAll('[data-testid="tweet"]');
+        Array.from(allTweets).forEach((tweet) => {
+            if (tweet) {
+                // Get link
+                const link = tweet.querySelector('time')?.parentElement?.getAttribute('href');
+                if (link) {
+                    // Check if it's already synced
+                    const tx = ''; // todo: get real tx hash
+                    if (tx) {
+                        // Already synced
+                        // todo: generate synced notice
+                    } else {
+                        // Not synced
+                        // todo: generate sync button
+
+                        // Get tweet data
+                        const tweetText = tweet.querySelector('[data-testid="tweetText"]')?.textContent;
+                        const tweetMedia = {
+                            photo: Array.from(tweet.querySelectorAll('[data-testid="tweetPhoto"] img')).map((img) =>
+                                img.getAttribute('src'),
+                            ),
+                            // video: Array.from(tweet.querySelectorAll('[data-testid="videoPlayer"] video'))
+                            //   .map(video => video.getAttribute('src')), // Not downloadable
+                        };
+                    }
+                    // todo: mount sync button or status notice
+
+                    const syncStatusContainer = document.createElement('div');
+
+                    const moreButton = tweet.querySelector('[data-testid="caret"]');
+                    if (moreButton && moreButton.parentNode) {
+                        moreButton.parentNode.insertBefore(syncStatusContainer, moreButton);
+                    } // else: what?
+                } // else Unable to find link, skip
+            }
+        });
     }
 }
 

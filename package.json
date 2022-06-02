@@ -20,6 +20,7 @@
         "@fortawesome/free-solid-svg-icons": "^6.1.1",
         "@fortawesome/vue-fontawesome": "^3.0.0-5",
         "@walletconnect/web3-provider": "^1.7.8",
+        "axios": "^0.27.2",
         "bind-decorator": "^1.0.11",
         "buffer": "^6.0.3",
         "crossbell.js": "^0.5.18",

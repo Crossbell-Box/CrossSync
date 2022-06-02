@@ -16,6 +16,7 @@ specifiers:
     '@vitejs/plugin-vue': ^2.3.3
     '@walletconnect/web3-provider': ^1.7.8
     autoprefixer: ^10.4.7
+    axios: ^0.27.2
     bind-decorator: ^1.0.11
     browserify-zlib: ^0.2.0
     buffer: ^6.0.3
@@ -56,6 +57,7 @@ dependencies:
     '@fortawesome/free-solid-svg-icons': 6.1.1
     '@fortawesome/vue-fontawesome': 3.0.0-5_ra36apx7k7u2r4lnz24hnvxtpe
     '@walletconnect/web3-provider': 1.7.8
+    axios: 0.27.2
     bind-decorator: 1.0.11
     buffer: 6.0.3
     crossbell.js: 0.5.18
@@ -3531,7 +3533,10 @@ packages:
         dev: true
 
     /delayed-stream/1.0.0:
-        resolution: { integrity: sha1-3zrhmayt+31ECqrgsp4icrJOxhk= }
+        resolution:
+            {
+                integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==,
+            }
         engines: { node: '>=0.4.0' }
         dev: false
 

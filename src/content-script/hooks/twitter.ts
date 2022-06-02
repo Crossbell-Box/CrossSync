@@ -147,6 +147,9 @@ class TwitterHook {
             }
 
             el.parentNode.insertBefore(crossSyncToggleEl, el);
+
+            // update SyncToggle.vue
+            (<any>window).cssc?.checkAvailable?.();
         }
         this.main.xlog('info', 'Sync toggle button mounted.');
     }

@@ -70,6 +70,10 @@ document.addEventListener('keydown', () => {
         checkAvailable();
     }, 0);
 });
+
+(<any>window).cssc = {
+    checkAvailable,
+};
 </script>
 
 <style>

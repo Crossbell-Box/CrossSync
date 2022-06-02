@@ -2,7 +2,20 @@
     <div class="flex-1 flex flex-col">
         <h1 class="flex text-4xl font-bold my-5 py-4">Help</h1>
         <div class="flex flex-col">
-            <p>Here are some introductions to CrossSync and Crossbell...</p>
+            <p class="leading-7 my-3 text-gray-700">
+                CrossSync is a socially-oriented web3 Dapp that runs on the Crossbell. CrossSync aims to allow a
+                user-owned flow of social information, including but not limited to: following other user profiles,
+                integrated Twitter UI, note-posting, achievement badges, and more.
+            </p>
+            <p class="leading-7 my-3 text-gray-700">
+                Crossbell allows users the ability to take back their data ownership; CrossSync makes owning your data a
+                fun and engaging social experience.
+            </p>
+            <p class="leading-7 my-3 text-gray-700">
+                To get started, you’ll need go to
+                <a class="underline" href="http://facuet.crossbell.io">facuet.crossbell.io</a> and get some $CSB. After
+                you’ve connected your wallet and received the $CSB, you’ll be able to mint a profile on CrossSync.
+            </p>
         </div>
     </div>
 </template>

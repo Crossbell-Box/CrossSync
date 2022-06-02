@@ -16,6 +16,7 @@
                     placeholder="Please enter the Crossbell handle you want"
                     maxlength="31"
                     show-word-limit
+                    @change="changeHandle"
                 />
             </el-form-item>
             <el-form-item label="Avatar" prop="avatar" class="my-8 items-center" size="large">
@@ -65,7 +66,7 @@
                 <el-button text bg type="default" @click="skip" v-if="profiles.length">Skip</el-button>
             </el-form-item>
         </el-form>
-        <div v-loading="ensLoading">
+        <div v-loading="ensLoading" v-if="ensDeadline > +new Date()">
             <div v-if="ensList.length">
                 <p class="mt-14">
                     <b>🎉 ENS Event:</b> We've reserved your ENS name for you, only you can claim it, click to claim it
@@ -107,6 +108,8 @@ import ProfileCard from '@/components/Profiles.vue';
 import { Plus, Lock, Unlock } from '@element-plus/icons-vue';
 import { debounce } from 'lodash-es';
 import { upload } from '@/common/ipfs';
+import axios from 'axios';
+import moment from 'moment';
 
 const router = useRouter();
 const store = useStore();
@@ -124,6 +127,16 @@ const mintDisabled = ref(true);
 const isUploadingAvatar = ref(false);
 const avatarUri = ref('');
 const avatarUriLocked = ref(false);
+let isENS = '';
+const ensDeadline = ref(1656547200000);
+
+const changeHandle = () => {
+    isENS = '';
+};
+
+axios.get('https://crosssync-ens-deadline.rss3.workers.dev/').then((res) => {
+    ensDeadline.value = parseInt(res.data);
+});
 
 const validateHandle = (handle: string): boolean => {
     return /^[a-z0-9_\\-]{3,31}$/.test(handle);
@@ -139,13 +152,6 @@ const switchAccount = async () => {
 
 const skip = async () => {
     await router.push('/profiles');
-};
-
-const choose = async (profile: Profile) => {
-    await store.dispatch('setSettings', {
-        handle: profile.username,
-    });
-    await router.push('/home');
 };
 
 const ruleForm = reactive({
@@ -228,9 +234,15 @@ const check = async () => {
 
 const tweet = () => {
     const text = encodeURIComponent(
-        `#OwnMyTweets I'm proudly syncing my Tweet to blockchain and truly owning my tweet!`,
+        `#OwnMyTweets - ${
+            isENS
+                ? `This Tweet signals that I have claimed my ENS ${isENS} as my handle on`
+                : `My future tweets will be synced on-chain through`
+        } https://crosssync.app via @_Crossbell ${
+            isENS ? `(${moment.duration(moment().diff(ensDeadline.value)).humanize()} remaining to claim)` : ``
+        }`,
     );
-    window.open(`https://twitter.com/intent/tweet?text=${text}&via=CrossSync&url=https://crosssync.app`);
+    window.open(`https://twitter.com/intent/tweet?text=${text}`);
     setTimeout(() => {
         mintDisabled.value = false;
     }, 3000);
@@ -264,6 +276,7 @@ const mint = async () => {
 };
 
 const claimENS = async (ens: Profile) => {
+    isENS = ens.username || '';
     isMinting.value = true;
 
     ruleForm.handle = ens.username!.replace(/\.eth$/, '');

@@ -79,7 +79,7 @@
                     v-for="ens in ensList"
                     :key="ens"
                     @click="claimENS(ens)"
-                    >{{ ens }}</el-button
+                    >{{ ens.username }}</el-button
                 >
             </div>
             <div v-else class="text-gray-400 text-sm leading-8 mt-2 mb-4">Sorry, we did not find your ENS name</div>
@@ -115,7 +115,7 @@ if (!store.state.settings.address) {
     router.push('/');
 }
 
-const ensList = ref<string[]>([]);
+const ensList = ref<Profile[]>([]);
 const isChecking = ref(false);
 const isMinting = ref(false);
 const ensLoading = ref(true);
@@ -263,10 +263,17 @@ const mint = async () => {
     await next();
 };
 
-const claimENS = async (ens: string) => {
+const claimENS = async (ens: Profile) => {
     isMinting.value = true;
 
-    ruleForm.handle = ens.replace(/\.eth$/, '');
+    ruleForm.handle = ens.username!.replace(/\.eth$/, '');
+    if (ens.avatars?.[0]) {
+        ruleForm.avatar = ens.avatars[0];
+        setAvatarUri(ens.avatars[0]);
+        enLockAvatarUri(); // Prevent change by mistake
+    }
+    ruleForm.name = ens.name || ens.username!;
+    ruleForm.bio = ens.bio || '';
 
     isMinting.value = false;
 };
@@ -282,7 +289,7 @@ const initENS = async () => {
                 source: 'ENS',
                 identity: store.state.settings.address!,
             })
-        ).list.map((profile) => profile.username!);
+        ).list;
     } catch (e) {
         // Failed to find ENS profiles.
     }

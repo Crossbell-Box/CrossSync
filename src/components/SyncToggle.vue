@@ -51,7 +51,7 @@ bucket.valueStream.subscribe((values) => {
         values.syncing = true;
     }
     isSyncing.value = values.syncing;
-    if (!!values.handle || !!values.address) {
+    if (!values.handle || !values.address) {
         isSyncing.value = false;
     }
 });

@@ -46,9 +46,9 @@ class TwitterHook {
                             duration: 0,
                         });
 
-                        const username = (<HTMLAnchorElement>(
-                            document.querySelector('main[role=main] a[role=link]')
-                        ))?.pathname.replace('/', '');
+                        let link = (<HTMLAnchorElement>document.querySelector('[data-testid="AppTabBar_Profile_Link"]'))
+                            ?.pathname;
+                        const username = link.split('/')[1];
 
                         const tweet = (<HTMLElement>document.querySelector('[data-testid=tweetTextarea_0]'))?.innerText;
 

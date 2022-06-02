@@ -67,7 +67,7 @@
             </el-form-item>
         </el-form>
         <div v-loading="ensLoading" v-if="ensDeadline > +new Date()">
-            <div v-if="ensList.length">
+            <div>
                 <p class="mt-14">
                     <b>🎉 ENS Event:</b> We've reserved your ENS name and RSS3 RNS name for you, only you can claim it,
                     click to claim it for free!
@@ -92,8 +92,10 @@
                     @click="claimENS(rns)"
                     >{{ rns.username }}</el-button
                 >
+                <div v-if="!ensList.length" class="text-gray-400 text-sm leading-8 mt-2 mb-4">
+                    Sorry, we did not find your ENS name
+                </div>
             </div>
-            <div v-else class="text-gray-400 text-sm leading-8 mt-2 mb-4">Sorry, we did not find your ENS name</div>
         </div>
     </div>
     <el-dialog v-model="dialogVisible" title="Tweet to continue" width="31%">

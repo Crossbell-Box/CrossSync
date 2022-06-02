@@ -41,8 +41,10 @@ class TwitterHook {
                     if (handle && syncing === true) {
                         this.main.xlog('info', 'Sync triggered.');
 
-                        notice = ElMessage.info({
-                            message: 'CrossSync is syncing your posting...',
+                        notice = ElMessage.warning({
+                            dangerouslyUseHTMLString: true,
+                            message:
+                                '<p>CrossSync is syncing your posting...</p><p style="margin-top: 7px;font-size: 12px;">(1/2) Uploading posting to IPFS</p>',
                             duration: 0,
                         });
 
@@ -95,6 +97,14 @@ class TwitterHook {
                         note.related_urls = [`https://twitter.com${link}`];
 
                         this.main.xlog('info', 'Posting tweet...', note);
+
+                        notice?.close();
+                        notice = ElMessage.warning({
+                            dangerouslyUseHTMLString: true,
+                            message:
+                                '<p>CrossSync is syncing your posting...</p><p style="margin-top: 7px;font-size: 12px;">(2/2) Waiting for signature and transaction on Crossbell</p>',
+                            duration: 0,
+                        });
 
                         const unidata = await this.main.getUnidata();
                         if (unidata) {

@@ -8,19 +8,8 @@
             <el-button class="align-middle ml-2" text bg type="primary" @click="switchAccount"
                 >switch account</el-button
             >
-            <p v-if="profiles.length">
-                You already have {{ profiles.length }} profile{{ profiles.length > 1 ? 's' : '' }}
-            </p>
-            <ProfileCard
-                class="mt-4 cursor-pointer mb-5"
-                v-for="profile in profiles"
-                :profile="profile"
-                :key="profile.username"
-                size="mini"
-                @click="choose(profile)"
-            />
         </div>
-        <el-form :model="ruleForm" status-icon :rules="rules" label-width="50px">
+        <el-form :model="ruleForm" status-icon :rules="rules" label-width="60px">
             <el-form-item label="Handle" prop="handle" class="my-8" size="large">
                 <el-input
                     v-model="ruleForm.handle"
@@ -29,57 +18,51 @@
                     show-word-limit
                 />
             </el-form-item>
+            <el-form-item label="Avatar" prop="avatar" class="my-8 items-center" size="large">
+                <div class="flex flex-row gap-4 w-full" v-loading="isUploadingAvatar">
+                    <el-upload
+                        class="flex relative w-16 h-16 justify-center flex-shrink-0"
+                        accept="image/*"
+                        :autoUpload="false"
+                        :showFileList="false"
+                        @change="handleUpload"
+                    >
+                        <el-avatar class="absolute" :size="64" :src="avatarUri" />
+                        <el-icon class="absolute m-auto" :size="16" color="white">
+                            <Plus />
+                        </el-icon>
+                    </el-upload>
+                    <el-input
+                        class="flex m-auto"
+                        v-model="ruleForm.avatar"
+                        placeholder="Avatar URL (HTTPS or IPFS)"
+                        :disabled="avatarUriLocked"
+                    >
+                        <template #append>
+                            <el-tooltip v-if="avatarUriLocked" content="Click to Unlock" placement="top">
+                                <el-button :icon="Lock" @click="unLockAvatarUri" />
+                            </el-tooltip>
+                            <el-tooltip v-else content="Click to Lock" placement="top">
+                                <el-button :icon="Unlock" @click="enLockAvatarUri" />
+                            </el-tooltip>
+                        </template>
+                    </el-input>
+                </div>
+            </el-form-item>
+            <el-form-item label="Name" prop="name" class="my-8" size="large">
+                <el-input v-model="ruleForm.name" placeholder="Enter your name" />
+            </el-form-item>
+            <el-form-item label="Bio" prop="bio" class="my-8" size="large">
+                <el-input v-model="ruleForm.bio" type="textarea" placeholder="Enter your bio" :rows="4" />
+            </el-form-item>
         </el-form>
-        <el-collapse class="mb-8">
-            <el-collapse-item title="Profile">
-                <el-form :model="profileForm" status-icon :rules="profileRules" label-width="50px">
-                    <el-form-item label="Avatar" prop="avatar" class="my-8 items-center" size="large">
-                        <div class="flex flex-row gap-4 w-full" v-loading="isUploadingAvatar">
-                            <el-upload
-                                class="flex relative w-16 h-16 justify-center flex-shrink-0"
-                                accept="image/*"
-                                :autoUpload="false"
-                                :showFileList="false"
-                                @change="handleUpload"
-                            >
-                                <el-avatar class="absolute" :size="64" :src="avatarUri" />
-                                <el-icon class="absolute m-auto" :size="16" color="white">
-                                    <Plus />
-                                </el-icon>
-                            </el-upload>
-                            <el-input
-                                class="flex m-auto"
-                                v-model="profileForm.avatar"
-                                placeholder="Avatar URL (HTTPS or IPFS)"
-                                :disabled="avatarUriLocked"
-                            >
-                                <template #append>
-                                    <el-tooltip v-if="avatarUriLocked" content="Click to Unlock" placement="top">
-                                        <el-button :icon="Lock" @click="unLockAvatarUri" />
-                                    </el-tooltip>
-                                    <el-tooltip v-else content="Click to Lock" placement="top">
-                                        <el-button :icon="Unlock" @click="enLockAvatarUri" />
-                                    </el-tooltip>
-                                </template>
-                            </el-input>
-                        </div>
-                    </el-form-item>
-                    <el-form-item label="Name" prop="name" class="my-8" size="large">
-                        <el-input v-model="profileForm.name" placeholder="Enter your name" />
-                    </el-form-item>
-                    <el-form-item label="Bio" prop="bio" class="my-8" size="large">
-                        <el-input v-model="profileForm.bio" type="textarea" placeholder="Enter your bio" :rows="4" />
-                    </el-form-item>
-                </el-form>
-            </el-collapse-item>
-        </el-collapse>
+        <!-- <el-form :model="profileForm" status-icon :rules="profileRules" label-width="50px">
+        </el-form> -->
         <el-form>
             <el-form-item>
                 <el-button type="default" :loading="isChecking" @click="check">Check Availability</el-button>
                 <el-button type="primary" :loading="isChecking" @click="dialog">I've decided!</el-button>
-                <el-button text bg type="default" @click="skip" v-if="profiles.length"
-                    >I don't want to mint, just go to the next step</el-button
-                >
+                <el-button text bg type="default" @click="skip" v-if="profiles.length">Skip</el-button>
             </el-form-item>
         </el-form>
         <div v-loading="ensLoading">
@@ -96,7 +79,7 @@
                     v-for="ens in ensList"
                     :key="ens"
                     @click="claimENS(ens)"
-                    >{{ ens }}</el-button
+                    >{{ ens.username }}</el-button
                 >
             </div>
             <div v-else class="text-gray-400 text-sm leading-8 mt-2 mb-4">Sorry, we did not find your ENS name</div>
@@ -132,7 +115,7 @@ if (!store.state.settings.address) {
     router.push('/');
 }
 
-const ensList = ref<string[]>([]);
+const ensList = ref<Profile[]>([]);
 const isChecking = ref(false);
 const isMinting = ref(false);
 const ensLoading = ref(true);
@@ -143,7 +126,7 @@ const avatarUri = ref('');
 const avatarUriLocked = ref(false);
 
 const validateHandle = (handle: string): boolean => {
-    return /^[a-z0-9_\\-]{1,31}$/.test(handle);
+    return /^[a-z0-9_\\-]{3,31}$/.test(handle);
 };
 
 const address = `${store.state.settings.address!.slice(0, 6)}...${store.state.settings.address!.slice(-4)}`;
@@ -167,9 +150,6 @@ const choose = async (profile: Profile) => {
 
 const ruleForm = reactive({
     handle: '',
-});
-
-const profileForm = reactive({
     name: '',
     avatar: '',
     bio: '',
@@ -178,6 +158,17 @@ const profileForm = reactive({
 const rules = reactive({
     handle: [
         {
+            required: true,
+            message: 'Please input handle',
+            trigger: 'blur',
+        },
+        {
+            min: 3,
+            max: 31,
+            message: 'Length should be 3 to 31',
+            trigger: 'blur',
+        },
+        {
             validator: (rule: any, value: any, callback: any) => {
                 if (validateHandle(value)) {
                     callback();
@@ -185,12 +176,10 @@ const rules = reactive({
                     callback(new Error());
                 }
             },
-            trigger: 'change',
+            message: 'Contains illegal characters',
+            trigger: 'blur',
         },
     ],
-});
-
-const profileRules = reactive({
     avatar: [
         {
             validator: debounce((rule: any, value: string, callback: any) => {
@@ -264,9 +253,9 @@ const mint = async () => {
         },
         {
             username: ruleForm.handle,
-            avatars: profileForm.avatar ? [profileForm.avatar] : undefined,
-            name: profileForm.name ? profileForm.name : undefined,
-            bio: profileForm.bio ? profileForm.bio : undefined,
+            ...(ruleForm.avatar && { avatars: [ruleForm.avatar] }),
+            ...(ruleForm.name && { name: ruleForm.name }),
+            ...(ruleForm.bio && { bio: ruleForm.bio }),
         },
     );
 
@@ -274,10 +263,17 @@ const mint = async () => {
     await next();
 };
 
-const claimENS = async (ens: string) => {
+const claimENS = async (ens: Profile) => {
     isMinting.value = true;
 
-    ruleForm.handle = ens.replace(/\.eth$/, '');
+    ruleForm.handle = ens.username!.replace(/\.eth$/, '');
+    if (ens.avatars?.[0]) {
+        ruleForm.avatar = ens.avatars[0];
+        setAvatarUri(ens.avatars[0]);
+        enLockAvatarUri(); // Prevent change by mistake
+    }
+    ruleForm.name = ens.name || ens.username!;
+    ruleForm.bio = ens.bio || '';
 
     isMinting.value = false;
 };
@@ -293,7 +289,7 @@ const initENS = async () => {
                 source: 'ENS',
                 identity: store.state.settings.address!,
             })
-        ).list.map((profile) => profile.username!);
+        ).list;
     } catch (e) {
         // Failed to find ENS profiles.
     }
@@ -308,7 +304,7 @@ const handleUpload = async (file: UploadFile) => {
         try {
             const ipfsUri = await upload(file.raw);
             ElMessage.success('Uploaded successfully!');
-            profileForm.avatar = ipfsUri;
+            ruleForm.avatar = ipfsUri;
             setAvatarUri(ipfsUri);
             enLockAvatarUri(); // Prevent change by mistake
         } catch (e: any) {

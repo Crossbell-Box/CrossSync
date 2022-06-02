@@ -13,7 +13,7 @@
                     'fill-[#E6A23C]': typeof isSyncing === 'string', // or isSyncing !== !!isSyncing
                     grayscale: isSyncing === false,
                     'opacity-50': !available,
-                    'mr-2': available,
+                    'mx-2': available,
                 }"
                 @click="toggleSyncing"
             >
@@ -66,6 +66,12 @@ const checkAvailable = () => {
 checkAvailable();
 
 document.addEventListener('keydown', () => {
+    setTimeout(() => {
+        checkAvailable();
+    }, 0);
+});
+
+document.addEventListener('keyup', () => {
     setTimeout(() => {
         checkAvailable();
     }, 0);

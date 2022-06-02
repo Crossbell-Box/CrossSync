@@ -22,7 +22,7 @@
         "@walletconnect/web3-provider": "^1.7.8",
         "bind-decorator": "^1.0.11",
         "buffer": "^6.0.3",
-        "crossbell.js": "^0.5.17",
+        "crossbell.js": "^0.5.18",
         "element-plus": "^2.2.2",
         "ethers": "^5.6.8",
         "events": "^3.3.0",
@@ -39,7 +39,7 @@
         "web3modal": "^1.9.7"
     },
     "devDependencies": {
-        "@crxjs/vite-plugin": "^1.0.6",
+        "@crxjs/vite-plugin": "^1.0.7",
         "@originjs/vite-plugin-commonjs": "^1.0.3",
         "@tailwindcss/line-clamp": "^0.4.0",
         "@types/chrome": "^0.0.188",
@@ -50,7 +50,7 @@
         "browserify-zlib": "^0.2.0",
         "husky": "^8.0.1",
         "less": "^4.1.2",
-        "lint-staged": "^12.5.0",
+        "lint-staged": "^13.0.0",
         "postcss": "^8.4.14",
         "prettier": "2.6.2",
         "rollup-plugin-polyfill-node": "^0.9.0",
@@ -59,7 +59,7 @@
         "typescript": "^4.7.2",
         "unplugin-auto-import": "^0.8.6",
         "unplugin-vue-components": "^0.19.6",
-        "vite": "3.0.0-alpha.8",
+        "vite": "3.0.0-alpha.9",
         "vue-tsc": "^0.35.2"
     }
 }

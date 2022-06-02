@@ -69,8 +69,8 @@
         <div v-loading="ensLoading" v-if="ensDeadline > +new Date()">
             <div v-if="ensList.length">
                 <p class="mt-14">
-                    <b>🎉 ENS Event:</b> We've reserved your ENS name for you, only you can claim it, click to claim it
-                    for free!
+                    <b>🎉 ENS Event:</b> We've reserved your ENS name and RSS3 RNS name for you, only you can claim it,
+                    click to claim it for free!
                 </p>
                 <el-button
                     text
@@ -81,6 +81,16 @@
                     :key="ens"
                     @click="claimENS(ens)"
                     >{{ ens.username }}</el-button
+                >
+                <el-button
+                    text
+                    bg
+                    type="primary"
+                    class="mt-2 mb-4"
+                    v-for="rns in rnsList"
+                    :key="rns"
+                    @click="claimENS(rns)"
+                    >{{ rns.username }}</el-button
                 >
             </div>
             <div v-else class="text-gray-400 text-sm leading-8 mt-2 mb-4">Sorry, we did not find your ENS name</div>
@@ -104,7 +114,6 @@ import { reactive, ref } from 'vue';
 import { ElMessage, UploadFile, UploadProps } from 'element-plus';
 import { useRouter } from 'vue-router';
 import { useStore } from '@/common/store';
-import ProfileCard from '@/components/Profiles.vue';
 import { Plus, Lock, Unlock } from '@element-plus/icons-vue';
 import { debounce } from 'lodash-es';
 import { upload } from '@/common/ipfs';
@@ -119,6 +128,7 @@ if (!store.state.settings.address) {
 }
 
 const ensList = ref<Profile[]>([]);
+const rnsList = ref<Profile[]>([]);
 const isChecking = ref(false);
 const isMinting = ref(false);
 const ensLoading = ref(true);
@@ -264,7 +274,7 @@ const mint = async () => {
             action: 'add',
         },
         {
-            username: ruleForm.handle,
+            username: ruleForm.handle + '.rss3',
             ...(ruleForm.avatar && { avatars: [ruleForm.avatar] }),
             ...(ruleForm.name && { name: ruleForm.name }),
             ...(ruleForm.bio && { bio: ruleForm.bio }),
@@ -279,7 +289,7 @@ const claimENS = async (ens: Profile) => {
     isENS = ens.username || '';
     isMinting.value = true;
 
-    ruleForm.handle = ens.username!.replace(/\.eth$/, '');
+    ruleForm.handle = ens.username!.replace(/\.eth$/, '').replace(/\.rss3$/, '');
     if (ens.avatars?.[0]) {
         ruleForm.avatar = ens.avatars[0];
         setAvatarUri(ens.avatars[0]);
@@ -303,6 +313,21 @@ const initENS = async () => {
                 identity: store.state.settings.address!,
             })
         ).list;
+        const rns = (await axios.get(`https://rss3.domains/address/${store.state.settings.address}`)).data.rnsName;
+        if (rns) {
+            const rnsProfile = (await axios.get(`https://prenode.rss3.dev/${store.state.settings.address}`)).data
+                .profile;
+            rnsList.value = [
+                {
+                    username: rns,
+                    name: rnsProfile.name,
+                    avatars: rnsProfile.avatar,
+                    bio: rnsProfile.bio,
+
+                    source: 'RNS',
+                },
+            ];
+        }
     } catch (e) {
         // Failed to find ENS profiles.
     }

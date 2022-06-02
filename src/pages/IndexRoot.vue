@@ -59,6 +59,8 @@ const connect = async (force = true) => {
             const balance = (await c.getBalance(address)).data;
             if (parseInt(balance) < 0.02 * Math.pow(10, 18)) {
                 await router.push('/faucet');
+            } else if (store.state.profiles?.list.length) {
+                await router.push('/profiles');
             } else {
                 await router.push('/mint');
             }

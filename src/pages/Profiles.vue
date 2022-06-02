@@ -17,9 +17,9 @@
             :key="profile.username"
             @click="choose(profile)"
         />
-        <el-button text bg type="primary" class="mt-2 mb-4" @click="router.push('/mint')"
-            >Or mint another one</el-button
-        >
+        <el-card class="relative cursor-pointer font-bold text-center" shadow="hover" @click="router.push('/mint')">
+            + Mint Another One
+        </el-card>
     </div>
 </template>
 

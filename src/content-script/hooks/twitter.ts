@@ -6,6 +6,7 @@ import { upload } from '@/common/ipfs';
 import { bucket, getSettings, key, store } from '@/common/store';
 
 import SyncToggleButton from '@/components/SyncToggle.vue';
+import SyncStatus from '@/components/SyncStatus.vue';
 import type { NoteInput } from 'unidata.js/dist/types/notes';
 
 let syncToggleApp: App<Element> | null = null;
@@ -225,32 +226,91 @@ class TwitterHook {
         // All tweets
         const allTweets = document.querySelectorAll('[data-testid="tweet"]');
         Array.from(allTweets).forEach((tweet) => {
-            if (tweet) {
+            if (tweet && !tweet.querySelector('[cssc="sync-status"]')) {
                 // Get link
                 const link = tweet.querySelector('time')?.parentElement?.getAttribute('href');
                 if (link) {
                     // Check if it's already synced
                     const tx = ''; // todo: get real tx hash
-                    if (tx) {
-                        // Already synced
-                        // todo: generate synced notice
-                    } else {
-                        // Not synced
-                        // todo: generate sync button
+                    // Get tweet data
+                    const tweetText = tweet.querySelector('[data-testid="tweetText"]')?.textContent || '';
+                    const tweetMedia = {
+                        photo: Array.from(tweet.querySelectorAll('[data-testid="tweetPhoto"] img')).map((img) =>
+                            img.getAttribute('src'),
+                        ),
+                        // video: Array.from(tweet.querySelectorAll('[data-testid="videoPlayer"] video'))
+                        //   .map(video => video.getAttribute('src')), // Not downloadable
+                    };
+                    const syncStatus = createApp(SyncStatus, {
+                        tx,
+                        postFunc: async () => {
+                            let newTx = '';
+                            const settings = await getSettings();
+                            const handle = settings.handle;
+                            const unidata = await this.main.getUnidata();
+                            let notice: MessageHandle | undefined;
+                            notice = ElMessage.warning({
+                                dangerouslyUseHTMLString: true,
+                                message:
+                                    '<p>CrossSync is syncing your posting...</p><p style="margin-top: 7px;font-size: 12px;">(1/2) Uploading posting to IPFS</p>',
+                                duration: 0,
+                            });
 
-                        // Get tweet data
-                        const tweetText = tweet.querySelector('[data-testid="tweetText"]')?.textContent;
-                        const tweetMedia = {
-                            photo: Array.from(tweet.querySelectorAll('[data-testid="tweetPhoto"] img')).map((img) =>
-                                img.getAttribute('src'),
-                            ),
-                            // video: Array.from(tweet.querySelectorAll('[data-testid="videoPlayer"] video'))
-                            //   .map(video => video.getAttribute('src')), // Not downloadable
-                        };
-                    }
-                    // todo: mount sync button or status notice
+                            // Upload to IPFS
+                            // todo: upload media
+
+                            notice?.close();
+                            notice = ElMessage.warning({
+                                dangerouslyUseHTMLString: true,
+                                message:
+                                    '<p>CrossSync is syncing your posting...</p><p style="margin-top: 7px;font-size: 12px;">(2/2) Waiting for signature and transaction on Crossbell</p>',
+                                duration: 0,
+                            });
+
+                            const note = {
+                                tags: ['CrossSync', 'Twitter'],
+                                authors: [`csb://account:${username}@twitter`],
+                                body: {
+                                    content: tweetText,
+                                    mime_type: 'text/plain',
+                                    size_in_bytes: tweetText.length,
+                                },
+                                // attachments: uploadedAttachments,
+                            };
+                            this.main.xlog('info', 'Posting tweet...', note);
+                            if (handle && unidata) {
+                                try {
+                                    const { data } = await unidata.notes.set(
+                                        {
+                                            source: 'Crossbell Note',
+                                            identity: handle,
+                                            platform: 'Crossbell',
+                                            action: 'add',
+                                        },
+                                        note,
+                                    );
+                                    ElMessage.success(
+                                        'CrossSync has successfully synced your posting to blockchain! 🎉',
+                                    );
+                                    newTx = data.tx; // todo: get real tx hash
+                                } catch (e) {
+                                    this.main.xlog('error', 'Failed to post note.', e);
+                                    ElMessage.error('CrossSync encountered a problem: Unidata failed to post note.');
+                                }
+                            } else {
+                                this.main.xlog('info', `Failed to get Unidata Instance.`);
+                                ElMessage.error('CrossSync encountered a problem: Unidata instance is not ready.');
+                            }
+
+                            notice?.close();
+                            return newTx;
+                        },
+                    });
+                    syncStatus.use(ElementPlus);
+                    syncStatus.use(store, key);
 
                     const syncStatusContainer = document.createElement('div');
+                    syncStatus.mount(syncStatusContainer);
 
                     const moreButton = tweet.querySelector('[data-testid="caret"]');
                     if (moreButton && moreButton.parentNode) {

@@ -103,7 +103,7 @@
             🎉 Congratulations! This handle <b>{{ ruleForm.handle }}</b> is available to mint!
         </p>
         <p class="mb-4">
-            Before continue, please tell your Twitter followers you are syncing your tweets to blockchain and truly
+            Before continuing, please tell your Twitter followers you are syncing your tweets to blockchain and truly
             owning your tweet!
         </p>
         <el-button type="primary" @click="tweet">Tweet</el-button>

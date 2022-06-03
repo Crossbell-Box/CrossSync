@@ -44,7 +44,7 @@ class TwitterHook {
                         notice = ElMessage.warning({
                             dangerouslyUseHTMLString: true,
                             message:
-                                '<p>CrossSync is syncing your posting...</p><p style="margin-top: 7px;font-size: 12px;">(1/2) Uploading posting to IPFS</p>',
+                                '<p>CrossSync is syncing your post...</p><p style="margin-top: 7px;font-size: 12px;">(1/2) Uploading post to IPFS</p>',
                             duration: 0,
                         });
 
@@ -102,7 +102,7 @@ class TwitterHook {
                         notice = ElMessage.warning({
                             dangerouslyUseHTMLString: true,
                             message:
-                                '<p>CrossSync is syncing your posting...</p><p style="margin-top: 7px;font-size: 12px;">(2/2) Waiting for signature and transaction on Crossbell</p>',
+                                '<p>CrossSync is syncing your post...</p><p style="margin-top: 7px;font-size: 12px;">(2/2) Waiting for signature and transaction on Crossbell</p>',
                             duration: 0,
                         });
 
@@ -118,7 +118,7 @@ class TwitterHook {
                                     },
                                     note,
                                 );
-                                ElMessage.success('CrossSync has successfully synced your posting to blockchain! 🎉');
+                                ElMessage.success('CrossSync has successfully synced your post to blockchain! 🎉');
                             } catch (e) {
                                 this.main.xlog('error', 'Failed to post note.', e);
                                 ElMessage.error('CrossSync encountered a problem: Unidata failed to post note.');

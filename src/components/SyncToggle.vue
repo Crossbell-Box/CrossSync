@@ -27,6 +27,7 @@
 import { bucket, getSettings } from '@/common/store';
 import { ref } from 'vue';
 import logo from '../assets/logo.svg?raw';
+import { ElMessage } from 'element-plus';
 
 const isSyncing = ref<boolean | string>('Loading...');
 const available = ref(false);
@@ -38,7 +39,9 @@ const toggleSyncing = async () => {
         });
     }
     if (typeof settings.syncing === 'string') {
-        settings.syncing = true;
+        ElMessage.warning({
+            message: `Please switch and connet your wallet account ${settings.address} and refresh the page.`,
+        });
     } else {
         settings.syncing = !settings.syncing;
     }

@@ -4,9 +4,8 @@
             <div class="inline-block rounded-full align-middle fill-[#5088ff] w-36 h-36">
                 <span class="flex w-full h-full items-center logo" v-html="logo" />
             </div>
-            <h1 class="text-4xl font-bold my-5">Welcome to CrossSync! 👋</h1>
-            <p class="my-5 text-slate-400">Here are some introductions to CrossSync and Crossbell...</p>
-            <el-button type="primary" :loading="isConnecting" round size="large" class="text-xl" @click="connect"
+            <h1 class="text-4xl font-bold my-6">Welcome to CrossSync! 👋</h1>
+            <el-button type="primary" :loading="isConnecting" round size="large" class="text-xl mt-2" @click="connect"
                 >Connect Wallet</el-button
             >
         </div>

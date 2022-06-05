@@ -23,7 +23,7 @@ const web3Modal = new Web3Modal({
 let metaMaskProvider: ReturnType<typeof createMetaMaskProvider>;
 
 export async function connect(force = false) {
-    if (window.chrome?.runtime?.id) {
+    if (!window.ethereum) {
         if (!metaMaskProvider) {
             metaMaskProvider = createMetaMaskProvider();
         }
@@ -36,6 +36,10 @@ export async function connect(force = false) {
                         eth_accounts: {},
                     },
                 ],
+            });
+        } else {
+            await metaMaskProvider.request({
+                method: 'eth_requestAccounts',
             });
         }
 

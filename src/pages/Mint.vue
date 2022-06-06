@@ -276,7 +276,7 @@ const mint = async () => {
             action: 'add',
         },
         {
-            username: ruleForm.handle + '.rss3',
+            username: ruleForm.handle,
             ...(ruleForm.avatar && { avatars: [ruleForm.avatar] }),
             ...(ruleForm.name && { name: ruleForm.name }),
             ...(ruleForm.bio && { bio: ruleForm.bio }),

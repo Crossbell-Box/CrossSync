@@ -4,6 +4,7 @@ import '@/common/locationChange';
 import { connect as w3mConnect } from '@/common/wallet';
 import Unidata from 'unidata.js';
 import TwitterHook from './hooks/twitter';
+import AsyncLock from 'async-lock';
 
 import '../css/lib.css';
 
@@ -14,11 +15,14 @@ export interface Hook {
 
 class CrossSyncContentScript {
     private unidata: Unidata | undefined;
+    private lock: AsyncLock;
+
     address: string | undefined;
 
     constructor() {
         this.xlog('info', 'CorssSync Content Script is running');
         this.initHooks();
+        this.lock = new AsyncLock();
     }
 
     private async initHooks() {
@@ -35,26 +39,28 @@ class CrossSyncContentScript {
     }
 
     async getUnidata() {
-        if (!this.unidata) {
-            try {
-                const provider = await w3mConnect(); // Metamask
-                if (provider) {
-                    this.address = (
-                        await provider.request({
-                            method: 'eth_accounts',
-                        })
-                    )?.[0];
-                    // this.xlog('info', 'Init unidata with address: ', this.address);
-                    this.unidata = new Unidata({
-                        ethereumProvider: provider,
-                    });
-                } else {
-                    this.xlog('warn', 'No provider');
+        await this.lock.acquire('getUnidata', async () => {
+            if (!this.unidata) {
+                try {
+                    const provider = await w3mConnect(); // Metamask
+                    if (provider) {
+                        this.address = (
+                            await provider.request({
+                                method: 'eth_accounts',
+                            })
+                        )?.[0];
+                        // this.xlog('info', 'Init unidata with address: ', this.address);
+                        this.unidata = new Unidata({
+                            ethereumProvider: provider,
+                        });
+                    } else {
+                        this.xlog('warn', 'No provider');
+                    }
+                } catch (e: any) {
+                    this.xlog('error', 'Failed to initialize Unidata', e);
                 }
-            } catch (e: any) {
-                this.xlog('error', 'Failed to initialize Unidata', e);
             }
-        }
+        });
         return this.unidata;
     }
 

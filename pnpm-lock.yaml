@@ -10,11 +10,13 @@ specifiers:
     '@fortawesome/vue-fontawesome': ^3.0.0-5
     '@originjs/vite-plugin-commonjs': ^1.0.3
     '@tailwindcss/line-clamp': ^0.4.0
+    '@types/async-lock': ^1.1.5
     '@types/chrome': ^0.0.188
     '@types/lodash-es': ^4.17.6
     '@types/markdown-it': ^12.2.3
     '@vitejs/plugin-vue': ^2.3.3
     '@walletconnect/web3-provider': ^1.7.8
+    async-lock: ^1.3.1
     autoprefixer: ^10.4.7
     axios: ^0.27.2
     bind-decorator: ^1.0.11
@@ -57,6 +59,7 @@ dependencies:
     '@fortawesome/free-solid-svg-icons': 6.1.1
     '@fortawesome/vue-fontawesome': 3.0.0-5_ra36apx7k7u2r4lnz24hnvxtpe
     '@walletconnect/web3-provider': 1.7.8
+    async-lock: 1.3.1
     axios: 0.27.2
     bind-decorator: 1.0.11
     buffer: 6.0.3
@@ -80,6 +83,7 @@ devDependencies:
     '@crxjs/vite-plugin': 1.0.7_vite@3.0.0-alpha.9
     '@originjs/vite-plugin-commonjs': 1.0.3
     '@tailwindcss/line-clamp': 0.4.0_tailwindcss@3.0.24
+    '@types/async-lock': 1.1.5
     '@types/chrome': 0.0.188
     '@types/lodash-es': 4.17.6
     '@types/markdown-it': 12.2.3
@@ -1482,6 +1486,13 @@ packages:
             tailwindcss: 3.0.24
         dev: true
 
+    /@types/async-lock/1.1.5:
+        resolution:
+            {
+                integrity: sha512-A9ClUfmj6wwZMLRz0NaYzb98YH1exlHdf/cdDSKBfMQJnPOdO8xlEW0Eh2QsTTntGzOFWURcEjYElkZ1IY4GCQ==,
+            }
+        dev: true
+
     /@types/bn.js/4.11.6:
         resolution:
             {
@@ -2453,6 +2464,13 @@ packages:
         resolution:
             {
                 integrity: sha512-csOlWGAcRFJaI6m+F2WKdnMKr4HhdhFVBk0H/QbJFMCr+uO2kwohwXQPxw/9OCxp05r5ghVBFSyioixx3gfkNQ==,
+            }
+        dev: false
+
+    /async-lock/1.3.1:
+        resolution:
+            {
+                integrity: sha512-zK7xap9UnttfbE23JmcrNIyueAn6jWshihJqA33U/hEnKprF/lVGBDsBv/bqLm2YMMl1DnpHhUY044eA0t1TUw==,
             }
         dev: false
 

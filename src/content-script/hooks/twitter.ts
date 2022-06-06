@@ -31,7 +31,6 @@ class TwitterHook {
         ];
 
         let startPromise: Promise<NoteInput> | undefined;
-        let notice: MessageHandle | undefined;
         chrome.runtime.onMessage.addListener(async (msg) => {
             if (msg.type === 'create-tweet-start') {
                 startPromise = new Promise(async (resolve) => {
@@ -42,42 +41,27 @@ class TwitterHook {
                     if (handle && syncing === true) {
                         this.main.xlog('info', 'Sync triggered.');
 
-                        notice = ElMessage.warning({
-                            dangerouslyUseHTMLString: true,
-                            message:
-                                '<p>CrossSync is syncing your post...</p><p style="margin-top: 7px;font-size: 12px;">(1/2) Uploading post to IPFS</p>',
-                            duration: 0,
-                        });
-
-                        const username = this.getUsername();
-
                         const tweet = (<HTMLElement>document.querySelector('[data-testid=tweetTextarea_0]'))?.innerText;
 
-                        const tweetAttachmentElements = document.querySelectorAll(
-                            '[data-testid="attachments"] img, [data-testid="attachments"] source',
-                        );
+                        const attachmentUrls = Array.from(
+                            document.querySelectorAll(
+                                '[data-testid="attachments"] img, [data-testid="attachments"] source',
+                            ),
+                        ).map((attachment) => {
+                            return (<HTMLImageElement | HTMLSourceElement>attachment).src;
+                        });
 
-                        const uploadedAttachments = await Promise.all(
-                            Array.from(tweetAttachmentElements).map(async (attachment) => {
-                                const result = await fetch((<HTMLImageElement | HTMLSourceElement>attachment).src);
-                                const blob = await result.blob();
-                                return {
-                                    address: await upload(blob),
-                                    mime_type: blob.type,
-                                    size_in_bytes: blob.size,
-                                };
-                            }),
-                        );
+                        const attachments = await this.uploadAttachments(attachmentUrls);
 
                         resolve({
                             tags: ['CrossSync', 'Twitter'],
-                            authors: [`csb://account:${username}@twitter`],
+                            authors: [`csb://account:${this.getUsername()}@twitter`],
                             body: {
                                 content: tweet,
                                 mime_type: 'text/plain',
                                 size_in_bytes: tweet.length,
                             },
-                            attachments: uploadedAttachments,
+                            attachments,
                         });
                     }
                 });
@@ -85,53 +69,17 @@ class TwitterHook {
                     ElMessage.error(`CrossSync encountered a problem: ${err.message}`);
                 });
             } else if (msg.type === 'create-tweet-end') {
-                const settings = await getSettings();
-                const handle = settings.handle;
-                const syncing = settings.syncing;
+                if (startPromise) {
+                    const note = await startPromise;
+                    const link = document.querySelector('time')?.parentElement?.getAttribute('href');
+                    note.related_urls = [`https://twitter.com${link}`];
 
-                if (handle && syncing === true) {
-                    if (startPromise) {
-                        const note = await startPromise;
-                        const link = document.querySelector('time')?.parentElement?.getAttribute('href');
-                        note.related_urls = [`https://twitter.com${link}`];
+                    this.main.xlog('info', 'Trigger auto posting tweet...', note);
 
-                        this.main.xlog('info', 'Posting tweet...', note);
-
-                        notice?.close();
-                        notice = ElMessage.warning({
-                            dangerouslyUseHTMLString: true,
-                            message:
-                                '<p>CrossSync is syncing your post...</p><p style="margin-top: 7px;font-size: 12px;">(2/2) Waiting for signature and transaction on Crossbell</p>',
-                            duration: 0,
-                        });
-
-                        const unidata = await this.main.getUnidata();
-                        if (unidata) {
-                            try {
-                                await unidata.notes.set(
-                                    {
-                                        source: 'Crossbell Note',
-                                        identity: handle,
-                                        platform: 'Crossbell',
-                                        action: 'add',
-                                    },
-                                    note,
-                                );
-                                ElMessage.success('CrossSync has successfully synced your post to blockchain! 🎉');
-                            } catch (e) {
-                                this.main.xlog('error', 'Failed to post note.', e);
-                                ElMessage.error('CrossSync encountered a problem: Unidata failed to post note.');
-                            }
-                        } else {
-                            this.main.xlog('info', `Failed to get Unidata Instance.`);
-                            ElMessage.error('CrossSync encountered a problem: Unidata instance is not ready.');
-                        }
-
-                        notice?.close();
-                    } else {
-                        this.main.xlog('info', `Failed to find note info.`);
-                        ElMessage.error('CrossSync encountered a problem: Failed to find note info.');
-                    }
+                    this.sync(note);
+                } else {
+                    this.main.xlog('info', `Failed to find note info.`);
+                    ElMessage.error('CrossSync encountered a problem: Failed to find note info.');
                 }
             }
         });
@@ -154,6 +102,91 @@ class TwitterHook {
             this.main.xlog('error', 'Failed to add route change event listener.', e);
         }
         this.mountSyncOldTweets(); // Init Run
+    }
+
+    private async sync(note: NoteInput, attachmentUrls?: string[]) {
+        const settings = await getSettings();
+        const handle = settings.handle;
+        const syncing = settings.syncing;
+        let notice: MessageHandle | undefined;
+
+        if (handle && syncing === true) {
+            if (attachmentUrls) {
+                note.attachments = await this.uploadAttachments(attachmentUrls);
+            }
+
+            this.main.xlog('info', 'Posting tweet...', note);
+
+            notice?.close();
+            notice = ElMessage.warning({
+                dangerouslyUseHTMLString: true,
+                message:
+                    '<p>CrossSync is syncing your post...</p><p style="margin-top: 7px;font-size: 12px;">(2/2) Waiting for signature and transaction on Crossbell</p>',
+                duration: 0,
+            });
+
+            const unidata = await this.main.getUnidata();
+            if (unidata) {
+                try {
+                    const data = await unidata.notes.set(
+                        {
+                            source: 'Crossbell Note',
+                            identity: handle,
+                            platform: 'Crossbell',
+                            action: 'add',
+                        },
+                        note,
+                    );
+                    ElMessage.success('CrossSync has successfully synced your post to blockchain! 🎉');
+
+                    if (data.code !== 0) {
+                        ElMessage.error(`CrossSync encountered a problem: ${data.message}`);
+                    } else {
+                        return data.data;
+                    }
+                } catch (e) {
+                    this.main.xlog('error', 'Failed to post note.', e);
+                    ElMessage.error('CrossSync encountered a problem: Unidata failed to post note.');
+                }
+            } else {
+                this.main.xlog('info', `Failed to get Unidata Instance.`);
+                ElMessage.error('CrossSync encountered a problem: Unidata instance is not ready.');
+            }
+
+            notice?.close();
+        }
+    }
+
+    private async uploadAttachments(attachmentUrls: string[]) {
+        const settings = await getSettings();
+        const handle = settings.handle;
+        const syncing = settings.syncing;
+        let notice: MessageHandle | undefined;
+        if (handle && syncing === true) {
+            // attachments
+            notice = ElMessage.warning({
+                dangerouslyUseHTMLString: true,
+                message:
+                    '<p>CrossSync is syncing your post...</p><p style="margin-top: 7px;font-size: 12px;">(1/2) Uploading post attachments to IPFS</p>',
+                duration: 0,
+            });
+
+            const attachments = await Promise.all(
+                Array.from(attachmentUrls).map(async (attachment) => {
+                    const result = await fetch(attachment);
+                    const blob = await result.blob();
+                    return {
+                        address: await upload(blob),
+                        mime_type: blob.type,
+                        size_in_bytes: blob.size,
+                    };
+                }),
+            );
+
+            notice?.close();
+
+            return attachments;
+        }
     }
 
     private mountSyncToggleApp(el: Element) {
@@ -235,7 +268,7 @@ class TwitterHook {
                         ),
                         // ...Array.from(tweet.querySelectorAll('[data-testid="videoPlayer"] video'))
                         //   .map(video => video.getAttribute('src')), // Not downloadable
-                    ].filter((url) => !!url);
+                    ].filter((url) => !!url) as string[];
                     const syncStatus = createApp(SyncStatus, {
                         loadFunc: async () => {
                             // Check if it's already synced
@@ -250,37 +283,6 @@ class TwitterHook {
                         },
                         postFunc: async () => {
                             let newNoteID = '';
-                            const settings = await getSettings();
-                            const handle = settings.handle;
-                            const unidata = await this.main.getUnidata();
-                            let notice: MessageHandle | undefined;
-                            notice = ElMessage.warning({
-                                dangerouslyUseHTMLString: true,
-                                message:
-                                    '<p>CrossSync is syncing your posting...</p><p style="margin-top: 7px;font-size: 12px;">(1/2) Uploading posting to IPFS</p>',
-                                duration: 0,
-                            });
-
-                            // Upload to IPFS
-                            const uploadedAttachments = await Promise.all(
-                                Array.from(tweetMedia).map(async (attachment) => {
-                                    const result = await fetch(attachment!);
-                                    const blob = await result.blob();
-                                    return {
-                                        address: await upload(blob),
-                                        mime_type: blob.type,
-                                        size_in_bytes: blob.size,
-                                    };
-                                }),
-                            );
-
-                            notice?.close();
-                            notice = ElMessage.warning({
-                                dangerouslyUseHTMLString: true,
-                                message:
-                                    '<p>CrossSync is syncing your posting...</p><p style="margin-top: 7px;font-size: 12px;">(2/2) Waiting for signature and transaction on Crossbell</p>',
-                                duration: 0,
-                            });
 
                             const note = {
                                 tags: ['CrossSync', 'Twitter'],
@@ -290,35 +292,12 @@ class TwitterHook {
                                     mime_type: 'text/plain',
                                     size_in_bytes: tweetText.length,
                                 },
-                                attachments: uploadedAttachments,
                                 related_urls: [link],
                             };
-                            this.main.xlog('info', 'Posting tweet...', note);
-                            if (handle && unidata) {
-                                try {
-                                    const { data } = await unidata.notes.set(
-                                        {
-                                            source: 'Crossbell Note',
-                                            identity: handle,
-                                            platform: 'Crossbell',
-                                            action: 'add',
-                                        },
-                                        note,
-                                    );
-                                    ElMessage.success(
-                                        'CrossSync has successfully synced your posting to blockchain! 🎉',
-                                    );
-                                    newNoteID = data;
-                                } catch (e) {
-                                    this.main.xlog('error', 'Failed to post note.', e);
-                                    ElMessage.error('CrossSync encountered a problem: Unidata failed to post note.');
-                                }
-                            } else {
-                                this.main.xlog('info', `Failed to get Unidata Instance.`);
-                                ElMessage.error('CrossSync encountered a problem: Unidata instance is not ready.');
-                            }
 
-                            notice?.close();
+                            const data = await this.sync(note, tweetMedia);
+                            newNoteID = data || '';
+
                             return newNoteID;
                         },
                     });

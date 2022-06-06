@@ -216,10 +216,6 @@ class TwitterHook {
     private mountSyncOldTweets() {
         // Only activate on Personal Timeline
         const username = this.getUsername();
-        if (window.location.pathname !== `/${username}`) {
-            this.main.xlog('info', `Not on personal timeline (${username}).`);
-            return;
-        }
 
         this.main.xlog('info', 'Mounting sync old tweets button...');
 
@@ -229,8 +225,8 @@ class TwitterHook {
             if (tweet && !tweet.querySelector('[cssc="sync-status"]')) {
                 // Get link
                 const tweetPath = tweet.querySelector('time')?.parentElement?.getAttribute('href');
-                const link = `https://twitter.com${tweetPath}`;
-                if (link) {
+                if (tweetPath && tweetPath.includes(`/${username}/status/`)) {
+                    const link = `https://twitter.com${tweetPath}`;
                     // Get tweet data
                     const tweetText = tweet.querySelector('[data-testid="tweetText"]')?.textContent || '';
                     const tweetMedia = [

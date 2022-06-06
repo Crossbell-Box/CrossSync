@@ -1,5 +1,5 @@
 <template>
-    <el-tooltip placement="left" :content="loading ? 'Syncing...' : noteID || 'Click to sync'">
+    <el-tooltip placement="left" :content="loading ? loadingNotice : noteID || 'Click to sync'">
         <div
             class="flex w-6 h-6"
             :class="{
@@ -22,8 +22,9 @@ import { ref } from 'vue';
 import { Loading } from '@element-plus/icons-vue';
 
 const props = defineProps({
-    noteID: {
-        type: String,
+    loadFunc: {
+        type: Function,
+        required: true,
     },
     postFunc: {
         type: Function,
@@ -31,15 +32,24 @@ const props = defineProps({
     },
 });
 
-const noteID = ref(props.noteID);
-const loading = ref(false);
+const noteID = ref('');
+const loading = ref(true);
+const loadingNotice = ref('Loading...');
 
 const syncOrRedirect = async (e: any) => {
     loading.value = true;
     e.preventDefault();
     if (!noteID.value) {
+        loadingNotice.value = 'Syncing...';
         noteID.value = await props.postFunc();
     }
     loading.value = false;
 };
+
+const init = async () => {
+    noteID.value = await props.loadFunc();
+    loading.value = false;
+};
+
+init();
 </script>

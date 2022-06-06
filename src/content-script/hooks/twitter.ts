@@ -225,23 +225,12 @@ class TwitterHook {
 
         // All tweets
         const allTweets = document.querySelectorAll('[data-testid="tweet"]');
-        Array.from(allTweets).forEach(async (tweet) => {
+        Array.from(allTweets).forEach((tweet) => {
             if (tweet && !tweet.querySelector('[cssc="sync-status"]')) {
                 // Get link
-                const link = tweet.querySelector('time')?.parentElement?.getAttribute('href');
+                const tweetPath = tweet.querySelector('time')?.parentElement?.getAttribute('href');
+                const link = `https://twitter.com${tweetPath}`;
                 if (link) {
-                    // Check if it's already synced
-                    const unidata = await this.main.getUnidata();
-                    const noteResp = await unidata?.notes.get({
-                        source: 'Crossbell Note',
-                        filter: {
-                            url: link,
-                        },
-                    });
-                    let noteID = '';
-                    if (noteResp?.list?.length) {
-                        noteID = noteResp.list[0].id || '';
-                    }
                     // Get tweet data
                     const tweetText = tweet.querySelector('[data-testid="tweetText"]')?.textContent || '';
                     const tweetMedia = [
@@ -252,7 +241,17 @@ class TwitterHook {
                         //   .map(video => video.getAttribute('src')), // Not downloadable
                     ].filter((url) => !!url);
                     const syncStatus = createApp(SyncStatus, {
-                        noteID,
+                        loadFunc: async () => {
+                            // Check if it's already synced
+                            const unidata = await this.main.getUnidata();
+                            const noteResp = await unidata?.notes.get({
+                                source: 'Crossbell Note',
+                                filter: {
+                                    url: link,
+                                },
+                            });
+                            return noteResp?.list?.[0]?.id || '';
+                        },
                         postFunc: async () => {
                             let newNoteID = '';
                             const settings = await getSettings();
@@ -296,6 +295,7 @@ class TwitterHook {
                                     size_in_bytes: tweetText.length,
                                 },
                                 attachments: uploadedAttachments,
+                                related_urls: [link],
                             };
                             this.main.xlog('info', 'Posting tweet...', note);
                             if (handle && unidata) {
@@ -312,7 +312,7 @@ class TwitterHook {
                                     ElMessage.success(
                                         'CrossSync has successfully synced your posting to blockchain! 🎉',
                                     );
-                                    newNoteID = data.noteId;
+                                    newNoteID = data;
                                 } catch (e) {
                                     this.main.xlog('error', 'Failed to post note.', e);
                                     ElMessage.error('CrossSync encountered a problem: Unidata failed to post note.');

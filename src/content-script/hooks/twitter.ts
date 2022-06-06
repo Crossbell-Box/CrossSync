@@ -141,8 +141,6 @@ class TwitterHook {
 
                     if (data.code !== 0) {
                         ElMessage.error(`CrossSync encountered a problem: ${data.message}`);
-                    } else {
-                        return data.data;
                     }
                 } catch (e) {
                     this.main.xlog('error', 'Failed to post note.', e);
@@ -270,7 +268,7 @@ class TwitterHook {
                         //   .map(video => video.getAttribute('src')), // Not downloadable
                     ].filter((url) => !!url) as string[];
                     const syncStatus = createApp(SyncStatus, {
-                        loadFunc: async () => {
+                        getNote: async () => {
                             // Check if it's already synced
                             const unidata = await this.main.getUnidata();
                             const noteResp = await unidata?.notes.get({
@@ -279,9 +277,9 @@ class TwitterHook {
                                     url: link,
                                 },
                             });
-                            return noteResp?.list?.[0]?.id || '';
+                            return noteResp?.list[0];
                         },
-                        postFunc: async () => {
+                        postNote: async () => {
                             let newNoteID = '';
 
                             const note = {
@@ -295,10 +293,7 @@ class TwitterHook {
                                 related_urls: [link],
                             };
 
-                            const data = await this.sync(note, tweetMedia);
-                            newNoteID = data || '';
-
-                            return newNoteID;
+                            await this.sync(note, tweetMedia);
                         },
                     });
                     syncStatus.use(ElementPlus);

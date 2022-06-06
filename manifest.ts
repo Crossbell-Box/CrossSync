@@ -32,7 +32,7 @@ const manifest: ManifestV3Export = {
             matches: ['*://*.twitter.com/*'],
         },
     ],
-    permissions: ['storage', 'webRequest'],
+    permissions: ['storage', 'webRequest', 'webNavigation'],
     host_permissions: ['*://*.twitter.com/*'],
 };
 

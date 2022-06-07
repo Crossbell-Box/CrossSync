@@ -14,10 +14,12 @@ let crossSyncToggleEl: HTMLDivElement;
 
 class TwitterHook {
     hooks: Hook[];
-    main: Main;
+    private main: Main;
+    private noteCache: Map<string, NoteInput>;
 
     constructor(main: Main) {
         this.main = main;
+        this.noteCache = new Map();
 
         this.hooks = [
             {
@@ -276,15 +278,22 @@ class TwitterHook {
                     ].filter((url) => !!url) as string[];
                     const syncStatus = createApp(SyncStatus, {
                         getNote: async () => {
-                            // Check if it's already synced
-                            const unidata = await this.main.getUnidata();
-                            const noteResp = await unidata?.notes.get({
-                                source: 'Crossbell Note',
-                                filter: {
-                                    url: link,
-                                },
-                            });
-                            return noteResp?.list[0];
+                            if (this.noteCache.has(link)) {
+                                return this.noteCache.get(link);
+                            } else {
+                                // Check if it's already synced
+                                const unidata = await this.main.getUnidata();
+                                const noteResp = await unidata?.notes.get({
+                                    source: 'Crossbell Note',
+                                    filter: {
+                                        url: link,
+                                    },
+                                });
+                                if (noteResp?.list[0]) {
+                                    this.noteCache.set(link, noteResp?.list[0]);
+                                }
+                                return noteResp?.list[0];
+                            }
                         },
                         postNote: async () => {
                             let newNoteID = '';

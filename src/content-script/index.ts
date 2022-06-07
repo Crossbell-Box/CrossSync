@@ -11,6 +11,7 @@ import '../css/lib.css';
 export interface Hook {
     selector: string;
     callback: (el: Element) => void;
+    endless?: boolean;
 }
 
 class CrossSyncContentScript {
@@ -29,7 +30,7 @@ class CrossSyncContentScript {
         switch (new URL(window.location.href).host) {
             case 'twitter.com':
                 new TwitterHook(this).hooks.forEach((h) => {
-                    observe(h.selector, h.callback);
+                    observe(h.selector, h.callback, h.endless);
                 });
                 break;
             default:

@@ -33,6 +33,7 @@ class TwitterHook {
                 callback: async (el) => {
                     this.mountSyncOldTweets();
                 },
+                endless: true,
             },
         ];
 

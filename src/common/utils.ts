@@ -2,7 +2,7 @@ import { debounce } from 'lodash-es';
 
 const interval = 200;
 const maxCount = 10000 / interval;
-export function observe(selector: string, callback: (ele: Element) => void) {
+export function observe(selector: string, callback: (ele: Element) => void, endless?: boolean) {
     let observer: MutationObserver;
     let cache: Element;
     const cb = (result: Element) => {
@@ -14,7 +14,7 @@ export function observe(selector: string, callback: (ele: Element) => void) {
     const run = () => {
         let currentCount = 0;
         const result = document.querySelector(selector);
-        if (result) {
+        if (result && !endless) {
             cb(result);
         } else {
             if (observer) {
@@ -23,13 +23,19 @@ export function observe(selector: string, callback: (ele: Element) => void) {
             observer = new MutationObserver(
                 debounce(() => {
                     const result = document.querySelector(selector);
-                    if (result) {
-                        observer.disconnect();
-                        cb(result);
-                    } else if (currentCount > maxCount) {
-                        observer.disconnect();
+                    if (!endless) {
+                        if (result) {
+                            observer.disconnect();
+                            cb(result);
+                        } else if (currentCount > maxCount) {
+                            observer.disconnect();
+                        } else {
+                            currentCount++;
+                        }
                     } else {
-                        currentCount++;
+                        if (result) {
+                            cb(result);
+                        }
                     }
                 }, interval),
             );

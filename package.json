@@ -13,7 +13,7 @@
         "**/*": "prettier --write --ignore-unknown"
     },
     "dependencies": {
-        "@element-plus/icons-vue": "2.0.1",
+        "@element-plus/icons-vue": "2.0.4",
         "@extend-chrome/storage": "^1.5.0",
         "@fortawesome/fontawesome-svg-core": "^6.1.1",
         "@fortawesome/free-brands-svg-icons": "^6.1.1",
@@ -25,7 +25,7 @@
         "bind-decorator": "^1.0.11",
         "buffer": "^6.0.3",
         "crossbell.js": "^0.5.18",
-        "element-plus": "^2.2.2",
+        "element-plus": "^2.2.4",
         "ethers": "^5.6.8",
         "events": "^3.3.0",
         "lodash-es": "^4.17.21",
@@ -33,7 +33,7 @@
         "metamask-extension-provider": "^3.0.0",
         "moment": "^2.29.3",
         "process": "^0.11.10",
-        "unidata.js": "^0.4.4",
+        "unidata.js": "^0.4.7",
         "util": "^0.12.4",
         "vue": "^3.2.36",
         "vue-router": "^4.0.15",

@@ -23,7 +23,7 @@ specifiers:
     browserify-zlib: ^0.2.0
     buffer: ^6.0.3
     crossbell.js: ^0.5.18
-    element-plus: ^2.2.4
+    element-plus: 2.2.2
     ethers: ^5.6.8
     events: ^3.3.0
     husky: ^8.0.1
@@ -64,7 +64,7 @@ dependencies:
     bind-decorator: 1.0.11
     buffer: 6.0.3
     crossbell.js: 0.5.18
-    element-plus: 2.2.4_vue@3.2.36
+    element-plus: 2.2.2_vue@3.2.36
     ethers: 5.6.8
     events: 3.3.0
     lodash-es: 4.17.21
@@ -613,10 +613,10 @@ packages:
         engines: { node: '>=10' }
         dev: false
 
-    /@element-plus/icons-vue/2.0.4_vue@3.2.36:
+    /@element-plus/icons-vue/1.1.4_vue@3.2.36:
         resolution:
             {
-                integrity: sha512-UeBVBU3fuBsYa9mzM7DgkRztQ1Aftw3sMTI/1gZsqXq2NWiCOi16ZYXXGIc0jFDIu+k6SojzdlxOjv+rN/Y6FQ==,
+                integrity: sha512-Iz/nHqdp1sFPmdzRwHkEQQA3lKvoObk8azgABZ81QUOpW9s/lUyQVUSh0tNtEPZXQlKwlSh7SPgoVxzrE0uuVQ==,
             }
         peerDependencies:
             vue: ^3.2.0
@@ -624,10 +624,10 @@ packages:
             vue: 3.2.36
         dev: false
 
-    /@element-plus/icons-vue/2.0.5_vue@3.2.36:
+    /@element-plus/icons-vue/2.0.4_vue@3.2.36:
         resolution:
             {
-                integrity: sha512-jvNWyKcdvPvMDLTWjghrPY+bYHKqh7hbAFIPe+HWR073zilzt33csREzmKx3VwhdlJUW5u0nCqN+0rwI8jlH+w==,
+                integrity: sha512-UeBVBU3fuBsYa9mzM7DgkRztQ1Aftw3sMTI/1gZsqXq2NWiCOi16ZYXXGIc0jFDIu+k6SojzdlxOjv+rN/Y6FQ==,
             }
         peerDependencies:
             vue: ^3.2.0
@@ -3703,16 +3703,16 @@ packages:
                 integrity: sha512-lYxzcUCjWxxVug+A7UxBCUiVr13TCjfZFYJS9Lq1VpU/ErwV4a6zUQo9dfojuGpw/L/x9REGuBl6ICQPGgbs3g==,
             }
 
-    /element-plus/2.2.4_vue@3.2.36:
+    /element-plus/2.2.2_vue@3.2.36:
         resolution:
             {
-                integrity: sha512-jktZr0o3ARDxWNWPEaJZQm2BN7thTpQl0aIfCUo5eB5m+zEap2DEcojyGKMHSQsCULcPM32NFfu2sHlhbhOiGA==,
+                integrity: sha512-yGcj2Ayb0jZO1WbI51tHJ4efhlfWKlBqqGtWbzhq+tcpfaKzJZN+IHRouuFasqn0ZV3tWCDu1jggDR1+9y7XfQ==,
             }
         peerDependencies:
             vue: ^3.2.0
         dependencies:
             '@ctrl/tinycolor': 3.4.1
-            '@element-plus/icons-vue': 2.0.5_vue@3.2.36
+            '@element-plus/icons-vue': 1.1.4_vue@3.2.36
             '@floating-ui/dom': 0.5.2
             '@popperjs/core': /@sxzz/popperjs-es/2.11.7
             '@types/lodash': 4.14.182

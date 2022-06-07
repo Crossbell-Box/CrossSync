@@ -28,6 +28,12 @@ class TwitterHook {
                     this.mountSyncToggleApp(el);
                 },
             },
+            {
+                selector: '[data-testid="tweet"]',
+                callback: async (el) => {
+                    this.mountSyncOldTweets();
+                },
+            },
         ];
 
         let startPromise: Promise<NoteInput> | undefined;
@@ -93,15 +99,15 @@ class TwitterHook {
             this.main.xlog('error', 'Failed to add account change event listener.', e);
         }
 
-        // Listen on route change Event
-        try {
-            this.main.xlog('info', 'Adding route change event listener.');
-            window.removeEventListener('locationchange', () => this.mountSyncOldTweets()); // Remove old (if any)
-            window.addEventListener('locationchange', () => this.mountSyncOldTweets()); // Add new
-        } catch (e) {
-            this.main.xlog('error', 'Failed to add route change event listener.', e);
-        }
-        this.mountSyncOldTweets(); // Init Run
+        // // Listen on route change Event
+        // try {
+        //     this.main.xlog('info', 'Adding route change event listener.');
+        //     window.removeEventListener('locationchange', () => this.mountSyncOldTweets()); // Remove old (if any)
+        //     window.addEventListener('locationchange', () => this.mountSyncOldTweets()); // Add new
+        // } catch (e) {
+        //     this.main.xlog('error', 'Failed to add route change event listener.', e);
+        // }
+        // this.mountSyncOldTweets(); // Init Run
     }
 
     private async sync(note: NoteInput, attachmentUrls?: string[]) {

@@ -273,8 +273,9 @@ class TwitterHook {
                         ...Array.from(tweet.querySelectorAll('[data-testid="tweetPhoto"] img')).map((img) =>
                             img.getAttribute('src'),
                         ),
-                        // ...Array.from(tweet.querySelectorAll('[data-testid="videoPlayer"] video'))
-                        //   .map(video => video.getAttribute('src')), // Not downloadable
+                        ...Array.from(tweet.querySelectorAll('[data-testid="videoPlayer"] video')).map((video) =>
+                            video.getAttribute('poster'),
+                        ),
                     ].filter((url) => !!url) as string[];
                     const syncStatus = createApp(SyncStatus, {
                         getNote: async () => {

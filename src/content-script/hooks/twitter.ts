@@ -80,12 +80,15 @@ class TwitterHook {
             } else if (msg.type === 'create-tweet-end') {
                 if (startPromise) {
                     const note = await startPromise;
-                    const link = document.querySelector('time')?.parentElement?.getAttribute('href');
-                    note.related_urls = [`https://twitter.com${link}`];
 
-                    this.main.xlog('info', 'Trigger auto posting tweet...', note);
+                    setTimeout(() => {
+                        const link = document.querySelector('time')?.parentElement?.getAttribute('href');
+                        note.related_urls = [`https://twitter.com${link}`];
 
-                    this.sync(note);
+                        this.main.xlog('info', 'Trigger auto posting tweet...', note);
+
+                        this.sync(note);
+                    }, 10);
                 } else {
                     this.main.xlog('info', `Failed to find note info.`);
                     ElMessage.error('CrossSync encountered a problem: Failed to find note info.');

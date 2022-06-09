@@ -13,7 +13,7 @@
             </p>
             <p class="leading-7 my-3 text-gray-700">
                 To get started, you’ll need go to
-                <a class="underline" href="https://facuet.crossbell.io">facuet.crossbell.io</a> and get some $CSB. After
+                <a class="underline" href="https://faucet.crossbell.io">faucet.crossbell.io</a> and get some $CSB. After
                 you’ve connected your wallet and received the $CSB, you’ll be able to mint a profile on CrossSync.
             </p>
         </div>

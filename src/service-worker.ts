@@ -53,25 +53,31 @@ const afterResponseListener = (details: chrome.webRequest.WebResponseCacheDetail
     }
 };
 
-chrome.webNavigation.onBeforeNavigate.addListener(
-    () => {
-        // Wake Up
-        if (!chrome.webRequest.onBeforeRequest.hasListener(beforeRequestListener)) {
-            chrome.webRequest.onBeforeRequest.addListener(
-                beforeRequestListener,
-                {
-                    urls: ['https://twitter.com/*/CreateTweet'],
-                },
-                ['requestBody'],
-            );
-        }
-        if (!chrome.webRequest.onCompleted.hasListener(afterResponseListener)) {
-            chrome.webRequest.onCompleted.addListener(afterResponseListener, {
+const wakeUpSW = () => {
+    // Wake Up
+    if (!chrome.webRequest.onBeforeRequest.hasListener(beforeRequestListener)) {
+        chrome.webRequest.onBeforeRequest.addListener(
+            beforeRequestListener,
+            {
                 urls: ['https://twitter.com/*/CreateTweet'],
-            });
-        }
-    },
-    {
-        url: [{ hostContains: 'twitter.com' }],
-    },
-);
+            },
+            ['requestBody'],
+        );
+    }
+    if (!chrome.webRequest.onCompleted.hasListener(afterResponseListener)) {
+        chrome.webRequest.onCompleted.addListener(afterResponseListener, {
+            urls: ['https://twitter.com/*/CreateTweet'],
+        });
+    }
+};
+
+chrome.webNavigation.onBeforeNavigate.addListener(wakeUpSW, {
+    url: [{ hostContains: 'twitter.com' }],
+});
+
+// Wake Up SW by Content Script
+chrome.runtime.onMessage.addListener((msg) => {
+    if (msg.type === 'wakeup-sw') {
+        wakeUpSW();
+    }
+});

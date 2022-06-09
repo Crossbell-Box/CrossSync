@@ -24,6 +24,12 @@ class CrossSyncContentScript {
         this.xlog('info', 'CorssSync Content Script is running');
         this.initHooks();
         this.lock = new AsyncLock();
+        // Keep Service Worker Alive
+        setInterval(() => {
+            chrome.runtime.sendMessage({
+                type: 'wakeup-sw',
+            });
+        }, 10 * 1000); // Per 10 seconds
     }
 
     private async initHooks() {

@@ -117,6 +117,13 @@ class TwitterHook {
     }
 
     private async sync(note: NoteInput, attachmentUrls?: string[]) {
+        if (!(<any>window).cssc) {
+            (<any>window).cssc = {};
+        }
+        const url = note.related_urls?.[0];
+        (<any>window).cssc.syncing = url;
+        (<any>window).cssc.updateSyncing?.[url || '']?.('syncing');
+
         const settings = await getSettings();
         const handle = settings.handle;
         const syncing = settings.syncing;
@@ -157,6 +164,9 @@ class TwitterHook {
                 } catch (e) {
                     this.main.xlog('error', 'Failed to post note.', e);
                     ElMessage.error('CrossSync encountered a problem: Unidata failed to post note.');
+
+                    (<any>window).cssc.syncing = null;
+                    (<any>window).cssc.updateSyncing?.[url || '']?.('synced');
                 }
             } else {
                 this.main.xlog('info', `Failed to get Unidata Instance.`);
@@ -164,6 +174,9 @@ class TwitterHook {
             }
 
             notice?.close();
+
+            (<any>window).cssc.syncing = null;
+            (<any>window).cssc.updateSyncing?.[url || '']?.('synced');
         }
     }
 
@@ -281,6 +294,7 @@ class TwitterHook {
                         ),
                     ].filter((url) => !!url) as string[];
                     const syncStatus = createApp(SyncStatus, {
+                        link: link,
                         getNote: async () => {
                             if (this.noteCache.has(link)) {
                                 return this.noteCache.get(link);

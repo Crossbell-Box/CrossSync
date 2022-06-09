@@ -33,6 +33,10 @@ const props = defineProps({
         type: Function,
         required: true,
     },
+    link: {
+        type: String,
+        required: true,
+    },
 });
 
 const note = ref<Note>();
@@ -57,8 +61,34 @@ const syncOrRedirect = async (e: any) => {
 
 const init = async () => {
     note.value = await props.getNote();
-    loading.value = false;
+    if (loadingNotice.value !== 'Syncing...') {
+        loading.value = false;
+    }
 };
 
 init();
+
+async function setStatus(status: string) {
+    switch (status) {
+        case 'syncing':
+            loading.value = true;
+            loadingNotice.value = 'Syncing...';
+            break;
+        case 'synced':
+            loadingNotice.value = 'Loading...';
+            init();
+            break;
+    }
+}
+
+if (!(<any>window).cssc) {
+    (<any>window).cssc = {};
+}
+if (!(<any>window).cssc.updateSyncing) {
+    (<any>window).cssc.updateSyncing = {};
+}
+(<any>window).cssc.updateSyncing[props.link] = setStatus;
+if ((<any>window).cssc.syncing === props.link) {
+    setStatus('syncing');
+}
 </script>

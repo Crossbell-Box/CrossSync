@@ -1,8 +1,10 @@
 <template>
     <el-card class="relative border-0 hover:bg-gray-100" shadow="never">
         <div class="flex flex-row">
-            <div class="w-10 h-10 mr-3"><img class="rounded-full" :src="profile.avatars?.[0]" /></div>
-            <div>
+            <div class="w-10 h-10 mr-3" v-if="profile.avatars?.[0]">
+                <img class="rounded-full" :src="profile.avatars?.[0]" />
+            </div>
+            <div class="flex-1">
                 <div class="mb-1">
                     <span class="font-bold align-middle">{{ profile.name || profile.username }}</span>
                     <span class="text-gray-500 ml-1 align-middle" v-if="profile.username">@{{ profile.username }}</span>

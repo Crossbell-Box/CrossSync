@@ -43,8 +43,8 @@
                     class="text-gray-400 leading-7"
                     v-if="note.body?.mime_type === 'text/markdown'"
                     v-html="md.render(note.body!.content!)"
-                ></div>
-                <div class="note-body" v-else>
+                />
+                <div class="note-body whitespace-pre" v-else>
                     {{ note.body?.content || note.summary?.content }}
                 </div>
                 <el-row :gutter="20">

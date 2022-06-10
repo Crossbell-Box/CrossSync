@@ -268,23 +268,28 @@ const dialog = async () => {
 
 const mint = async () => {
     isMinting.value = true;
-    await window.unidata?.profiles.set(
-        {
-            source: 'Crossbell Profile',
-            identity: store.state.settings.address!,
-            platform: 'Ethereum',
-            action: 'add',
-        },
-        {
-            username: ruleForm.handle,
-            ...(ruleForm.avatar && { avatars: [ruleForm.avatar] }),
-            ...(ruleForm.name && { name: ruleForm.name }),
-            ...(ruleForm.bio && { bio: ruleForm.bio }),
-        },
-    );
+    try {
+        await window.unidata?.profiles.set(
+            {
+                source: 'Crossbell Profile',
+                identity: store.state.settings.address!,
+                platform: 'Ethereum',
+                action: 'add',
+            },
+            {
+                username: ruleForm.handle,
+                ...(ruleForm.avatar && { avatars: [ruleForm.avatar] }),
+                ...(ruleForm.name && { name: ruleForm.name }),
+                ...(ruleForm.bio && { bio: ruleForm.bio }),
+            },
+        );
+        await next();
+    } catch (e) {
+        ElMessage.error('Failed to mint handle...');
+        console.log(e);
+    }
 
     isMinting.value = false;
-    await next();
 };
 
 const claimENS = async (ens: Profile) => {

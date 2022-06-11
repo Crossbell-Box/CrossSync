@@ -1,7 +1,6 @@
 import { createStore, Store, useStore as baseUseStore } from 'vuex';
 import { InjectionKey } from 'vue';
 import { disconnect } from '@/common/wallet';
-import { getBucket } from '@extend-chrome/storage';
 import Unidata from 'unidata.js';
 
 export interface Settings {
@@ -10,7 +9,14 @@ export interface Settings {
     handle?: string;
 }
 
-export const bucket = getBucket<Settings>('settings', 'sync');
+export const bucket = {
+    get: () => {},
+    set: (a: any) => {},
+    clear: () => {},
+    valueStream: {
+        subscribe: (a: (b: any) => void) => {},
+    },
+};
 
 export const getSettings = async (): Promise<Settings> =>
     Object.assign(

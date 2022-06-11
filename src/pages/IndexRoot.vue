@@ -39,10 +39,6 @@ if (store.state.settings.address) {
 const isConnecting = ref(false);
 
 const connect = async (force = true) => {
-    if (!chrome?.runtime?.id) {
-        window.location.href = 'https://chrome.google.com/webstore/detail/crosssync/cilehfhekljoecdbbimgebbncpjagmon';
-    }
-
     isConnecting.value = true;
 
     try {

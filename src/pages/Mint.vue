@@ -248,7 +248,7 @@ const tweet = () => {
     const text = encodeURIComponent(
         `#OwnMyTweets - ${
             isENS
-                ? `This Tweet signals that I have claimed my ENS ${isENS} as my handle on`
+                ? `This Tweet signals that I have claimed my ${isENS.endsWith('.rss3') ? 'RNS' : 'ENS'} ${isENS} as my handle on`
                 : `My future tweets will be synced on-chain through`
         } https://crosssync.app via @_Crossbell ${
             isENS ? `(${moment.duration(moment().diff(ensDeadline.value)).humanize()} remaining to claim)` : ``

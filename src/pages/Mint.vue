@@ -227,20 +227,35 @@ const check = async () => {
         return;
     }
 
-    const profiles = await window.unidata?.profiles.get({
-        source: 'Crossbell Profile',
-        identity: ruleForm.handle,
-        platform: 'Crossbell',
-    });
+    try {
+        const profiles = await window.unidata?.profiles.get({
+            source: 'Crossbell Profile',
+            identity: ruleForm.handle,
+            platform: 'Crossbell',
+        });
 
-    isChecking.value = false;
+        const isReserved = (
+            await fetch(
+                `https://faas-sgp1-18bc02ac.doserverless.co/api/v1/web/fn-94f39aba-a3e4-4614-9e9a-628569184919/default/crosssync-ens-rns-check?handle=${ruleForm.handle}`,
+            ).then((res) => res.json())
+        ).reserved;
 
-    if (profiles?.list.length) {
-        ElMessage.error('Oops, this handle has already been taken...');
+        isChecking.value = false;
+
+        if (profiles?.list.length) {
+            ElMessage.error('Oops, this handle has already been taken...');
+            return false;
+        } else if (isReserved) {
+            ElMessage.error('Oops, this handle is reserved...');
+            return false;
+        } else {
+            ElMessage.success('This handle is available!');
+            return true;
+        }
+    } catch (e) {
+        ElMessage.error('Sorry, unable to check validity at this moment.');
+        console.log(e);
         return false;
-    } else {
-        ElMessage.success('This handle is available!');
-        return true;
     }
 };
 
@@ -248,7 +263,9 @@ const tweet = () => {
     const text = encodeURIComponent(
         `#OwnMyTweets - ${
             isENS
-                ? `This Tweet signals that I have claimed my ${isENS.endsWith('.rss3') ? 'RNS' : 'ENS'} ${isENS} as my handle on`
+                ? `This Tweet signals that I have claimed my ${
+                      isENS.endsWith('.rss3') ? 'RNS' : 'ENS'
+                  } ${isENS} as my handle on`
                 : `My future tweets will be synced on-chain through`
         } https://crosssync.app via @_Crossbell ${
             isENS ? `(${moment.duration(moment().diff(ensDeadline.value)).humanize()} remaining to claim)` : ``

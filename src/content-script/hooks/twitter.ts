@@ -82,8 +82,13 @@ class TwitterHook {
                     const note = await startPromise;
 
                     setTimeout(() => {
-                        const link = document.querySelector('time')?.parentElement?.getAttribute('href');
-                        note.related_urls = [`https://twitter.com${link}`];
+                        const tweet = document.querySelector('[data-testid="tweet"]');
+                        const link = tweet?.querySelector('time')?.parentElement?.getAttribute('href');
+                        if (link) {
+                            note.related_urls = [`https://twitter.com${link}`];
+                        } else {
+                            this.main.xlog('error', 'Failed to get link for: ', tweet);
+                        }
 
                         this.main.xlog('info', 'Trigger auto posting tweet...', note);
 

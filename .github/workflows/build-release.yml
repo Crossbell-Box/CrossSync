@@ -1,0 +1,53 @@
+name: Build release pack
+
+on:
+    push:
+        tags:
+            - 'v*.*.*'
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Checkout tag
+              run: |
+                  git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+                  tag_name="${GITHUB_REF##*/}"
+                  echo Tag $tag_name
+                  git checkout $tag_name
+                  echo "TAG_NAME=${tag_name}" >> $GITHUB_ENV
+
+            - name: Install Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 16
+
+            - name: Install pnpm
+              uses: pnpm/action-setup@v2
+              id: pnpm-install
+              with:
+                  version: latest
+
+            - name: Install Dependencies
+              run: pnpm install
+
+            - name: Build
+              run: pnpm build
+
+            - name: Package
+              run: |
+                  cd ./dist/ 
+                  zip -r ../crosssync-${{ env.TAG_NAME }}.zip ./
+                  cd ../
+
+            - name: Release
+              uses: softprops/action-gh-release@v1
+              with:
+                  draft: true
+                  name: CrossSync - ${{ env.TAG_NAME }}
+                  tag_name: ${{ env.TAG_NAME }}
+                  files: ./crosssync-${{ env.TAG_NAME }}.zip
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

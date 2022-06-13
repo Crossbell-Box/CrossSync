@@ -1,0 +1,39 @@
+name: Build test pack
+
+on:
+    push:
+        branches: [develop, release/*]
+    pull_request:
+        branches: [develop]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Install Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 16
+
+            - name: Install pnpm
+              uses: pnpm/action-setup@v2
+              id: pnpm-install
+              with:
+                  version: latest
+
+            - name: Install Dependencies
+              run: pnpm install
+
+            - name: Build
+              run: pnpm build
+
+            - name: Pack and upload Artifact
+              uses: actions/upload-artifact@v2
+              with:
+                  name: crosssync-test-pack
+                  path: dist/ # this will pack automatically, so no other packs needed
+                  retention-days: 7

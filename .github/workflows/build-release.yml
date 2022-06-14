@@ -45,9 +45,9 @@ jobs:
             - name: Release
               uses: softprops/action-gh-release@v1
               with:
-                  draft: true
                   name: CrossSync - ${{ env.TAG_NAME }}
                   tag_name: ${{ env.TAG_NAME }}
+                  generate_release_notes: true
                   files: ./crosssync-${{ env.TAG_NAME }}.zip
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

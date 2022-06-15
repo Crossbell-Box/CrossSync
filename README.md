@@ -27,9 +27,9 @@ Crossbell allows users the ability to take back their data ownership; CrossSync 
 
 To get started, you’ll need go to [Crossbell Faucet](https://faucet.crossbell.io) and get some $CSB. After you’ve connected your wallet and received the $CSB, you’ll be able to mint a profile on CrossSync.
 
-## 🪙 Gitcoin
+## 🪙 Special
 
-We are [live on Gitcoin](https://gitcoin.co/grants/6466/crosssync-2) with [@cross-sync](https://github.com/cross-sync) !
+You can find us [on Gitcoin](https://gitcoin.co/grants/6466/crosssync-2) !
 
 (Might need a little more time for the staff to approve the grant...)
 

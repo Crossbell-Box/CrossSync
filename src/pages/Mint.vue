@@ -234,18 +234,16 @@ const check = async () => {
             platform: 'Crossbell',
         });
 
-        const isReserved = (
-            await fetch(
-                `https://faas-sgp1-18bc02ac.doserverless.co/api/v1/web/fn-94f39aba-a3e4-4614-9e9a-628569184919/default/crosssync-ens-rns-check?handle=${ruleForm.handle}`,
-            ).then((res) => res.json())
-        ).reserved;
+        const isReservedRes = await fetch(
+            `https://faas-sgp1-18bc02ac.doserverless.co/api/v1/web/fn-94f39aba-a3e4-4614-9e9a-628569184919/default/crosssync-ens-rns-check?handle=${ruleForm.handle}`,
+        ).then((res) => res.json());
 
         isChecking.value = false;
 
         if (profiles?.list.length) {
             ElMessage.error('Oops, this handle has already been taken...');
             return false;
-        } else if (isReserved) {
+        } else if (isReservedRes.reserved && isReservedRes.ensOwner !== address && isReservedRes.rnsOwner !== address) {
             ElMessage.error('Oops, this handle is reserved...');
             return false;
         } else {

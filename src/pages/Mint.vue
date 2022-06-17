@@ -235,7 +235,7 @@ const check = async () => {
         });
 
         const isReservedRes = await fetch(
-            `https://faas-sgp1-18bc02ac.doserverless.co/api/v1/web/fn-94f39aba-a3e4-4614-9e9a-628569184919/default/crosssync-ens-rns-check?handle=${ruleForm.handle}`,
+            `https://faas-sgp1-18bc02ac.doserverless.co/api/v1/web/fn-94f39aba-a3e4-4614-9e9a-628569184919/default/crosssync-ens-rns-check?handle=${ruleForm.handle}&address=${store.state.settings.address}`,
         ).then((res) => res.json());
 
         isChecking.value = false;
@@ -243,7 +243,11 @@ const check = async () => {
         if (profiles?.list.length) {
             ElMessage.error('Oops, this handle has already been taken...');
             return false;
-        } else if (isReservedRes.reserved && isReservedRes.ensOwner !== address && isReservedRes.rnsOwner !== address) {
+        } else if (
+            isReservedRes.reserved && // Reserved
+            isReservedRes.ensOwner?.toLowerCase() !== store.state.settings.address!.toLowerCase() && // Not ENS owner
+            isReservedRes.rnsOwner?.toLowerCase() !== store.state.settings.address!.toLowerCase() // Not RNS owner
+        ) {
             ElMessage.error('Oops, this handle is reserved...');
             return false;
         } else {

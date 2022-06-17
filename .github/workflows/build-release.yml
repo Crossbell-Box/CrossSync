@@ -26,7 +26,6 @@ jobs:
 
             - name: Install pnpm
               uses: pnpm/action-setup@v2
-              id: pnpm-install
               with:
                   version: latest
 
@@ -41,6 +40,17 @@ jobs:
                   cd ./dist/ 
                   zip -r ../crosssync-${{ env.TAG_NAME }}.zip ./
                   cd ../
+
+            - name: Submit to Chrome Web Store
+              continue-on-error: true
+              run: |
+                  pnpm install chrome-webstore-upload-cli --save-dev
+                  npx chrome-webstore-upload-cli upload --source ./crosssync-${{ env.TAG_NAME }}.zip --auto-publish
+              env:
+                  EXTENSION_ID: cilehfhekljoecdbbimgebbncpjagmon
+                  CLIENT_ID: ${{ secrets.CWS_CLIENT_ID }}
+                  CLIENT_SECRET: ${{ secrets.CWS_CLIENT_SECRET }}
+                  REFRESH_TOKEN: ${{ secrets.CWS_REFRESH_TOKEN }}
 
             - name: Release
               uses: softprops/action-gh-release@v1

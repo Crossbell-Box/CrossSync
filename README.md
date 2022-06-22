@@ -29,9 +29,7 @@ To get started, you’ll need go to [Crossbell Faucet](https://faucet.crossbell.
 
 ## 🪙 Special
 
-You can find us [on Gitcoin](https://gitcoin.co/grants/6466/crosssync-2) !
-
-(Might need a little more time for the staff to approve the grant...)
+You can find us [on Gitcoin](https://gitcoin.co/grants/6465/crosssync) !
 
 ## 🎁 Installation
 

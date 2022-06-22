@@ -7,7 +7,7 @@
             class="flex w-6 h-6"
             :class="{
                 'fill-[#5088ff]': note,
-                grayscale: !note,
+                'fill-[#888888]': !note,
                 'opacity-50 mr-4': true,
             }"
             cssc="sync-status"

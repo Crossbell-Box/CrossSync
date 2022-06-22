@@ -11,7 +11,7 @@
                 :class="{
                     'fill-[#5088ff]': isSyncing === true,
                     'fill-[#E6A23C]': typeof isSyncing === 'string', // or isSyncing !== !!isSyncing
-                    grayscale: isSyncing === false,
+                    'fill-[#888888]': isSyncing === false,
                     'opacity-50': !available,
                     'mx-2': available,
                 }"

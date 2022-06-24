@@ -45,7 +45,7 @@ jobs:
               continue-on-error: true
               run: |
                   pnpm install chrome-webstore-upload-cli --save-dev
-                  npx chrome-webstore-upload-cli upload --source ./crosssync-${{ env.TAG_NAME }}.zip --auto-publish
+                  npx chrome-webstore-upload-cli upload --source ./crosssync-${{ env.TAG_NAME }}.zip
               env:
                   EXTENSION_ID: cilehfhekljoecdbbimgebbncpjagmon
                   CLIENT_ID: ${{ secrets.CWS_CLIENT_ID }}

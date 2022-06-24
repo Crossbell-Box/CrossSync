@@ -4,7 +4,7 @@
         <div class="flex flex-col">
             <p class="leading-7 my-3 text-gray-700">
                 CrossSync is a socially-oriented web3 Dapp that runs on the Crossbell. CrossSync aims to allow a
-                user-owned flow of social information, including but not limited to: following other user profiles,
+                user-owned flow of social information, including but not limited to: following other user characters,
                 integrated Twitter UI, note-posting, achievement badges, and more.
             </p>
             <p class="leading-7 my-3 text-gray-700">
@@ -14,7 +14,7 @@
             <p class="leading-7 my-3 text-gray-700">
                 To get started, you’ll need go to
                 <a class="underline" href="https://faucet.crossbell.io">faucet.crossbell.io</a> and get some $CSB. After
-                you’ve connected your wallet and received the $CSB, you’ll be able to mint a profile on CrossSync.
+                you’ve connected your wallet and received the $CSB, you’ll be able to mint a character on CrossSync.
             </p>
         </div>
     </div>
@@ -28,10 +28,10 @@ const router = useRouter();
 const store = useStore();
 
 if (store.state.settings.address) {
-    if (!store.state.profiles?.list.length) {
+    if (!store.state.characters?.list.length) {
         router.push('/mint');
     } else if (!store.state.settings.handle) {
-        router.push('/profiles');
+        router.push('/characters');
     }
 } else {
     router.push('/');

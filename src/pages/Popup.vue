@@ -1,9 +1,9 @@
 <template>
     <div class="w-80 flex flex-col">
-        <div v-if="profile">
-            <Profile
+        <div v-if="character">
+            <Character
                 class="mb-0 rounded-br-none cursor-pointer border-0"
-                :profile="profile"
+                :character="character"
                 size="small"
                 @click="expand"
             />
@@ -20,15 +20,13 @@
     </div>
 </template>
 <script setup lang="ts">
-import Profile from '@/components/Profiles.vue';
-// import {useRouter} from "vue-router";
+import Character from '@/components/Characters.vue';
 import { useStore } from '@/common/store';
 import { ref, watchEffect } from 'vue';
 
-// const router = useRouter();
 const store = useStore();
 
-const profile = ref<any>({});
+const character = ref<any>({});
 
 const isSyncing = ref(store.state.settings.syncing && !!store.state.settings.handle);
 
@@ -44,12 +42,12 @@ const expand = () => {
 };
 
 const init = async () => {
-    if (!store.state.profiles?.list.length) {
+    if (!store.state.characters?.list.length) {
         expand();
     } else {
-        profile.value =
-            store.state.profiles!.list.find((profile) => profile.username === store.state.settings.handle) ||
-            store.state.profiles!.list[0]; // As a fallback, use the first profile
+        character.value =
+            store.state.characters!.list.find((character) => character.username === store.state.settings.handle) ||
+            store.state.characters!.list[0]; // As a fallback, use the first character
     }
 };
 

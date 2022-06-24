@@ -23,7 +23,7 @@ export const getSettings = async (): Promise<Settings> =>
 const settings = await getSettings();
 
 interface State {
-    profiles?: Profiles;
+    characters?: Characters;
     settings: Settings;
 }
 
@@ -32,9 +32,9 @@ export const key: InjectionKey<Store<State>> = Symbol();
 export const store = createStore<State>({
     state: {
         settings: settings,
-        profiles: settings.address
-            ? await new Unidata().profiles.get({
-                  source: 'Crossbell Profile',
+        characters: settings.address
+            ? await new Unidata().characters.get({
+                  source: 'Crossbell Character',
                   identity: settings.address,
               })
             : undefined,
@@ -43,8 +43,8 @@ export const store = createStore<State>({
     actions: {
         async setSettings({ state }, settings: Partial<Settings>) {
             if (settings.address && settings.address !== state.settings.address) {
-                state.profiles = await window.unidata!.profiles.get({
-                    source: 'Crossbell Profile',
+                state.characters = await window.unidata!.characters.get({
+                    source: 'Crossbell Character',
                     identity: settings.address,
                 });
             }
@@ -54,7 +54,7 @@ export const store = createStore<State>({
         },
         async reset({ state }) {
             await disconnect();
-            state.profiles = undefined;
+            state.characters = undefined;
             state.settings = {
                 syncing: true,
             };

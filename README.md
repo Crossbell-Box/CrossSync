@@ -25,7 +25,7 @@ CrossSync is a socially-oriented web3 Dapp that runs on the Crossbell. CrossSync
 
 Crossbell allows users the ability to take back their data ownership; CrossSync makes owning your data a fun and engaging social experience.
 
-To get started, you’ll need go to [Crossbell Faucet](https://faucet.crossbell.io) and get some $CSB. After you’ve connected your wallet and received the $CSB, you’ll be able to mint a profile on CrossSync.
+To get started, you’ll need go to [Crossbell Faucet](https://faucet.crossbell.io) and get some $CSB. After you’ve connected your wallet and received the $CSB, you’ll be able to mint a character on CrossSync.
 
 ## 🪙 Special
 

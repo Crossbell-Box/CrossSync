@@ -22,7 +22,7 @@ specifiers:
     bind-decorator: ^1.0.11
     browserify-zlib: ^0.2.0
     buffer: ^6.0.3
-    crossbell.js: ^0.8.2
+    crossbell.js: ^0.8.3
     element-plus: 2.2.2
     ethers: ^5.6.8
     events: ^3.3.0
@@ -40,7 +40,7 @@ specifiers:
     stream-browserify: ^3.0.0
     tailwindcss: ^3.0.24
     typescript: ^4.7.2
-    unidata.js: ^0.5.10
+    unidata.js: ^0.5.11
     unplugin-auto-import: ^0.8.6
     unplugin-vue-components: ^0.19.6
     util: ^0.12.4
@@ -63,7 +63,7 @@ dependencies:
     axios: 0.27.2
     bind-decorator: 1.0.11
     buffer: 6.0.3
-    crossbell.js: 0.8.2
+    crossbell.js: 0.8.3
     element-plus: 2.2.2_vue@3.2.36
     ethers: 5.6.8
     events: 3.3.0
@@ -72,7 +72,7 @@ dependencies:
     metamask-extension-provider: 3.0.0
     moment: 2.29.3
     process: 0.11.10
-    unidata.js: 0.5.10
+    unidata.js: 0.5.11
     util: 0.12.4
     vue: 3.2.36
     vue-router: 4.0.15_vue@3.2.36
@@ -3400,27 +3400,10 @@ packages:
             which: 2.0.2
         dev: true
 
-    /crossbell.js/0.7.10:
+    /crossbell.js/0.8.3:
         resolution:
             {
-                integrity: sha512-LyUop73bME1ZH/w4lqvWoFSAXLc/Rrs53qTikk/ejKcwQML6dDAwJW4DLplXh9/2BZB/wSLEDp//lIroaQfyNw==,
-            }
-        dependencies:
-            ethers: 5.6.9
-            query-string: 7.1.1
-            ts-mixer: 6.0.1
-            undici: 5.5.1
-            web3-providers-ws: 1.7.4
-        transitivePeerDependencies:
-            - bufferutil
-            - supports-color
-            - utf-8-validate
-        dev: false
-
-    /crossbell.js/0.8.2:
-        resolution:
-            {
-                integrity: sha512-mP77u4wLrWb66+VMCoztQ5QHvNWA1YqKQGNuReHiwAQn3czeQ+sjEzxWNDVxsYrASoUOflDckIlJBwkFQPAi5Q==,
+                integrity: sha512-TFomKckhTLdCdFMbv1WV587pDA6iC1zA/0hnr2euuwTVDrsG6HRwSe83Oin+CdW90Ll7rMtMPvkwSIpI1gyEgQ==,
             }
         dependencies:
             ethers: 5.6.9
@@ -9063,16 +9046,16 @@ packages:
         engines: { node: '>=12.18' }
         dev: false
 
-    /unidata.js/0.5.10:
+    /unidata.js/0.5.11:
         resolution:
             {
-                integrity: sha512-/h4Y42AknD06/NnhDbduWqjn3OySIAAox7hzBBpZLPkai5AezVx3cS5GTUEB2S5taVZgC12upSUDXJPPtQutuA==,
+                integrity: sha512-1FjebFWZDbdXi1fhOEXOXWNM1UKZ4ecy31CKAqBTGWCzZhHZFTpGwV9dUELF0NTAl16EuAu0WJSURK6zE5+XBQ==,
             }
         dependencies:
             '@types/lodash': 4.14.182
             '@urql/core': 2.5.0_graphql@16.5.0
             axios: 0.27.2
-            crossbell.js: 0.7.10
+            crossbell.js: 0.8.3
             ethers: 5.6.9
             graphql: 16.5.0
             lodash: 4.17.21

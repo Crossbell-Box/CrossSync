@@ -109,16 +109,6 @@ class TwitterHook {
         } catch (e) {
             this.main.xlog('error', 'Failed to add account change event listener.', e);
         }
-
-        // // Listen on route change Event
-        // try {
-        //     this.main.xlog('info', 'Adding route change event listener.');
-        //     window.removeEventListener('locationchange', () => this.mountSyncOldTweets()); // Remove old (if any)
-        //     window.addEventListener('locationchange', () => this.mountSyncOldTweets()); // Add new
-        // } catch (e) {
-        //     this.main.xlog('error', 'Failed to add route change event listener.', e);
-        // }
-        // this.mountSyncOldTweets(); // Init Run
     }
 
     private async sync(note: NoteInput, attachmentUrls?: string[]) {
@@ -247,14 +237,6 @@ class TwitterHook {
         if (settings.syncing !== false && settings.address) {
             if (settings.address.toLowerCase() !== this.main.address?.toLowerCase()) {
                 newStatus = 'Address changed.';
-                // this.main.xlog('info', 'Old address: ', settings.address);
-                // this.main.xlog('info', 'Now address: ', this.main.address);
-                // } else if (unidata) { // Disabled for unidata.utils.contract is undefined
-                //     settings.syncing = true;
-                //     const balance = (await unidata.utils.contract.getBalance(this.main.address)).data;
-                //     if (parseInt(balance) < 0.0005 * Math.pow(10, 18)) {
-                //         newStatus = 'Balance might not enough.';
-                //     }
             }
             if (newStatus !== '') {
                 this.main.xlog('warn', newStatus);
@@ -319,8 +301,6 @@ class TwitterHook {
                             }
                         },
                         postNote: async () => {
-                            let newNoteID = '';
-
                             const note = {
                                 tags: ['CrossSync', 'Twitter'],
                                 authors: [`csb://account:${username}@twitter`],

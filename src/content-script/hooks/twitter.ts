@@ -234,7 +234,7 @@ class TwitterHook {
         const unidata = await this.main.getUnidata();
         // this.main.xlog('info', 'Now address is: '+ this.main.address);
         let newStatus = '';
-        if (settings.syncing !== false && settings.address) {
+        if (settings.syncing !== false && settings.address && this.main.address) {
             if (settings.address.toLowerCase() !== this.main.address?.toLowerCase()) {
                 newStatus = 'Address changed.';
                 this.main.xlog('warn', `Old address: ${settings.address}, now: ${this.main.address}`);

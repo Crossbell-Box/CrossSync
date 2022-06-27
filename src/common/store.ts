@@ -3,6 +3,7 @@ import { InjectionKey } from 'vue';
 import { disconnect } from '@/common/wallet';
 import { getBucket } from '@extend-chrome/storage';
 import Unidata from 'unidata.js';
+import type { Profiles } from 'unidata.js';
 
 export interface Settings {
     syncing: boolean | string;
@@ -23,7 +24,7 @@ export const getSettings = async (): Promise<Settings> =>
 const settings = await getSettings();
 
 interface State {
-    characters?: Characters;
+    characters?: Profiles;
     settings: Settings;
 }
 
@@ -33,8 +34,8 @@ export const store = createStore<State>({
     state: {
         settings: settings,
         characters: settings.address
-            ? await new Unidata().characters.get({
-                  source: 'Crossbell Character',
+            ? await new Unidata().profiles.get({
+                  source: 'Crossbell Profile',
                   identity: settings.address,
               })
             : undefined,
@@ -43,8 +44,8 @@ export const store = createStore<State>({
     actions: {
         async setSettings({ state }, settings: Partial<Settings>) {
             if (settings.address && settings.address !== state.settings.address) {
-                state.characters = await window.unidata!.characters.get({
-                    source: 'Crossbell Character',
+                state.characters = await window.unidata!.profiles.get({
+                    source: 'Crossbell Profile',
                     identity: settings.address,
                 });
             }

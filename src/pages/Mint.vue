@@ -119,6 +119,7 @@ import { debounce } from 'lodash-es';
 import { upload } from '@/common/ipfs';
 import axios from 'axios';
 import moment from 'moment';
+import type { Profile } from 'unidata.js';
 
 const router = useRouter();
 const store = useStore();
@@ -127,8 +128,8 @@ if (!store.state.settings.address) {
     router.push('/');
 }
 
-const ensList = ref<Character[]>([]);
-const rnsList = ref<Character[]>([]);
+const ensList = ref<Profile[]>([]);
+const rnsList = ref<Profile[]>([]);
 const isChecking = ref(false);
 const isMinting = ref(false);
 const ensLoading = ref(true);
@@ -226,8 +227,8 @@ const check = async () => {
     }
 
     try {
-        const characters = await window.unidata?.characters.get({
-            source: 'Crossbell Character',
+        const characters = await window.unidata?.profiles.get({
+            source: 'Crossbell Profile',
             identity: ruleForm.handle,
             platform: 'Crossbell',
         });
@@ -286,9 +287,9 @@ const dialog = async () => {
 const mint = async () => {
     isMinting.value = true;
     try {
-        await window.unidata?.characters.set(
+        await window.unidata?.profiles.set(
             {
-                source: 'Crossbell Character',
+                source: 'Crossbell Profile',
                 identity: store.state.settings.address!,
                 platform: 'Ethereum',
                 action: 'add',
@@ -309,7 +310,7 @@ const mint = async () => {
     isMinting.value = false;
 };
 
-const claimENS = async (ens: Character) => {
+const claimENS = async (ens: Profile) => {
     isENS = ens.username || '';
     isMinting.value = true;
 
@@ -332,7 +333,7 @@ const next = async () => {
 const initENS = async () => {
     try {
         ensList.value = (
-            await window.unidata?.characters.get({
+            await window.unidata?.profiles.get({
                 source: 'ENS',
                 identity: store.state.settings.address!,
             })

@@ -35,11 +35,12 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from '@/common/store';
 import Note from '@/components/Notes.vue';
+import type { Note as TypeNote } from 'unidata.js';
 
 const router = useRouter();
 const store = useStore();
 
-const notes = ref<Note[]>([]);
+const notes = ref<TypeNote[]>([]);
 const loading = ref(true);
 
 if (store.state.settings.address) {

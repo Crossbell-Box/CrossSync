@@ -28,6 +28,7 @@ import CharacterCard from '@/components/Characters.vue';
 import { useRouter } from 'vue-router';
 import { useStore } from '@/common/store';
 import { ref } from 'vue';
+import type { Profile } from 'unidata.js';
 
 const router = useRouter();
 const store = useStore();
@@ -43,7 +44,7 @@ if (store.state.settings.address) {
 const address = `${store.state.settings.address!.slice(0, 6)}...${store.state.settings.address!.slice(-4)}`;
 const loading = ref(false);
 
-const choose = async (character: Character) => {
+const choose = async (character: Profile) => {
     loading.value = true;
     await store.dispatch('setSettings', {
         handle: character.username,

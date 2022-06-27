@@ -23,6 +23,7 @@
 import logo from '../assets/logo.svg?raw';
 import { ref } from 'vue';
 import { Loading } from '@element-plus/icons-vue';
+import type { Note } from 'unidata.js';
 
 const props = defineProps({
     getNote: {

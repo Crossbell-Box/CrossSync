@@ -237,6 +237,7 @@ class TwitterHook {
         if (settings.syncing !== false && settings.address) {
             if (settings.address.toLowerCase() !== this.main.address?.toLowerCase()) {
                 newStatus = 'Address changed.';
+                this.main.xlog('warn', `Old address: ${settings.address}, now: ${this.main.address}`);
             }
             if (newStatus !== '') {
                 this.main.xlog('warn', newStatus);

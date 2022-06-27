@@ -18,7 +18,7 @@
                 </el-skeleton>
             </li>
             <li v-for="note in notes" :key="note.id">
-                <Note :note="note" :profile="profile" />
+                <Note :note="note" :character="character" />
             </li>
             <li v-if="!loading && notes.length === 0">
                 <p class="text-center text-gray-500">
@@ -35,18 +35,19 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from '@/common/store';
 import Note from '@/components/Notes.vue';
+import type { Note as TypeNote } from 'unidata.js';
 
 const router = useRouter();
 const store = useStore();
 
-const notes = ref<Note[]>([]);
+const notes = ref<TypeNote[]>([]);
 const loading = ref(true);
 
 if (store.state.settings.address) {
-    if (!store.state.profiles?.list.length) {
+    if (!store.state.characters?.list.length) {
         router.push('/mint');
     } else if (!store.state.settings.handle) {
-        router.push('/profiles');
+        router.push('/characters');
     }
 } else {
     router.push('/');
@@ -71,9 +72,9 @@ const load = async () => {
 
 load();
 
-const profile =
-    store.state.profiles!.list.find((profile) => profile.username === store.state.settings.handle) ||
-    store.state.profiles!.list[0]; // As a fallback, use the first profile
+const character =
+    store.state.characters!.list.find((character) => character.username === store.state.settings.handle) ||
+    store.state.characters!.list[0]; // As a fallback, use the first character
 
 const tweet = () => {
     const text = encodeURIComponent(

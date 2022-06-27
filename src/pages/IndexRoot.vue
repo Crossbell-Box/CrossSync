@@ -27,10 +27,10 @@ const store = useStore();
 const router = useRouter();
 
 if (store.state.settings.address) {
-    if (!store.state.profiles?.list.length) {
+    if (!store.state.characters?.list.length) {
         router.push('/mint');
     } else if (!store.state.settings.handle) {
-        router.push('/profiles');
+        router.push('/characters');
     } else {
         router.push('/home');
     }
@@ -58,8 +58,8 @@ const connect = async (force = true) => {
             const balance = (await c.getBalance(address)).data;
             if (parseInt(balance) < 0.02 * Math.pow(10, 18)) {
                 await router.push('/faucet');
-            } else if (store.state.profiles?.list.length) {
-                await router.push('/profiles');
+            } else if (store.state.characters?.list.length) {
+                await router.push('/characters');
             } else {
                 await router.push('/mint');
             }

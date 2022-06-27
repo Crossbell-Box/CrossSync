@@ -32,10 +32,10 @@ const toFaucet = () => {
 };
 
 const next = () => {
-    if (!store.state.profiles?.list.length) {
+    if (!store.state.characters?.list.length) {
         router.push('/mint');
     } else if (!store.state.settings.handle) {
-        router.push('/profiles');
+        router.push('/characters');
     } else {
         router.push('/home');
     }

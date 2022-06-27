@@ -1,6 +1,6 @@
 <template>
     <div class="py-5 w-full mx-16 max-w-3xl">
-        <h1 class="text-4xl font-bold my-5">Mint Your Crossbell Profile 👾</h1>
+        <h1 class="text-4xl font-bold my-5">Mint Your Crossbell Character 👾</h1>
         <div class="mb-8">
             <span class="align-middle"
                 >You are logged in as <b>{{ address }}</b>
@@ -57,13 +57,11 @@
                 <el-input v-model="ruleForm.bio" type="textarea" placeholder="Enter your bio" :rows="4" />
             </el-form-item>
         </el-form>
-        <!-- <el-form :model="profileForm" status-icon :rules="profileRules" label-width="50px">
-        </el-form> -->
         <el-form>
             <el-form-item>
                 <el-button type="default" :loading="isChecking" @click="check">Check Availability</el-button>
                 <el-button type="primary" :loading="isChecking" @click="dialog">I've decided!</el-button>
-                <el-button text bg type="default" @click="skip" v-if="profiles.length">Skip</el-button>
+                <el-button text bg type="default" @click="skip" v-if="characters.length">Skip</el-button>
             </el-form-item>
         </el-form>
         <div v-loading="ensLoading" v-if="ensDeadline > +new Date()">
@@ -121,6 +119,7 @@ import { debounce } from 'lodash-es';
 import { upload } from '@/common/ipfs';
 import axios from 'axios';
 import moment from 'moment';
+import type { Profile } from 'unidata.js';
 
 const router = useRouter();
 const store = useStore();
@@ -155,7 +154,7 @@ const validateHandle = (handle: string): boolean => {
 };
 
 const address = `${store.state.settings.address!.slice(0, 6)}...${store.state.settings.address!.slice(-4)}`;
-const profiles = store.state.profiles?.list || [];
+const characters = store.state.characters?.list || [];
 
 const switchAccount = async () => {
     await store.dispatch('reset');
@@ -163,7 +162,7 @@ const switchAccount = async () => {
 };
 
 const skip = async () => {
-    await router.push('/profiles');
+    await router.push('/characters');
 };
 
 const ruleForm = reactive({
@@ -228,7 +227,7 @@ const check = async () => {
     }
 
     try {
-        const profiles = await window.unidata?.profiles.get({
+        const characters = await window.unidata?.profiles.get({
             source: 'Crossbell Profile',
             identity: ruleForm.handle,
             platform: 'Crossbell',
@@ -240,7 +239,7 @@ const check = async () => {
 
         isChecking.value = false;
 
-        if (profiles?.list.length) {
+        if (characters?.list.length) {
             ElMessage.error('Oops, this handle has already been taken...');
             return false;
         } else if (
@@ -328,7 +327,7 @@ const claimENS = async (ens: Profile) => {
 };
 
 const next = async () => {
-    await router.push('/profiles');
+    await router.push('/characters');
 };
 
 const initENS = async () => {
@@ -341,14 +340,14 @@ const initENS = async () => {
         ).list;
         const rns = (await axios.get(`https://rss3.domains/address/${store.state.settings.address}`)).data.rnsName;
         if (rns) {
-            const rnsProfile = (await axios.get(`https://prenode.rss3.dev/${store.state.settings.address}`)).data
+            const rnsCharacter = (await axios.get(`https://prenode.rss3.dev/${store.state.settings.address}`)).data
                 .profile;
             rnsList.value = [
                 {
                     username: rns,
-                    name: rnsProfile.name,
-                    avatars: rnsProfile.avatar,
-                    bio: rnsProfile.bio,
+                    name: rnsCharacter.name,
+                    avatars: rnsCharacter.avatar,
+                    bio: rnsCharacter.bio,
 
                     source: 'RNS',
                 },

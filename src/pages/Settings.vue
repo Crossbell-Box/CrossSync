@@ -3,9 +3,9 @@
         <h1 class="flex text-4xl font-bold my-5 py-4">Settings</h1>
         <div class="flex flex-col">
             <el-col class="flex flex-col gap-3">
-                <el-card shadow="hover" class="cursor-pointer" @click="switchProfile">
+                <el-card shadow="hover" class="cursor-pointer" @click="switchcharacter">
                     <div class="flex flex-row" style="justify-content: space-between">
-                        <div class="flex">Switch Profile</div>
+                        <div class="flex">Switch Character</div>
                         <div class="flex w-4">
                             <ArrowRight />
                         </div>
@@ -44,17 +44,17 @@ const store = useStore();
 const isSyncing = ref(store.state.settings.syncing && !!store.state.settings.handle);
 
 if (store.state.settings.address) {
-    if (!store.state.profiles?.list.length) {
+    if (!store.state.characters?.list.length) {
         router.push('/mint');
     } else if (!store.state.settings.handle) {
-        router.push('/profiles');
+        router.push('/characters');
     }
 } else {
     router.push('/');
 }
 
-const switchProfile = () => {
-    router.push('/profiles');
+const switchcharacter = () => {
+    router.push('/characters');
 };
 
 const switchAccount = async () => {

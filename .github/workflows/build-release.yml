@@ -43,16 +43,16 @@ jobs:
                   zip -r ../crosssync-${{ env.TAG_NAME }}.zip ./
                   cd ../
 
-            #            - name: Submit to Chrome Web Store
-            #              continue-on-error: true
-            #              run: |
-            #                  pnpm install chrome-webstore-upload-cli --save-dev
-            #                  npx chrome-webstore-upload-cli upload --source ./crosssync-${{ env.TAG_NAME }}.zip --auto-publish
-            #              env:
-            #                  EXTENSION_ID: cilehfhekljoecdbbimgebbncpjagmon
-            #                  CLIENT_ID: ${{ secrets.CWS_CLIENT_ID }}
-            #                  CLIENT_SECRET: ${{ secrets.CWS_CLIENT_SECRET }}
-            #                  REFRESH_TOKEN: ${{ secrets.CWS_REFRESH_TOKEN }}
+            - name: Submit to Chrome Web Store
+              continue-on-error: true
+              run: |
+                  pnpm install chrome-webstore-upload-cli --save-dev
+                  npx chrome-webstore-upload-cli upload --source ./crosssync-${{ env.TAG_NAME }}.zip --auto-publish
+              env:
+                  EXTENSION_ID: cilehfhekljoecdbbimgebbncpjagmon
+                  CLIENT_ID: ${{ secrets.CWS_CLIENT_ID }}
+                  CLIENT_SECRET: ${{ secrets.CWS_CLIENT_SECRET }}
+                  REFRESH_TOKEN: ${{ secrets.CWS_REFRESH_TOKEN }}
 
             - name: Release
               uses: softprops/action-gh-release@v1
@@ -61,6 +61,5 @@ jobs:
                   tag_name: ${{ env.TAG_NAME }}
                   generate_release_notes: true
                   files: ./crosssync-${{ env.TAG_NAME }}.zip
-                  draft: true # For this version only
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

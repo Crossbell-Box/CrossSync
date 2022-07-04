@@ -40,7 +40,7 @@ specifiers:
     stream-browserify: ^3.0.0
     tailwindcss: ^3.0.24
     typescript: ^4.7.2
-    unidata.js: ^0.5.11
+    unidata.js: 0.6.1
     unplugin-auto-import: ^0.8.6
     unplugin-vue-components: ^0.19.6
     util: ^0.12.4
@@ -72,7 +72,7 @@ dependencies:
     metamask-extension-provider: 3.0.0
     moment: 2.29.3
     process: 0.11.10
-    unidata.js: 0.5.11
+    unidata.js: 0.6.1
     util: 0.12.4
     vue: 3.2.36
     vue-router: 4.0.15_vue@3.2.36
@@ -1525,7 +1525,7 @@ packages:
                 integrity: sha512-pqr857jrp2kPuO9uRjZ3PwnJTjoQy+fcdxvBTvHm6dkmEL9q+hDD/2j/0ELOBPtPnS8LjCX0gI9nbl8lVkadpg==,
             }
         dependencies:
-            '@types/node': 17.0.35
+            '@types/node': 18.0.0
         dev: false
 
     /@types/bn.js/5.1.0:
@@ -1643,13 +1643,6 @@ packages:
             }
         dev: false
 
-    /@types/node/17.0.35:
-        resolution:
-            {
-                integrity: sha512-vu1SrqBjbbZ3J6vwY17jBs8Sr/BKA+/a/WtjRG+whKg1iuLFOosq872EXS0eXWILdO36DHQQeku/ZcL6hz2fpg==,
-            }
-        dev: false
-
     /@types/node/18.0.0:
         resolution:
             {
@@ -1670,7 +1663,7 @@ packages:
                 integrity: sha512-Cf63Rv7jCQ0LaL8tNXmEyqTHuIJxRdlS5vMh1mj5voN4+QFhVZnlZruezqpWYDiJ8UTzhP0VmeLXCmBk66YrMQ==,
             }
         dependencies:
-            '@types/node': 17.0.35
+            '@types/node': 18.0.0
         dev: false
 
     /@types/retry/0.12.0:
@@ -1686,7 +1679,7 @@ packages:
                 integrity: sha512-Da66lEIFeIz9ltsdMZcpQvmrmmoqrfju8pm1BH8WbYjZSwUgCwXLb9C+9XYogwBITnbsSaMdVPb2ekf7TV+03w==,
             }
         dependencies:
-            '@types/node': 17.0.35
+            '@types/node': 18.0.0
         dev: false
 
     /@urql/core/2.5.0_graphql@16.5.0:
@@ -3399,6 +3392,25 @@ packages:
             shebang-command: 2.0.0
             which: 2.0.2
         dev: true
+
+    /crossbell.js/0.10.1:
+        resolution:
+            {
+                integrity: sha512-D1gmBwMOLTscPzS6z6BznYL4cnREFGCSgH3+sQsvbBdcMF8Fbun7hXKxG3raFMZd7aPZphfT2POHj2zw2TNMRQ==,
+            }
+        dependencies:
+            ethers: 5.6.9
+            fetch-undici: 3.0.1
+            is-ipfs: 6.0.2
+            query-string: 7.1.1
+            ts-mixer: 6.0.1
+            web3-providers-ws: 1.7.4
+        transitivePeerDependencies:
+            - bufferutil
+            - node-fetch
+            - supports-color
+            - utf-8-validate
+        dev: false
 
     /crossbell.js/0.8.3:
         resolution:
@@ -5465,7 +5477,10 @@ packages:
         dev: false
 
     /hmac-drbg/1.0.1:
-        resolution: { integrity: sha1-0nRXAQJabHdabFRXk+1QL8DGSaE= }
+        resolution:
+            {
+                integrity: sha512-Tti3gMqLdZfhOQY1Mzf/AanLiqh1WTiJgEj26ZuYQ9fbkLomzGchCws4FyrSd4VkpBfiNhaE1On+lOz894jvXg==,
+            }
         dependencies:
             hash.js: 1.1.7
             minimalistic-assert: 1.0.1
@@ -5986,6 +6001,23 @@ packages:
         engines: { node: '>=8' }
         dependencies:
             ip-regex: 4.3.0
+        dev: false
+
+    /is-ipfs/6.0.2:
+        resolution:
+            {
+                integrity: sha512-RinUnsggL4hlLoHlZcvs2+92OE46Uflg/YVU1m5fXhyDBS/zh3bq+i6Aw7IbzJZ9oZXJx26TgxpqCuCr+LH/DA==,
+            }
+        engines: { node: '>=14.0.0', npm: '>=6.0.0' }
+        dependencies:
+            iso-url: 1.2.1
+            mafmt: 10.0.0
+            multiaddr: 10.0.1
+            multiformats: 9.6.5
+            uint8arrays: 3.0.0
+        transitivePeerDependencies:
+            - node-fetch
+            - supports-color
         dev: false
 
     /is-negative-zero/2.0.2:
@@ -6716,6 +6748,18 @@ packages:
         resolution: { integrity: sha1-81ypHEk/e3PaDgdJUwTxezH4fuU= }
         dev: false
 
+    /mafmt/10.0.0:
+        resolution:
+            {
+                integrity: sha512-K1bziJOXcnepfztu+2Xy9FLKVLaFMDuspmiyJIYRxnO0WOxFSV7XKSdMxMrVZxcvg1+YjlTIvSGTImUHU2k4Aw==,
+            }
+        dependencies:
+            multiaddr: 10.0.1
+        transitivePeerDependencies:
+            - node-fetch
+            - supports-color
+        dev: false
+
     /magic-string/0.25.9:
         resolution:
             {
@@ -6970,7 +7014,10 @@ packages:
         dev: false
 
     /minimalistic-crypto-utils/1.0.1:
-        resolution: { integrity: sha1-9sAMHAsIIkblxNmd+4x8CDsrWCo= }
+        resolution:
+            {
+                integrity: sha512-JIYlbt6g8i5jKfJ3xz7rF0LXmv2TkDxBLUkiBeZ7bAx4GnnNMr8xFpGnOxn6GhTEHx3SjRrZEoU+j04prX1ktg==,
+            }
         dev: false
 
     /minimatch/3.1.2:
@@ -8399,7 +8446,10 @@ packages:
         dev: false
 
     /setimmediate/1.0.5:
-        resolution: { integrity: sha1-KQy7Iy4waULX1+qbg3Mqt4VvgoU= }
+        resolution:
+            {
+                integrity: sha512-MATJdZp8sLqDl/68LfQmbP8zKPLQNV6BIZoIgrscFDQ+RsvK/BxeDQOgyxKKoh0y/8h3BqVFnCqQ/gd+reiIXA==,
+            }
         dev: false
 
     /sha.js/2.4.11:
@@ -9046,16 +9096,16 @@ packages:
         engines: { node: '>=12.18' }
         dev: false
 
-    /unidata.js/0.5.11:
+    /unidata.js/0.6.1:
         resolution:
             {
-                integrity: sha512-1FjebFWZDbdXi1fhOEXOXWNM1UKZ4ecy31CKAqBTGWCzZhHZFTpGwV9dUELF0NTAl16EuAu0WJSURK6zE5+XBQ==,
+                integrity: sha512-cI0Jx6SrrxduLydAJyDsTbj0N/7SHvWojx4brwnz2P8oVsBus0ZYRb+WDqENXl4mzeBf6nk2xdHP9VtjP/BEWg==,
             }
         dependencies:
             '@types/lodash': 4.14.182
             '@urql/core': 2.5.0_graphql@16.5.0
             axios: 0.27.2
-            crossbell.js: 0.8.3
+            crossbell.js: 0.10.1
             ethers: 5.6.9
             graphql: 16.5.0
             lodash: 4.17.21

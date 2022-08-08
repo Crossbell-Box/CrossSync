@@ -54,7 +54,7 @@ class TwitterHook {
 
                         const attachmentUrls = Array.from(
                             document.querySelectorAll(
-                                '[data-testid="attachments"] img, [data-testid="attachments"] source',
+                                '[data-testid="attachments"] div[aria-label="Media"] img, [data-testid="attachments"] div[aria-label="Media"] source',
                             ),
                         ).map((attachment) => {
                             return (<HTMLImageElement | HTMLSourceElement>attachment).src;
@@ -274,9 +274,9 @@ class TwitterHook {
                     // Get tweet data
                     const tweetText = tweet.querySelector('[data-testid="tweetText"]')?.textContent || '';
                     const tweetMedia = [
-                        ...Array.from(tweet.querySelectorAll('[data-testid="tweetPhoto"] img')).map((img) =>
-                            img.getAttribute('src'),
-                        ),
+                        ...Array.from(
+                            tweet.querySelectorAll(`a[href^="/${username}/status/"] [data-testid="tweetPhoto"] img`),
+                        ).map((img) => img.getAttribute('src')),
                         ...Array.from(tweet.querySelectorAll('[data-testid="videoPlayer"] video')).map((video) =>
                             video.getAttribute('poster'),
                         ),

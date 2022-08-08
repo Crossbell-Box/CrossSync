@@ -1,5 +1,5 @@
 <template>
-    <div class="w-80 mr-12 min-h-full pt-28 flex flex-col relative">
+    <div class="w-80 mr-12 min-h-full pt-28 flex flex-col relative flex-shrink-0">
         <Header />
         <Character
             class="mb-0 rounded-br-none cursor-pointer border-0"

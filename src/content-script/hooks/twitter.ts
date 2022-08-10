@@ -189,17 +189,26 @@ class TwitterHook {
                 duration: 0,
             });
 
-            const attachments = await Promise.all(
-                Array.from(attachmentUrls).map(async (attachment) => {
-                    const result = await fetch(attachment);
-                    const blob = await result.blob();
-                    return {
-                        address: await upload(blob),
-                        mime_type: blob.type,
-                        size_in_bytes: blob.size,
-                    };
-                }),
-            );
+            const attachments = (
+                await Promise.all(
+                    Array.from(attachmentUrls).map(async (attachment) => {
+                        const result = await fetch(attachment);
+                        const blob = await result.blob();
+                        try {
+                            return {
+                                address: await upload(blob),
+                                mime_type: blob.type,
+                                size_in_bytes: blob.size,
+                            };
+                        } catch (e) {
+                            this.main.xlog('error', 'Failed to upload to IPFS with error: ', e);
+                            return {
+                                address: '',
+                            };
+                        }
+                    }),
+                )
+            ).filter((attachment) => attachment.address !== '');
 
             notice?.close();
 

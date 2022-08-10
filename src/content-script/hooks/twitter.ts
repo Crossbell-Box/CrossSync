@@ -54,7 +54,7 @@ class TwitterHook {
 
                         const attachmentUrls = Array.from(
                             document.querySelectorAll(
-                                '[data-testid="attachments"] div[aria-label="Media"] img, [data-testid="attachments"] div[aria-label="Media"] source',
+                                '[data-testid="attachments"] img[src^="blob:https://twitter.com/"], [data-testid="attachments"] source',
                             ),
                         ).map((attachment) => {
                             return (<HTMLImageElement | HTMLSourceElement>attachment).src;

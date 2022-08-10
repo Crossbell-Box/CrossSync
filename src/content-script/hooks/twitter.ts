@@ -84,7 +84,7 @@ class TwitterHook {
                     setTimeout(() => {
                         const tweet = document.querySelector('[data-testid="tweet"]');
                         const link = tweet?.querySelector('time')?.parentElement?.getAttribute('href');
-                        if (link) {
+                        if (link && link.includes(this.getUsername())) {
                             note.related_urls = [`https://twitter.com${link}`];
                         } else {
                             this.main.xlog('error', 'Failed to get link for: ', tweet);

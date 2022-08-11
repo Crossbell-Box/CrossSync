@@ -2,7 +2,7 @@
     "name": "crosssync",
     "description": "Welcome to CrossSync! 👋",
     "private": false,
-    "version": "0.2.0",
+    "version": "0.2.1",
     "scripts": {
         "dev": "vite",
         "build": "vue-tsc --noEmit && vite build",

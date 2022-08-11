@@ -7,7 +7,7 @@ import { bucket, getSettings, key, store } from '@/common/store';
 
 import SyncToggleButton from '@/components/SyncToggle.vue';
 import SyncStatus from '@/components/SyncStatus.vue';
-import type { NoteInput } from 'unidata.js/dist/types/notes';
+import type { NoteInput } from 'unidata.js';
 
 let syncToggleApp: App<Element> | null = null;
 let crossSyncToggleEl: HTMLDivElement;
@@ -64,6 +64,7 @@ class TwitterHook {
 
                         resolve({
                             tags: ['CrossSync', 'Twitter'],
+                            applications: ['CrossSync', 'Twitter'],
                             authors: [`csb://account:${this.getUsername()}@twitter`],
                             body: {
                                 content: tweet,

@@ -11,7 +11,7 @@ specifiers:
   '@originjs/vite-plugin-commonjs': 1.0.3
   '@tailwindcss/line-clamp': 0.4.0
   '@types/async-lock': 1.1.5
-  '@types/chrome': 0.0.188
+  '@types/chrome': 0.0.193
   '@types/lodash-es': 4.17.6
   '@types/markdown-it': 12.2.3
   '@vitejs/plugin-vue': 2.3.4
@@ -34,9 +34,9 @@ specifiers:
   metamask-extension-provider: 3.0.0
   moment: 2.29.4
   postcss: 8.4.16
-  prettier: 2.6.2
+  prettier: 2.7.1
   process: 0.11.10
-  rollup-plugin-polyfill-node: 0.9.0
+  rollup-plugin-polyfill-node: 0.10.2
   stream-browserify: 3.0.0
   tailwindcss: 3.1.8
   typescript: 4.7.4
@@ -84,7 +84,7 @@ devDependencies:
   '@originjs/vite-plugin-commonjs': 1.0.3
   '@tailwindcss/line-clamp': 0.4.0_tailwindcss@3.1.8
   '@types/async-lock': 1.1.5
-  '@types/chrome': 0.0.188
+  '@types/chrome': 0.0.193
   '@types/lodash-es': 4.17.6
   '@types/markdown-it': 12.2.3
   '@vitejs/plugin-vue': 2.3.4_vite@3.0.7+vue@3.2.37
@@ -94,8 +94,8 @@ devDependencies:
   less: 4.1.3
   lint-staged: 13.0.3
   postcss: 8.4.16
-  prettier: 2.6.2
-  rollup-plugin-polyfill-node: 0.9.0_rollup@2.77.3
+  prettier: 2.7.1
+  rollup-plugin-polyfill-node: 0.10.2_rollup@2.77.3
   stream-browserify: 3.0.0
   tailwindcss: 3.1.8
   typescript: 4.7.4
@@ -584,14 +584,6 @@ packages:
   /@ctrl/tinycolor/3.4.1:
     resolution: {integrity: sha512-ej5oVy6lykXsvieQtqZxCOaLT+xD4+QNarq78cIYISHmZXshCvROLudpQN3lfL8G0NL7plMSSK+zlyvCaIJ4Iw==}
     engines: {node: '>=10'}
-    dev: false
-
-  /@element-plus/icons-vue/2.0.4_vue@3.2.37:
-    resolution: {integrity: sha512-UeBVBU3fuBsYa9mzM7DgkRztQ1Aftw3sMTI/1gZsqXq2NWiCOi16ZYXXGIc0jFDIu+k6SojzdlxOjv+rN/Y6FQ==}
-    peerDependencies:
-      vue: ^3.2.0
-    dependencies:
-      vue: 3.2.37
     dev: false
 
   /@element-plus/icons-vue/2.0.9_vue@3.2.37:
@@ -1281,8 +1273,8 @@ packages:
       '@types/har-format': 1.2.8
     dev: false
 
-  /@types/chrome/0.0.188:
-    resolution: {integrity: sha512-fVxbcnSrQqCaaTFfaP9QooRr0Lf47Ni+QVGpd4SQafe6x8RlLrlp+AAgc4QKNUVK7W6xEoOePMAu5sBXrc2qhA==}
+  /@types/chrome/0.0.193:
+    resolution: {integrity: sha512-R8C84oqvk8A8C8G1viBd8qLpDr86Y/jwD+KLgzUekbIT9RGds6a9GnlQyg8P7ltnGogTMHkiEQK0ZlcrvTeo3Q==}
     dependencies:
       '@types/filesystem': 0.0.32
       '@types/har-format': 1.2.8
@@ -5771,8 +5763,8 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
-  /prettier/2.6.2:
-    resolution: {integrity: sha512-PkUpF+qoXTqhOeWL9fu7As8LXsIUZ1WYaJiY/a7McAQzxjk82OF0tibkFXVCDImZtWxbvojFjerkiLb0/q8mew==}
+  /prettier/2.7.1:
+    resolution: {integrity: sha512-ujppO+MkdPqoVINuDFDRLClm7D78qbDt0/NR+wp5FqEZOoTNAjPHWj17QRhu7geIHJfcNhRk1XVQmF8Bp3ye+g==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: true
@@ -6147,8 +6139,8 @@ packages:
       bn.js: 5.2.1
     dev: false
 
-  /rollup-plugin-polyfill-node/0.9.0_rollup@2.77.3:
-    resolution: {integrity: sha512-cVqm7LjgBqtZ77M9hLYayXrLz18nLIVPp3MPqNi2suStrFDg1LsA2cSdMIighr2yeuAQrphu8ymXTAsJNVABow==}
+  /rollup-plugin-polyfill-node/0.10.2_rollup@2.77.3:
+    resolution: {integrity: sha512-5GMywXiLiuQP6ZzED/LO/Q0HyDi2W6b8VN+Zd3oB0opIjyRs494Me2ZMaqKWDNbGiW4jvvzl6L2n4zRgxS9cSQ==}
     peerDependencies:
       rollup: ^1.20.0 || ^2.0.0
     dependencies:

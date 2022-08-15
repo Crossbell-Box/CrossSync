@@ -45,7 +45,7 @@
         "@originjs/vite-plugin-commonjs": "1.0.3",
         "@tailwindcss/line-clamp": "0.4.0",
         "@types/async-lock": "1.1.5",
-        "@types/chrome": "0.0.188",
+        "@types/chrome": "0.0.193",
         "@types/lodash-es": "4.17.6",
         "@types/markdown-it": "12.2.3",
         "@vitejs/plugin-vue": "2.3.4",

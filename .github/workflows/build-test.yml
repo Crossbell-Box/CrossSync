@@ -34,7 +34,7 @@ jobs:
                   NODE_OPTIONS: --max_old_space_size=4096
 
             - name: Pack and upload Artifact
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v3
               with:
                   name: crosssync-test-pack
                   path: dist/ # this will pack automatically, so no other packs needed

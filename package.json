@@ -25,7 +25,7 @@
         "bind-decorator": "1.0.11",
         "buffer": "6.0.3",
         "crossbell.js": "0.10.15",
-        "element-plus": "2.2.13",
+        "element-plus": "2.2.2",
         "ethers": "5.6.9",
         "events": "3.3.0",
         "lodash-es": "4.17.21",

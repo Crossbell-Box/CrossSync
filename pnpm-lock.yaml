@@ -2,7 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@crxjs/vite-plugin': 1.0.13
-  '@element-plus/icons-vue': 2.0.4
+  '@element-plus/icons-vue': 2.0.9
   '@extend-chrome/storage': 1.5.0
   '@fortawesome/fontawesome-svg-core': 6.1.2
   '@fortawesome/free-brands-svg-icons': 6.1.2
@@ -52,7 +52,7 @@ specifiers:
   web3modal: 1.9.8
 
 dependencies:
-  '@element-plus/icons-vue': 2.0.4_vue@3.2.37
+  '@element-plus/icons-vue': 2.0.9_vue@3.2.37
   '@extend-chrome/storage': 1.5.0
   '@fortawesome/fontawesome-svg-core': 6.1.2
   '@fortawesome/free-brands-svg-icons': 6.1.2
@@ -594,8 +594,8 @@ packages:
       vue: 3.2.37
     dev: false
 
-  /@element-plus/icons-vue/2.0.4_vue@3.2.37:
-    resolution: {integrity: sha512-UeBVBU3fuBsYa9mzM7DgkRztQ1Aftw3sMTI/1gZsqXq2NWiCOi16ZYXXGIc0jFDIu+k6SojzdlxOjv+rN/Y6FQ==}
+  /@element-plus/icons-vue/2.0.9_vue@3.2.37:
+    resolution: {integrity: sha512-okdrwiVeKBmW41Hkl0eMrXDjzJwhQMuKiBOu17rOszqM+LS/yBYpNQNV5Jvoh06Wc+89fMmb/uhzf8NZuDuUaQ==}
     peerDependencies:
       vue: ^3.2.0
     dependencies:

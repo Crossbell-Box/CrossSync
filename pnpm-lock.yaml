@@ -22,7 +22,7 @@ specifiers:
   bind-decorator: 1.0.11
   browserify-zlib: 0.2.0
   buffer: 6.0.3
-  crossbell.js: 0.8.3
+  crossbell.js: 0.10.15
   element-plus: 2.2.2
   ethers: 5.6.9
   events: 3.3.0
@@ -63,7 +63,7 @@ dependencies:
   axios: 0.27.2
   bind-decorator: 1.0.11
   buffer: 6.0.3
-  crossbell.js: 0.8.3
+  crossbell.js: 0.10.15_node-fetch@3.2.10
   element-plus: 2.2.2_vue@3.2.37
   ethers: 5.6.9
   events: 3.3.0
@@ -2592,16 +2592,19 @@ packages:
       - utf-8-validate
     dev: false
 
-  /crossbell.js/0.8.3:
-    resolution: {integrity: sha512-TFomKckhTLdCdFMbv1WV587pDA6iC1zA/0hnr2euuwTVDrsG6HRwSe83Oin+CdW90Ll7rMtMPvkwSIpI1gyEgQ==}
+  /crossbell.js/0.10.2_node-fetch@3.2.10:
+    resolution: {integrity: sha512-FtoxTeinXcFjLbB5ya/NwyJX3d0VNbeOlj0fCNCpdiOf7+bibQWMkjdhnKpIieDYqt6i2dNfMbeygxhIHLWZkw==}
     dependencies:
+      async-retry: 1.3.3
       ethers: 5.6.9
       fetch-undici: 3.0.1
+      is-ipfs: 6.0.2_node-fetch@3.2.10
       query-string: 7.1.1
       ts-mixer: 6.0.1
-      web3-providers-ws: 1.7.4
+      web3-providers-ws: 1.7.5
     transitivePeerDependencies:
       - bufferutil
+      - node-fetch
       - supports-color
       - utf-8-validate
     dev: false
@@ -7070,28 +7073,12 @@ packages:
     engines: {node: '>= 8'}
     dev: false
 
-  /web3-core-helpers/1.7.4:
-    resolution: {integrity: sha512-F8PH11qIkE/LpK4/h1fF/lGYgt4B6doeMi8rukeV/s4ivseZHHslv1L6aaijLX/g/j4PsFmR42byynBI/MIzFg==}
-    engines: {node: '>=8.0.0'}
-    dependencies:
-      web3-eth-iban: 1.7.4
-      web3-utils: 1.7.4
-    dev: false
-
   /web3-core-helpers/1.7.5:
     resolution: {integrity: sha512-lDDjTks6Q6aNUO87RYrY2xub3UWTKr/RIWxpHJODEqkLxZS1dWdyliJ6aIx3031VQwsNT5HE7NvABe/t0p3iDQ==}
     engines: {node: '>=8.0.0'}
     dependencies:
       web3-eth-iban: 1.7.5
       web3-utils: 1.7.5
-    dev: false
-
-  /web3-eth-iban/1.7.4:
-    resolution: {integrity: sha512-XyrsgWlZQMv5gRcjXMsNvAoCRvV5wN7YCfFV5+tHUCqN8g9T/o4XUS20vDWD0k4HNiAcWGFqT1nrls02MGZ08w==}
-    engines: {node: '>=8.0.0'}
-    dependencies:
-      bn.js: 5.2.1
-      web3-utils: 1.7.4
     dev: false
 
   /web3-eth-iban/1.7.5:
@@ -7135,17 +7122,6 @@ packages:
       - utf-8-validate
     dev: false
 
-  /web3-providers-ws/1.7.4:
-    resolution: {integrity: sha512-g72X77nrcHMFU8hRzQJzfgi/072n8dHwRCoTw+WQrGp+XCQ71fsk2qIu3Tp+nlp5BPn8bRudQbPblVm2uT4myQ==}
-    engines: {node: '>=8.0.0'}
-    dependencies:
-      eventemitter3: 4.0.4
-      web3-core-helpers: 1.7.4
-      websocket: 1.0.34
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
   /web3-providers-ws/1.7.5:
     resolution: {integrity: sha512-9uJNVVkIGC8PmM9kNbgPth56HDMSSsxZh3ZEENdwO3LNWemaADiQYUDCsD/dMVkn0xsGLHP5dgAy4Q5msqySLg==}
     engines: {node: '>=8.0.0'}
@@ -7155,19 +7131,6 @@ packages:
       websocket: 1.0.34
     transitivePeerDependencies:
       - supports-color
-    dev: false
-
-  /web3-utils/1.7.4:
-    resolution: {integrity: sha512-acBdm6Evd0TEZRnChM/MCvGsMwYKmSh7OaUfNf5OKG0CIeGWD/6gqLOWIwmwSnre/2WrA1nKGId5uW2e5EfluA==}
-    engines: {node: '>=8.0.0'}
-    dependencies:
-      bn.js: 5.2.1
-      ethereum-bloom-filters: 1.0.10
-      ethereumjs-util: 7.1.5
-      ethjs-unit: 0.1.6
-      number-to-bn: 1.7.0
-      randombytes: 2.1.0
-      utf8: 3.0.0
     dev: false
 
   /web3-utils/1.7.5:

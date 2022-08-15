@@ -40,7 +40,7 @@ specifiers:
   stream-browserify: 3.0.0
   tailwindcss: 3.1.8
   typescript: 4.7.4
-  unidata.js: 0.6.10
+  unidata.js: 0.6.11
   unplugin-auto-import: 0.8.8
   unplugin-vue-components: 0.19.9
   util: 0.12.4
@@ -72,7 +72,7 @@ dependencies:
   metamask-extension-provider: 3.0.0
   moment: 2.29.4
   process: 0.11.10
-  unidata.js: 0.6.10_node-fetch@3.2.10
+  unidata.js: 0.6.11_node-fetch@3.2.10
   util: 0.12.4
   vue: 3.2.37
   vue-router: 4.1.3_vue@3.2.37
@@ -124,13 +124,6 @@ packages:
 
   /@assemblyscript/loader/0.9.4:
     resolution: {integrity: sha512-HazVq9zwTVwGmqdwYzu7WyQ6FQVZ7SwET0KKQuKm55jD0IfUpZgN0OPIiZG3zV1iSrVYcN0bdwLRXI/VNCYsUA==}
-    dev: false
-
-  /@babel/code-frame/7.16.7:
-    resolution: {integrity: sha512-iAXqUn8IIeBTNd72xsFlgaXHkMBMt6y4HJp1tIaK465CWLT/fG1aqB7ykr95gHHmlBdGbFeWWfyB4NJJ0nmeIg==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/highlight': 7.17.12
     dev: false
 
   /@babel/code-frame/7.18.6:
@@ -371,15 +364,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@babel/highlight/7.17.12:
-    resolution: {integrity: sha512-7yykMVF3hfZY2jsHZEEgLc+3x4o1O+fYyULu11GynEUQNwB6lua+IIQn1FiJxNucd5UlyJryrwsOh8PL9Sn8Qg==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/helper-validator-identifier': 7.16.7
-      chalk: 2.4.2
-      js-tokens: 4.0.0
-    dev: false
-
   /@babel/highlight/7.18.6:
     resolution: {integrity: sha512-u7stbOuYjaPezCuLj29hNW1v64M2Md2qupEKP1fHc7WdOA3DgLh37suiSrZYY7haUB7iBeQZ9P1uiRF359do3g==}
     engines: {node: '>=6.9.0'}
@@ -489,7 +473,7 @@ packages:
     resolution: {integrity: sha512-I8j/x8kHUrbYRTUxXrrMbfCa7jxkE7tZre39x3kjr9hvI82cK1FfqLygotcWN5kdPGWcLdWMHpSBavse5tWw3w==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/code-frame': 7.16.7
+      '@babel/code-frame': 7.18.6
       '@babel/parser': 7.18.4
       '@babel/types': 7.18.4
     dev: false
@@ -523,7 +507,7 @@ packages:
     resolution: {integrity: sha512-9eNwoeovJ6KH9zcCNnENY7DMFwTU9JdGCFtqNLfUAqtUHRCOsTOqWoffosP8vKmNYeSBUv3yVJXjfd8ucwOjUA==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/code-frame': 7.16.7
+      '@babel/code-frame': 7.18.6
       '@babel/generator': 7.18.2
       '@babel/helper-environment-visitor': 7.18.2
       '@babel/helper-function-name': 7.17.9
@@ -541,7 +525,7 @@ packages:
     resolution: {integrity: sha512-9eNwoeovJ6KH9zcCNnENY7DMFwTU9JdGCFtqNLfUAqtUHRCOsTOqWoffosP8vKmNYeSBUv3yVJXjfd8ucwOjUA==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/code-frame': 7.16.7
+      '@babel/code-frame': 7.18.6
       '@babel/generator': 7.18.2
       '@babel/helper-environment-visitor': 7.18.2
       '@babel/helper-function-name': 7.17.9
@@ -1281,13 +1265,13 @@ packages:
   /@types/bn.js/4.11.6:
     resolution: {integrity: sha512-pqr857jrp2kPuO9uRjZ3PwnJTjoQy+fcdxvBTvHm6dkmEL9q+hDD/2j/0ELOBPtPnS8LjCX0gI9nbl8lVkadpg==}
     dependencies:
-      '@types/node': 18.0.0
+      '@types/node': 18.7.1
     dev: false
 
   /@types/bn.js/5.1.0:
     resolution: {integrity: sha512-QSSVYj7pYFN49kW77o2s9xTCwZ8F2xLbjLLSEVh8D2F4JUhZtPAGOFLTD+ffqksBx/u4cE/KImFjyhqCjn/LIA==}
     dependencies:
-      '@types/node': 18.0.0
+      '@types/node': 18.7.1
     dev: false
 
   /@types/chrome/0.0.136:
@@ -1354,10 +1338,6 @@ packages:
     resolution: {integrity: sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==}
     dev: false
 
-  /@types/node/18.0.0:
-    resolution: {integrity: sha512-cHlGmko4gWLVI27cGJntjs/Sj8th9aYwplmZFwmmgYQQvL5NUsgVJG7OddLvNfLqYS31KFN0s3qlaD9qCaxACA==}
-    dev: false
-
   /@types/node/18.7.1:
     resolution: {integrity: sha512-GKX1Qnqxo4S+Z/+Z8KKPLpH282LD7jLHWJcVryOflnsnH+BtSDfieR6ObwBMwpnNws0bUK8GI7z0unQf9bARNQ==}
     dev: false
@@ -1369,7 +1349,7 @@ packages:
   /@types/pbkdf2/3.1.0:
     resolution: {integrity: sha512-Cf63Rv7jCQ0LaL8tNXmEyqTHuIJxRdlS5vMh1mj5voN4+QFhVZnlZruezqpWYDiJ8UTzhP0VmeLXCmBk66YrMQ==}
     dependencies:
-      '@types/node': 18.0.0
+      '@types/node': 18.7.1
     dev: false
 
   /@types/retry/0.12.0:
@@ -1379,7 +1359,7 @@ packages:
   /@types/secp256k1/4.0.3:
     resolution: {integrity: sha512-Da66lEIFeIz9ltsdMZcpQvmrmmoqrfju8pm1BH8WbYjZSwUgCwXLb9C+9XYogwBITnbsSaMdVPb2ekf7TV+03w==}
     dependencies:
-      '@types/node': 18.0.0
+      '@types/node': 18.7.1
     dev: false
 
   /@urql/core/2.5.0_graphql@16.5.0:
@@ -2595,8 +2575,8 @@ packages:
       which: 2.0.2
     dev: true
 
-  /crossbell.js/0.10.2_node-fetch@3.2.10:
-    resolution: {integrity: sha512-FtoxTeinXcFjLbB5ya/NwyJX3d0VNbeOlj0fCNCpdiOf7+bibQWMkjdhnKpIieDYqt6i2dNfMbeygxhIHLWZkw==}
+  /crossbell.js/0.10.15_node-fetch@3.2.10:
+    resolution: {integrity: sha512-sJ6J+tHwvqBGsTWAwqu8/is3B7WfTkyuwJ1Qb56/JoCj/l51Dha5KLUGaACJKlBuknvkmVB3zCPenEvmmbwMtQ==}
     dependencies:
       async-retry: 1.3.3
       ethers: 5.6.9
@@ -4510,7 +4490,7 @@ packages:
     dev: true
 
   /is-hex-prefixed/1.0.0:
-    resolution: {integrity: sha1-fY035q135dEnFIkTxXPggtd39VQ=}
+    resolution: {integrity: sha512-WvtOiug1VFrE9v1Cydwm+FnXd3+w9GaeVUss5W4v/SLy3UW00vP+6iNF2SdnfiBoLy4bTqVdkftNGTUeOFVsbA==}
     engines: {node: '>=6.5.0', npm: '>=3'}
     dev: false
 
@@ -6578,7 +6558,7 @@ packages:
     dev: true
 
   /strip-hex-prefix/1.0.0:
-    resolution: {integrity: sha1-DF8VX+8RUTczd96du1iNoFUA428=}
+    resolution: {integrity: sha512-q8d4ue7JGEiVcypji1bALTos+0pWtyGlivAWyPuTkHzuTCJqrK9sWxYQZUq6Nq3cuyv3bm734IhHvHtGGURU6A==}
     engines: {node: '>=6.5.0', npm: '>=3'}
     dependencies:
       is-hex-prefixed: 1.0.0
@@ -6803,13 +6783,13 @@ packages:
     engines: {node: '>=12.18'}
     dev: false
 
-  /unidata.js/0.6.10_node-fetch@3.2.10:
-    resolution: {integrity: sha512-x0CVNfExs51vdh0M4wMNz8snOHHBea14UVb6BX5ZwI/LpRMcpPcV+M8krEOZ9t8VNf17n7h/3wMwI1oCpuRZvg==}
+  /unidata.js/0.6.11_node-fetch@3.2.10:
+    resolution: {integrity: sha512-ZSPvEHiJHMbFH8GDe8NabV8LH+ijyXs7FnFRFsmqCf9xyQoGuHf5abz/tdK4cIbEXXowEhds++5zeHob575niA==}
     dependencies:
       '@types/lodash': 4.14.182
       '@urql/core': 2.5.0_graphql@16.5.0
       axios: 0.27.2
-      crossbell.js: 0.10.2_node-fetch@3.2.10
+      crossbell.js: 0.10.15_node-fetch@3.2.10
       ethers: 5.6.9
       graphql: 16.5.0
       lodash: 4.17.21

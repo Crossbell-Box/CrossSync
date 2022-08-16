@@ -14,7 +14,7 @@ specifiers:
   '@types/chrome': 0.0.193
   '@types/lodash-es': 4.17.6
   '@types/markdown-it': 12.2.3
-  '@vitejs/plugin-vue': 2.3.4
+  '@vitejs/plugin-vue': 3.0.3
   '@walletconnect/web3-provider': 1.8.0
   async-lock: 1.3.2
   autoprefixer: 10.4.8
@@ -87,7 +87,7 @@ devDependencies:
   '@types/chrome': 0.0.193
   '@types/lodash-es': 4.17.6
   '@types/markdown-it': 12.2.3
-  '@vitejs/plugin-vue': 2.3.4_vite@3.0.7+vue@3.2.37
+  '@vitejs/plugin-vue': 3.0.3_vite@3.0.7+vue@3.2.37
   autoprefixer: 10.4.8_postcss@8.4.16
   browserify-zlib: 0.2.0
   husky: 8.0.1
@@ -1396,11 +1396,11 @@ packages:
     dev: true
     optional: true
 
-  /@vitejs/plugin-vue/2.3.4_vite@3.0.7+vue@3.2.37:
-    resolution: {integrity: sha512-IfFNbtkbIm36O9KB8QodlwwYvTEsJb4Lll4c2IwB3VHc2gie2mSPtSzL0eYay7X2jd/2WX02FjSGTWR6OPr/zg==}
-    engines: {node: '>=12.0.0'}
+  /@vitejs/plugin-vue/3.0.3_vite@3.0.7+vue@3.2.37:
+    resolution: {integrity: sha512-U4zNBlz9mg+TA+i+5QPc3N5lQvdUXENZLO2h0Wdzp56gI1MWhqJOv+6R+d4kOzoaSSq6TnGPBdZAXKOe4lXy6g==}
+    engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
-      vite: ^2.5.10
+      vite: ^3.0.0
       vue: ^3.2.25
     dependencies:
       vite: 3.0.7_less@4.1.3

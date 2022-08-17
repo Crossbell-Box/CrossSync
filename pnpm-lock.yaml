@@ -40,7 +40,7 @@ specifiers:
   stream-browserify: 3.0.0
   tailwindcss: 3.1.8
   typescript: 4.7.4
-  unidata.js: 0.6.12
+  unidata.js: 0.6.14
   unplugin-auto-import: 0.11.1
   unplugin-vue-components: 0.22.4
   util: 0.12.4
@@ -72,7 +72,7 @@ dependencies:
   metamask-extension-provider: 3.0.0
   moment: 2.29.4
   process: 0.11.10
-  unidata.js: 0.6.12_node-fetch@2.6.7
+  unidata.js: 0.6.14_node-fetch@2.6.7
   util: 0.12.4
   vue: 3.2.37
   vue-router: 4.1.3_vue@3.2.37
@@ -97,7 +97,7 @@ devDependencies:
   prettier: 2.7.1
   rollup-plugin-polyfill-node: 0.10.2_rollup@2.77.3
   stream-browserify: 3.0.0
-  tailwindcss: 3.1.8
+  tailwindcss: 3.1.8_postcss@8.4.16
   typescript: 4.7.4
   unplugin-auto-import: 0.11.1_rollup@2.77.3+vite@3.0.8
   unplugin-vue-components: 0.22.4_jc5ihhr7sxvdpic4hxpmmb5we4
@@ -1098,7 +1098,7 @@ packages:
     peerDependencies:
       tailwindcss: '>=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1'
     dependencies:
-      tailwindcss: 3.1.8
+      tailwindcss: 3.1.8_postcss@8.4.16
     dev: true
 
   /@types/async-lock/1.1.5:
@@ -2419,6 +2419,23 @@ packages:
 
   /crossbell.js/0.10.15_node-fetch@2.6.7:
     resolution: {integrity: sha512-sJ6J+tHwvqBGsTWAwqu8/is3B7WfTkyuwJ1Qb56/JoCj/l51Dha5KLUGaACJKlBuknvkmVB3zCPenEvmmbwMtQ==}
+    dependencies:
+      async-retry: 1.3.3
+      ethers: 5.6.9
+      fetch-undici: 3.0.1
+      is-ipfs: 6.0.2_node-fetch@2.6.7
+      query-string: 7.1.1
+      ts-mixer: 6.0.1
+      web3-providers-ws: 1.7.5
+    transitivePeerDependencies:
+      - bufferutil
+      - node-fetch
+      - supports-color
+      - utf-8-validate
+    dev: false
+
+  /crossbell.js/0.10.17_node-fetch@2.6.7:
+    resolution: {integrity: sha512-BRgclp6m0QsI9eA48mlBXaIIEBnYYNOW3hJPnegPqqrtaWafSdJhJPLP/qoKY13YdGEQBLszpjivrRYc+GKFhA==}
     dependencies:
       async-retry: 1.3.3
       ethers: 5.6.9
@@ -6364,10 +6381,12 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  /tailwindcss/3.1.8:
+  /tailwindcss/3.1.8_postcss@8.4.16:
     resolution: {integrity: sha512-YSneUCZSFDYMwk+TGq8qYFdCA3yfBRdBlS7txSq0LUmzyeqRe3a8fBQzbz9M3WS/iFT4BNf/nmw9mEzrnSaC0g==}
     engines: {node: '>=12.13.0'}
     hasBin: true
+    peerDependencies:
+      postcss: ^8.0.9
     dependencies:
       arg: 5.0.2
       chokidar: 3.5.3
@@ -6536,13 +6555,13 @@ packages:
     engines: {node: '>=12.18'}
     dev: false
 
-  /unidata.js/0.6.12_node-fetch@2.6.7:
-    resolution: {integrity: sha512-fQ0C54+exK7n5j8zb91dBGy+o3vy9QWyCdJhyVXLrgGpBHOLbx4BOGO5sb0BK8fqY4w+TVFr/+CM7KboOU8mGg==}
+  /unidata.js/0.6.14_node-fetch@2.6.7:
+    resolution: {integrity: sha512-T6aQfebvrG+Y67z1a5lKHo6cf5yRL5quO9xqphxmFY1wS+0aOdaFc2TDRSdwnOGEWGtr/rEkPVzDiLUGJMpZCw==}
     dependencies:
       '@types/lodash': 4.14.182
       '@urql/core': 2.5.0_graphql@16.5.0
       axios: 0.27.2
-      crossbell.js: 0.10.15_node-fetch@2.6.7
+      crossbell.js: 0.10.17_node-fetch@2.6.7
       ethers: 5.6.9
       graphql: 16.5.0
       lodash: 4.17.21

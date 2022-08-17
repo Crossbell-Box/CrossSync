@@ -37,10 +37,6 @@ export async function connect(force = false) {
                     },
                 ],
             });
-        } else {
-            await metaMaskProvider.request({
-                method: 'eth_requestAccounts',
-            });
         }
 
         return metaMaskProvider;

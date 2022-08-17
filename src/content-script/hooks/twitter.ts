@@ -241,9 +241,17 @@ class TwitterHook {
         this.main.xlog('info', 'Detect status...');
         const settings = await getSettings();
         // this.main.xlog('info', 'Settings is', settings);
-        const unidata = await this.main.getUnidata();
-        // this.main.xlog('info', 'Now address is: '+ this.main.address);
         let newStatus = '';
+        try {
+            await this.main.getUnidata();
+        } catch (e: any) {
+            newStatus = e.message;
+            this.main.xlog('warn', newStatus);
+            settings.syncing = newStatus;
+            await bucket.set(settings);
+            return;
+        }
+        // this.main.xlog('info', 'Now address is: '+ this.main.address);
         if (settings.syncing !== false && settings.address && this.main.address) {
             if (settings.address.toLowerCase() !== this.main.address?.toLowerCase()) {
                 newStatus = 'Address changed.';

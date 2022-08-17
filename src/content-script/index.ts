@@ -56,6 +56,9 @@ class CrossSyncContentScript {
                                 method: 'eth_accounts',
                             })
                         )?.[0];
+                        if (!this.address) {
+                            throw new Error('No address found, MetaMask might be locked.');
+                        }
                         // this.xlog('info', 'Init unidata with address: ', this.address);
                         this.unidata = new Unidata({
                             ethereumProvider: provider,
@@ -65,6 +68,7 @@ class CrossSyncContentScript {
                     }
                 } catch (e: any) {
                     this.xlog('error', 'Failed to initialize Unidata', e);
+                    throw e;
                 }
             }
         });

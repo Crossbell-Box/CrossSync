@@ -322,6 +322,7 @@ class TwitterHook {
                         postNote: async () => {
                             const note = {
                                 tags: ['CrossSync', 'Twitter'],
+                                applications: ['CrossSync', 'Twitter'],
                                 authors: [`csb://account:${username}@twitter`],
                                 body: {
                                     content: tweetText,

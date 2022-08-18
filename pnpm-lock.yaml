@@ -22,7 +22,7 @@ specifiers:
   bind-decorator: 1.0.11
   browserify-zlib: 0.2.0
   buffer: 6.0.3
-  crossbell.js: 0.10.15
+  crossbell.js: 0.10.17
   element-plus: 2.2.2
   ethers: 5.6.9
   events: 3.3.0
@@ -63,7 +63,7 @@ dependencies:
   axios: 0.27.2
   bind-decorator: 1.0.11
   buffer: 6.0.3
-  crossbell.js: 0.10.15_node-fetch@2.6.7
+  crossbell.js: 0.10.17_node-fetch@2.6.7
   element-plus: 2.2.2_vue@3.2.37
   ethers: 5.6.9
   events: 3.3.0

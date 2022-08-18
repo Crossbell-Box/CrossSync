@@ -17,7 +17,7 @@
                         class="align-middle ml-2 text-sm"
                         target="_blank"
                         :href="url"
-                        v-for="url in note.related_urls"
+                        v-for="url in [...(note.external_urls || []), ...note.related_urls]"
                         :key="url"
                     >
                         <img

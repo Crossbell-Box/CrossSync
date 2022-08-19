@@ -24,7 +24,7 @@
         "axios": "0.27.2",
         "bind-decorator": "1.0.11",
         "buffer": "6.0.3",
-        "crossbell.js": "0.10.17",
+        "crossbell.js": "0.10.18",
         "element-plus": "2.2.2",
         "ethers": "5.6.9",
         "events": "3.3.0",

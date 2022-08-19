@@ -26,7 +26,7 @@
         "buffer": "6.0.3",
         "crossbell.js": "0.10.18",
         "element-plus": "2.2.2",
-        "ethers": "5.6.9",
+        "ethers": "5.7.0",
         "events": "3.3.0",
         "lodash-es": "4.17.21",
         "markdown-it": "13.0.1",

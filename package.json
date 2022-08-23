@@ -24,7 +24,7 @@
         "axios": "0.27.2",
         "bind-decorator": "1.0.11",
         "buffer": "6.0.3",
-        "crossbell.js": "0.10.18",
+        "crossbell.js": "0.10.20",
         "element-plus": "2.2.14",
         "ethers": "5.7.0",
         "events": "3.3.0",
@@ -36,7 +36,7 @@
         "unidata.js": "0.6.14",
         "util": "0.12.4",
         "vue": "3.2.37",
-        "vue-router": "4.1.3",
+        "vue-router": "4.1.4",
         "vuex": "4.0.2",
         "web3modal": "1.9.8"
     },

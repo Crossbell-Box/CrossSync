@@ -97,7 +97,10 @@ class TwitterHook {
                     }, 10);
                 } else {
                     this.main.xlog('info', `Failed to find note info.`);
-                    ElMessage.error('CrossSync encountered a problem: Failed to find note info.');
+                    ElMessage.error({
+                        message: 'CrossSync encountered a problem: Failed to find note info.',
+                        grouping: true,
+                    });
                 }
             }
         });
@@ -138,6 +141,7 @@ class TwitterHook {
                 message:
                     '<p>CrossSync is syncing your post...</p><p style="margin-top: 7px;font-size: 12px;">(2/2) Waiting for signature and transaction on Crossbell</p>',
                 duration: 0,
+                grouping: true,
             });
 
             const unidata = await this.main.getUnidata();
@@ -152,21 +156,30 @@ class TwitterHook {
                         },
                         note,
                     );
-                    ElMessage.success('CrossSync has successfully synced your post to blockchain! 🎉');
+                    ElMessage.success({
+                        message: 'CrossSync has successfully synced your post to blockchain! 🎉',
+                        grouping: true,
+                    });
 
                     if (data.code !== 0) {
                         ElMessage.error(`CrossSync encountered a problem: ${data.message}`);
                     }
                 } catch (e) {
                     this.main.xlog('error', 'Failed to post note.', e);
-                    ElMessage.error('CrossSync encountered a problem: Unidata failed to post note.');
+                    ElMessage.error({
+                        message: 'CrossSync encountered a problem: Unidata failed to post note.',
+                        grouping: true,
+                    });
 
                     (<any>window).cssc.syncing = null;
                     (<any>window).cssc.updateSyncing?.[url || '']?.('synced');
                 }
             } else {
                 this.main.xlog('info', `Failed to get Unidata Instance.`);
-                ElMessage.error('CrossSync encountered a problem: Unidata instance is not ready.');
+                ElMessage.error({
+                    message: 'CrossSync encountered a problem: Unidata instance is not ready.',
+                    grouping: true,
+                });
             }
 
             notice?.close();
@@ -188,6 +201,7 @@ class TwitterHook {
                 message:
                     '<p>CrossSync is syncing your post...</p><p style="margin-top: 7px;font-size: 12px;">(1/2) Uploading post attachments to IPFS</p>',
                 duration: 0,
+                grouping: true,
             });
 
             const attachments = (

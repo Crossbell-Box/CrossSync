@@ -64,37 +64,6 @@
                 <el-button text bg type="default" @click="skip" v-if="characters.length">Skip</el-button>
             </el-form-item>
         </el-form>
-        <div v-loading="ensLoading" v-if="ensDeadline > +new Date()">
-            <div>
-                <p class="mt-14">
-                    <b>🎉 ENS Event:</b> We've reserved your ENS name and RSS3 RNS name for you, only you can claim it,
-                    click to claim it for free!
-                </p>
-                <el-button
-                    text
-                    bg
-                    type="primary"
-                    class="mt-2 mb-4"
-                    v-for="ens in ensList"
-                    :key="ens"
-                    @click="claimENS(ens)"
-                    >{{ ens.username }}</el-button
-                >
-                <el-button
-                    text
-                    bg
-                    type="primary"
-                    class="mt-2 mb-4"
-                    v-for="rns in rnsList"
-                    :key="rns"
-                    @click="claimENS(rns)"
-                    >{{ rns.username }}</el-button
-                >
-                <div v-if="!ensList.length" class="text-gray-400 text-sm leading-8 mt-2 mb-4">
-                    Sorry, we did not find your ENS name
-                </div>
-            </div>
-        </div>
     </div>
     <el-dialog v-model="dialogVisible" title="Tweet to continue" width="31%">
         <p class="mb-4">
@@ -128,26 +97,15 @@ if (!store.state.settings.address) {
     router.push('/');
 }
 
-const ensList = ref<Profile[]>([]);
-const rnsList = ref<Profile[]>([]);
 const isChecking = ref(false);
 const isMinting = ref(false);
-const ensLoading = ref(true);
 const dialogVisible = ref(false);
 const mintDisabled = ref(true);
 const isUploadingAvatar = ref(false);
 const avatarUri = ref('');
 const avatarUriLocked = ref(false);
-let isENS = '';
-const ensDeadline = ref(1656547200000);
 
-const changeHandle = () => {
-    isENS = '';
-};
-
-axios.get('https://crosssync-ens-deadline.rss3.workers.dev/').then((res) => {
-    ensDeadline.value = parseInt(res.data);
-});
+const changeHandle = () => {};
 
 const validateHandle = (handle: string): boolean => {
     return /^[a-z0-9_\\-]{3,31}$/.test(handle);
@@ -262,15 +220,7 @@ const check = async () => {
 
 const tweet = () => {
     const text = encodeURIComponent(
-        `#OwnMyTweets - ${
-            isENS
-                ? `This Tweet signals that I have claimed my ${
-                      isENS.endsWith('.rss3') ? 'RNS' : 'ENS'
-                  } ${isENS} as my handle on`
-                : `My future tweets will be synced on-chain through`
-        } https://crosssync.app via @_Crossbell ${
-            isENS ? `(${moment.duration(moment().diff(ensDeadline.value)).humanize()} remaining to claim)` : ``
-        }`,
+        `#OwnMyTweets - My future tweets will be synced on-chain through https://crosssync.app via @_Crossbell`,
     );
     window.open(`https://twitter.com/intent/tweet?text=${text}`);
     setTimeout(() => {
@@ -310,53 +260,8 @@ const mint = async () => {
     isMinting.value = false;
 };
 
-const claimENS = async (ens: Profile) => {
-    isENS = ens.username || '';
-    isMinting.value = true;
-
-    ruleForm.handle = ens.username!.replace(/\.eth$/, '').replace(/\.rss3$/, '');
-    if (ens.avatars?.[0]) {
-        ruleForm.avatar = ens.avatars[0];
-        setAvatarUri(ens.avatars[0]);
-        enLockAvatarUri(); // Prevent change by mistake
-    }
-    ruleForm.name = ens.name || ens.username!;
-    ruleForm.bio = ens.bio || '';
-
-    isMinting.value = false;
-};
-
 const next = async () => {
     await router.push('/characters');
-};
-
-const initENS = async () => {
-    try {
-        ensList.value = (
-            await window.unidata?.profiles.get({
-                source: 'ENS',
-                identity: store.state.settings.address!,
-            })
-        ).list;
-        const rns = (await axios.get(`https://rss3.domains/address/${store.state.settings.address}`)).data.rnsName;
-        if (rns) {
-            const rnsCharacter = (await axios.get(`https://prenode.rss3.dev/${store.state.settings.address}`)).data
-                .profile;
-            rnsList.value = [
-                {
-                    username: rns,
-                    name: rnsCharacter.name,
-                    avatars: rnsCharacter.avatar,
-                    bio: rnsCharacter.bio,
-
-                    source: 'RNS',
-                },
-            ];
-        }
-    } catch (e) {
-        // Failed to find ENS profiles.
-    }
-    ensLoading.value = false;
 };
 
 const handleUpload = async (file: UploadFile) => {
@@ -384,8 +289,6 @@ const unLockAvatarUri = () => {
 const enLockAvatarUri = () => {
     avatarUriLocked.value = true;
 };
-
-initENS();
 </script>
 
 <style></style>

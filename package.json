@@ -38,7 +38,7 @@
         "vue": "3.2.37",
         "vue-router": "4.1.4",
         "vuex": "4.0.2",
-        "web3modal": "1.9.8"
+        "web3modal": "1.9.9"
     },
     "devDependencies": {
         "@crxjs/vite-plugin": "1.0.14",

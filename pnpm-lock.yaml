@@ -46,7 +46,7 @@ specifiers:
   util: 0.12.4
   vite: 3.0.9
   vue: 3.2.37
-  vue-router: 4.1.4
+  vue-router: 4.1.5
   vue-tsc: 0.35.2
   vuex: 4.0.2
   web3modal: 1.9.8
@@ -75,7 +75,7 @@ dependencies:
   unidata.js: 0.6.19_node-fetch@2.6.7
   util: 0.12.4
   vue: 3.2.37
-  vue-router: 4.1.4_vue@3.2.37
+  vue-router: 4.1.5_vue@3.2.37
   vuex: 4.0.2_vue@3.2.37
   web3modal: 1.9.8_react-is@16.13.1
 
@@ -6160,8 +6160,8 @@ packages:
       vue: 3.2.37
     dev: false
 
-  /vue-router/4.1.4_vue@3.2.37:
-    resolution: {integrity: sha512-UgYen33gOtwT3cOG1+yRen+Brk9py8CSlC9LEa3UjvKZ4EAoSo8NjZPDeDnmNerfazorHIJG1NC7qdi1SuQJnQ==}
+  /vue-router/4.1.5_vue@3.2.37:
+    resolution: {integrity: sha512-IsvoF5D2GQ/EGTs/Th4NQms9gd2NSqV+yylxIyp/OYp8xOwxmU8Kj/74E9DTSYAyH5LX7idVUngN3JSj1X4xcQ==}
     peerDependencies:
       vue: ^3.2.0
     dependencies:

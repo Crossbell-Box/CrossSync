@@ -298,22 +298,13 @@ class TwitterHook {
 
         // All tweets
         const allTweets = document.querySelectorAll('[data-testid="tweet"]');
-        Array.from(allTweets).forEach((tweet) => {
+        allTweets.forEach((tweet) => {
             if (tweet && !tweet.querySelector('[cssc="sync-status"]')) {
                 // Get link
                 const tweetPath = tweet.querySelector('time')?.parentElement?.getAttribute('href');
                 if (tweetPath && tweetPath.includes(`/${username}/status/`)) {
                     const link = `https://twitter.com${tweetPath}`;
-                    // Get tweet data
-                    const tweetText = tweet.querySelector('[data-testid="tweetText"]')?.textContent || '';
-                    const tweetMedia = [
-                        ...Array.from(
-                            tweet.querySelectorAll(`a[href^="/${username}/status/"] [data-testid="tweetPhoto"] img`),
-                        ).map((img) => img.getAttribute('src')),
-                        ...Array.from(tweet.querySelectorAll('[data-testid="videoPlayer"] video')).map((video) =>
-                            video.getAttribute('poster'),
-                        ),
-                    ].filter((url) => !!url) as string[];
+
                     const syncStatus = createApp(SyncStatus, {
                         link: link,
                         getNote: async () => {
@@ -335,6 +326,33 @@ class TwitterHook {
                             }
                         },
                         postNote: async () => {
+                            // Get tweet data
+                            const tweetTextNode = tweet.querySelector('[data-testid="tweetText"]');
+                            let tweetText = tweetTextNode?.textContent || '';
+                            const tweetTextAnchors = tweetTextNode?.querySelectorAll('a');
+                            // Get full url for all links
+                            const tweetTextLinks = tweetTextAnchors
+                                ? Array.from(tweetTextAnchors)
+                                      .map((a) => a.textContent)
+                                      .filter((link) => !!link)
+                                : [];
+
+                            // Remove final '…'
+                            tweetTextLinks.forEach((link) => {
+                                tweetText = tweetText.replace(link!, link!.replace('…', ''));
+                            });
+
+                            const tweetMedia = [
+                                ...Array.from(
+                                    tweet.querySelectorAll(
+                                        `a[href^="/${username}/status/"] [data-testid="tweetPhoto"] img`,
+                                    ),
+                                ).map((img) => img.getAttribute('src')),
+                                ...Array.from(tweet.querySelectorAll('[data-testid="videoPlayer"] video')).map(
+                                    (video) => video.getAttribute('poster'),
+                                ),
+                            ].filter((url) => !!url) as string[];
+
                             const note = {
                                 tags: ['CrossSync', 'Twitter'],
                                 applications: ['CrossSync', 'Twitter'],

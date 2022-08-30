@@ -45,17 +45,18 @@ class CrossSyncContentScript {
         }
     }
 
-    async getUnidata() {
+    async getUnidata(force: boolean = false, addressInSettings?: string) {
         await this.lock.acquire('getUnidata', async () => {
             if (!this.unidata) {
                 try {
-                    const provider = await w3mConnect(); // Metamask
+                    const provider = await w3mConnect(force); // Metamask
                     if (provider) {
-                        this.address = (
-                            await provider.request({
-                                method: 'eth_accounts',
-                            })
-                        )?.[0];
+                        this.address =
+                            (
+                                await provider.request({
+                                    method: 'eth_accounts',
+                                })
+                            )?.[0] || addressInSettings;
                         if (!this.address) {
                             throw new Error('No address found, MetaMask might be locked.');
                         }

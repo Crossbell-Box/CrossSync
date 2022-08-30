@@ -30,6 +30,9 @@ export async function connect(force = false) {
 
         if (force) {
             await metaMaskProvider.request({
+                method: 'eth_requestAccounts',
+            });
+            await metaMaskProvider.request({
                 method: 'wallet_requestPermissions',
                 params: [
                     {

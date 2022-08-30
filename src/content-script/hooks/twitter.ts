@@ -144,7 +144,7 @@ class TwitterHook {
                 grouping: true,
             });
 
-            const unidata = await this.main.getUnidata();
+            const unidata = await this.main.getUnidata(true, settings.address);
             if (unidata) {
                 try {
                     const data = await unidata.notes.set(
@@ -257,7 +257,7 @@ class TwitterHook {
         // this.main.xlog('info', 'Settings is', settings);
         let newStatus = '';
         try {
-            await this.main.getUnidata();
+            await this.main.getUnidata(false, settings.address);
         } catch (e: any) {
             newStatus = e.message;
             this.main.xlog('warn', newStatus);
@@ -289,9 +289,10 @@ class TwitterHook {
         return link.split('/')[1];
     }
 
-    private mountSyncOldTweets() {
+    private async mountSyncOldTweets() {
         // Only activate on Personal Timeline
         const username = this.getUsername();
+        const settings = await getSettings();
 
         this.main.xlog('info', 'Mounting sync old tweets button...');
 
@@ -320,7 +321,7 @@ class TwitterHook {
                                 return this.noteCache.get(link);
                             } else {
                                 // Check if it's already synced
-                                const unidata = await this.main.getUnidata();
+                                const unidata = await this.main.getUnidata(false, settings.address);
                                 const noteResp = await unidata?.notes.get({
                                     source: 'Crossbell Note',
                                     filter: {

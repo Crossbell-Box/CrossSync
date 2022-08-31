@@ -40,7 +40,7 @@ specifiers:
   stream-browserify: 3.0.0
   tailwindcss: 3.1.8
   typescript: 4.8.2
-  unidata.js: 0.6.19
+  unidata.js: 0.6.20
   unplugin-auto-import: 0.11.2
   unplugin-vue-components: 0.22.4
   util: 0.12.4
@@ -72,7 +72,7 @@ dependencies:
   metamask-extension-provider: 3.0.0
   moment: 2.29.4
   process: 0.11.10
-  unidata.js: 0.6.19_node-fetch@2.6.7
+  unidata.js: 0.6.20_node-fetch@2.6.7
   util: 0.12.4
   vue: 3.2.37
   vue-router: 4.1.5_vue@3.2.37
@@ -5910,8 +5910,8 @@ packages:
     engines: {node: '>=12.18'}
     dev: false
 
-  /unidata.js/0.6.19_node-fetch@2.6.7:
-    resolution: {integrity: sha512-ByvjhUEhE3ZKV3jSKoGAY2yHXdZCoy13NBkydiP+ELw2gouUR1ujysNybQxcrUdEvjQlrJZ3mR4SSwgQwPWqTg==}
+  /unidata.js/0.6.20_node-fetch@2.6.7:
+    resolution: {integrity: sha512-WhYaG7u0FIvLUmv08Iq8yX54FiO36jq2fB/GEKfV80VnxD1qSGekKe92jv9ANZYWtoZ/8tk45X/YUxsDi53E3g==}
     dependencies:
       '@types/lodash': 4.14.182
       '@urql/core': 2.5.0_graphql@16.5.0

@@ -86,9 +86,6 @@ import { useStore } from '@/common/store';
 import { Plus, Lock, Unlock } from '@element-plus/icons-vue';
 import { debounce } from 'lodash-es';
 import { upload } from '@/common/ipfs';
-import axios from 'axios';
-import moment from 'moment';
-import type { Profile } from 'unidata.js';
 
 const router = useRouter();
 const store = useStore();
@@ -191,21 +188,10 @@ const check = async () => {
             platform: 'Crossbell',
         });
 
-        const isReservedRes = await fetch(
-            `https://faas-sgp1-18bc02ac.doserverless.co/api/v1/web/fn-94f39aba-a3e4-4614-9e9a-628569184919/default/crosssync-ens-rns-check?handle=${ruleForm.handle}&address=${store.state.settings.address}`,
-        ).then((res) => res.json());
-
         isChecking.value = false;
 
         if (characters?.list.length) {
             ElMessage.error('Oops, this handle has already been taken...');
-            return false;
-        } else if (
-            isReservedRes.reserved && // Reserved
-            isReservedRes.ensOwner?.toLowerCase() !== store.state.settings.address!.toLowerCase() && // Not ENS owner
-            isReservedRes.rnsOwner?.toLowerCase() !== store.state.settings.address!.toLowerCase() // Not RNS owner
-        ) {
-            ElMessage.error('Oops, this handle is reserved...');
             return false;
         } else {
             ElMessage.success('This handle is available!');

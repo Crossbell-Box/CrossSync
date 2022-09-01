@@ -267,7 +267,7 @@ class TwitterHook {
         }
         // this.main.xlog('info', 'Now address is: '+ this.main.address);
         if (settings.syncing !== false && settings.address && this.main.address) {
-            if (settings.address.toLowerCase() !== this.main.address?.toLowerCase()) {
+            if (settings.address.toLowerCase() !== this.main.address.toLowerCase()) {
                 newStatus = 'Address changed.';
                 this.main.xlog('warn', `Old address: ${settings.address}, now: ${this.main.address}`);
             }

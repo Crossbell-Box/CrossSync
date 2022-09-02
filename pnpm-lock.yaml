@@ -9,7 +9,7 @@ specifiers:
   '@fortawesome/free-solid-svg-icons': 6.2.0
   '@fortawesome/vue-fontawesome': 3.0.1
   '@originjs/vite-plugin-commonjs': 1.0.3
-  '@tailwindcss/line-clamp': 0.4.0
+  '@tailwindcss/line-clamp': 0.4.2
   '@types/async-lock': 1.1.5
   '@types/chrome': 0.0.195
   '@types/lodash-es': 4.17.6
@@ -82,7 +82,7 @@ dependencies:
 devDependencies:
   '@crxjs/vite-plugin': 1.0.14_vite@3.0.9
   '@originjs/vite-plugin-commonjs': 1.0.3
-  '@tailwindcss/line-clamp': 0.4.0_tailwindcss@3.1.8
+  '@tailwindcss/line-clamp': 0.4.2_tailwindcss@3.1.8
   '@types/async-lock': 1.1.5
   '@types/chrome': 0.0.195
   '@types/lodash-es': 4.17.6
@@ -1313,8 +1313,8 @@ packages:
     resolution: {integrity: sha512-Ccy0NlLkzr0Ex2FKvh2X+OyERHXJ88XJ1MXtsI9y9fGexlaXaVTPzBCRBwIxFkORuOb+uBqeu+RqnpgYTEZRUQ==}
     dev: false
 
-  /@tailwindcss/line-clamp/0.4.0_tailwindcss@3.1.8:
-    resolution: {integrity: sha512-HQZo6gfx1D0+DU3nWlNLD5iA6Ef4JAXh0LeD8lOGrJwEDBwwJNKQza6WoXhhY1uQrxOuU8ROxV7CqiQV4CoiLw==}
+  /@tailwindcss/line-clamp/0.4.2_tailwindcss@3.1.8:
+    resolution: {integrity: sha512-HFzAQuqYCjyy/SX9sLGB1lroPzmcnWv1FHkIpmypte10hptf4oPUfucryMKovZh2u0uiS9U5Ty3GghWfEJGwVw==}
     peerDependencies:
       tailwindcss: '>=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1'
     dependencies:

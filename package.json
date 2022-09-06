@@ -48,7 +48,7 @@
         "@types/chrome": "0.0.196",
         "@types/lodash-es": "4.17.6",
         "@types/markdown-it": "12.2.3",
-        "@vitejs/plugin-vue": "3.0.3",
+        "@vitejs/plugin-vue": "3.1.0",
         "autoprefixer": "10.4.8",
         "browserify-zlib": "0.2.0",
         "husky": "8.0.1",

@@ -56,7 +56,9 @@ class TwitterHook {
                     if (handle && syncing === true) {
                         this.main.xlog('info', 'Sync triggered.');
 
-                        const tweet = (<HTMLElement>document.querySelector('[data-testid=tweetTextarea_0]'))?.innerText;
+                        const tweet =
+                            msg.tweet_text || // Get directly from request
+                            (<HTMLElement>document.querySelector('[data-testid=tweetTextarea_0]'))?.innerText; // Grab from frontend
 
                         const attachmentUrls = Array.from(
                             document.querySelectorAll(

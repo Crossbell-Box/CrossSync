@@ -19,6 +19,7 @@ let tabId: number | undefined;
 const beforeRequestListener = (details: chrome.webRequest.WebRequestBodyDetails) => {
     let data;
     let for_uri: string | null = null;
+    let tweet_text: string;
     if (details.requestBody?.raw?.[0]?.bytes) {
         const enc = new TextDecoder('utf-8');
         const arr = new Uint8Array(details.requestBody.raw[0].bytes);
@@ -33,6 +34,7 @@ const beforeRequestListener = (details: chrome.webRequest.WebRequestBodyDetails)
             // Is quote
             for_uri = data.variables.attachment_url;
         }
+        tweet_text = data.variables.tweet_text;
     }
     if (!hasDarkQueries[data.queryId]) {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -41,6 +43,7 @@ const beforeRequestListener = (details: chrome.webRequest.WebRequestBodyDetails)
                 chrome.tabs.sendMessage(tabId, {
                     type: 'create-tweet-start',
                     for_uri,
+                    tweet_text,
                 });
             }
         });

@@ -39,9 +39,15 @@ class TwitterHook {
             },
         ];
 
-        let startPromise: Promise<NoteInput> | undefined;
+        let startPromise:
+            | Promise<{
+                  note: NoteInput;
+                  for_uri?: string;
+              }>
+            | undefined;
         chrome.runtime.onMessage.addListener(async (msg) => {
             if (msg.type === 'create-tweet-start') {
+                const for_uri = msg.for_uri;
                 startPromise = new Promise(async (resolve) => {
                     const settings = await getSettings();
                     const handle = settings.handle;
@@ -63,15 +69,18 @@ class TwitterHook {
                         const attachments = await this.uploadAttachments(attachmentUrls);
 
                         resolve({
-                            tags: ['CrossSync', 'Twitter'],
-                            applications: ['CrossSync', 'Twitter'],
-                            authors: [`csb://account:${this.getUsername()}@twitter`],
-                            body: {
-                                content: tweet,
-                                mime_type: 'text/plain',
-                                size_in_bytes: tweet.length,
+                            note: {
+                                tags: ['CrossSync', 'Twitter'],
+                                applications: ['CrossSync', 'Twitter'],
+                                authors: [`csb://account:${this.getUsername()}@twitter`],
+                                body: {
+                                    content: tweet,
+                                    mime_type: 'text/plain',
+                                    size_in_bytes: tweet.length,
+                                },
+                                attachments,
                             },
-                            attachments,
+                            for_uri,
                         });
                     }
                 });
@@ -80,7 +89,7 @@ class TwitterHook {
                 });
             } else if (msg.type === 'create-tweet-end') {
                 if (startPromise) {
-                    const note = await startPromise;
+                    const { note, for_uri } = await startPromise;
 
                     setTimeout(() => {
                         const tweet = document.querySelector('[data-testid="tweet"]');
@@ -93,7 +102,7 @@ class TwitterHook {
 
                         this.main.xlog('info', 'Trigger auto posting tweet...', note);
 
-                        this.sync(note);
+                        this.sync(note, undefined, for_uri);
                     }, 10);
                 } else {
                     this.main.xlog('info', `Failed to find note info.`);
@@ -115,7 +124,7 @@ class TwitterHook {
         }
     }
 
-    private async sync(note: NoteInput, attachmentUrls?: string[]) {
+    private async sync(note: NoteInput, attachmentUrls?: string[], for_uri?: string) {
         if (!(<any>window).cssc) {
             (<any>window).cssc = {};
         }
@@ -155,6 +164,9 @@ class TwitterHook {
                             action: 'add',
                         },
                         note,
+                        {
+                            targetUri: for_uri,
+                        },
                     );
                     ElMessage.success({
                         message: 'CrossSync has successfully synced your post to blockchain! 🎉',

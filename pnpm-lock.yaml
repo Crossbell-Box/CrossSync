@@ -10,7 +10,7 @@ specifiers:
   '@fortawesome/vue-fontawesome': 3.0.1
   '@originjs/vite-plugin-commonjs': 1.0.3
   '@tailwindcss/line-clamp': 0.4.2
-  '@types/async-lock': 1.1.5
+  '@types/async-lock': 1.3.0
   '@types/chrome': 0.0.196
   '@types/lodash-es': 4.17.6
   '@types/markdown-it': 12.2.3
@@ -83,7 +83,7 @@ devDependencies:
   '@crxjs/vite-plugin': 1.0.14_vite@3.1.0
   '@originjs/vite-plugin-commonjs': 1.0.3
   '@tailwindcss/line-clamp': 0.4.2_tailwindcss@3.1.8
-  '@types/async-lock': 1.1.5
+  '@types/async-lock': 1.3.0
   '@types/chrome': 0.0.196
   '@types/lodash-es': 4.17.6
   '@types/markdown-it': 12.2.3
@@ -1336,8 +1336,8 @@ packages:
       tailwindcss: 3.1.8_postcss@8.4.16
     dev: true
 
-  /@types/async-lock/1.1.5:
-    resolution: {integrity: sha512-A9ClUfmj6wwZMLRz0NaYzb98YH1exlHdf/cdDSKBfMQJnPOdO8xlEW0Eh2QsTTntGzOFWURcEjYElkZ1IY4GCQ==}
+  /@types/async-lock/1.3.0:
+    resolution: {integrity: sha512-Z93wDSYW9aMgPR5t+7ouwTvy91Vp3M0Snh4Pd3tf+caSAq5bXZaGnnH9CDbjrwgmfDkRIX0Dx8GvSDgwuoaxoA==}
     dev: true
 
   /@types/bn.js/4.11.6:

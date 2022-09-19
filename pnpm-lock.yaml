@@ -11,7 +11,7 @@ specifiers:
   '@originjs/vite-plugin-commonjs': 1.0.3
   '@tailwindcss/line-clamp': 0.4.2
   '@types/async-lock': 1.3.0
-  '@types/chrome': 0.0.196
+  '@types/chrome': 0.0.197
   '@types/lodash-es': 4.17.6
   '@types/markdown-it': 12.2.3
   '@vitejs/plugin-vue': 3.1.0
@@ -84,7 +84,7 @@ devDependencies:
   '@originjs/vite-plugin-commonjs': 1.0.3
   '@tailwindcss/line-clamp': 0.4.2_tailwindcss@3.1.8
   '@types/async-lock': 1.3.0
-  '@types/chrome': 0.0.196
+  '@types/chrome': 0.0.197
   '@types/lodash-es': 4.17.6
   '@types/markdown-it': 12.2.3
   '@vitejs/plugin-vue': 3.1.0_vite@3.1.0+vue@3.2.39
@@ -1359,8 +1359,8 @@ packages:
       '@types/har-format': 1.2.8
     dev: false
 
-  /@types/chrome/0.0.196:
-    resolution: {integrity: sha512-LAjGIQYC0wyiYu6lVT03dBrHBfYTMsM8EmNfQ+UdZipGZe8OUiir6weoa9oQoBw3T3RLzBCp9m904T+rFtpPAg==}
+  /@types/chrome/0.0.197:
+    resolution: {integrity: sha512-m1NfS5bOjaypyqQfaX6CxmJodZVcvj5+Mt/K94EBHkflYjPNmXHAzbxfifdLMa0YM3PDyOxohoTS5ug/e6p5jA==}
     dependencies:
       '@types/filesystem': 0.0.32
       '@types/har-format': 1.2.8
@@ -2060,7 +2060,7 @@ packages:
       babel-plugin-syntax-jsx: 6.18.0
       lodash: 4.17.21
       picomatch: 2.3.1
-      styled-components: 5.3.5_weosonmcjvoewsjzleuokaixoa
+      styled-components: 5.3.5_gzjxbbqgwmhffys5rngtiuy3yq
     dev: false
 
   /babel-plugin-syntax-jsx/6.18.0:
@@ -5315,16 +5315,6 @@ packages:
       scheduler: 0.19.1
     dev: false
 
-  /react-dom/18.2.0_react@16.14.0:
-    resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
-    peerDependencies:
-      react: ^18.2.0
-    dependencies:
-      loose-envify: 1.4.0
-      react: 16.14.0
-      scheduler: 0.23.0
-    dev: false
-
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
@@ -5568,12 +5558,6 @@ packages:
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
-    dev: false
-
-  /scheduler/0.23.0:
-    resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
-    dependencies:
-      loose-envify: 1.4.0
     dev: false
 
   /scrypt-js/3.0.1:
@@ -5845,7 +5829,7 @@ packages:
       acorn: 8.8.0
     dev: true
 
-  /styled-components/5.3.5_weosonmcjvoewsjzleuokaixoa:
+  /styled-components/5.3.5_gzjxbbqgwmhffys5rngtiuy3yq:
     resolution: {integrity: sha512-ndETJ9RKaaL6q41B69WudeqLzOpY1A/ET/glXkNZ2T7dPjPqpPCXXQjDFYZWwNnE5co0wX+gTCqx9mfxTmSIPg==}
     engines: {node: '>=10'}
     requiresBuild: true
@@ -5863,7 +5847,7 @@ packages:
       css-to-react-native: 3.0.0
       hoist-non-react-statics: 3.3.2
       react: 16.14.0
-      react-dom: 18.2.0_react@16.14.0
+      react-dom: 16.14.0_react@16.14.0
       react-is: 18.2.0
       shallowequal: 1.1.0
       supports-color: 5.5.0
@@ -6389,7 +6373,7 @@ packages:
       prop-types: 15.8.1
       react: 16.14.0
       react-dom: 16.14.0_react@16.14.0
-      styled-components: 5.3.5_weosonmcjvoewsjzleuokaixoa
+      styled-components: 5.3.5_gzjxbbqgwmhffys5rngtiuy3yq
       tslib: 1.14.1
     transitivePeerDependencies:
       - react-is

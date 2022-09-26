@@ -1,6 +1,9 @@
 <template>
     <ul v-infinite-scroll="load" class="infinite-list flex-1" style="overflow: auto">
         <li class="flex text-4xl font-bold my-5 py-4">Home</li>
+        <li v-for="note in notes" :key="note.id">
+            <Note :note="note" :character="character" />
+        </li>
         <li v-for="(_, index) in Array(5)" :key="index" v-show="loading">
             <el-skeleton animated>
                 <template #template>
@@ -16,10 +19,7 @@
                 </template>
             </el-skeleton>
         </li>
-        <li v-for="note in notes" :key="note.id">
-            <Note :note="note" :character="character" />
-        </li>
-        <li v-if="!loading && notes.length === 0">
+        <li v-if="!haveMore && notes.length === 0">
             <p class="text-center text-gray-500">
                 <span class="align-middle">No notes yet... Try to </span>
                 <el-button class="align-middle" text bg type="primary" @click="tweet">sync a tweet</el-button>
@@ -39,7 +39,8 @@ const router = useRouter();
 const store = useStore();
 
 const notes = ref<TypeNote[]>([]);
-const loading = ref(true);
+const loading = ref(false);
+const haveMore = ref(true);
 
 if (store.state.settings.address) {
     if (!store.state.characters?.list.length) {
@@ -52,10 +53,9 @@ if (store.state.settings.address) {
 }
 
 let cursor: any;
-let first = true;
 const load = async () => {
-    if (cursor || first) {
-        first = false;
+    if (!loading.value && haveMore.value) {
+        loading.value = true;
         const result = await window.unidata.notes.get({
             identity: store.state.settings.handle!,
             platform: 'Crossbell',
@@ -65,10 +65,18 @@ const load = async () => {
                     applications: ['CrossSync'],
                 },
             }),
-            cursor,
+            ...(cursor && { cursor }),
         });
-        notes.value = notes.value.concat(result?.list || []);
-        cursor = result?.cursor;
+        if (result?.list && result.list.length > 0) {
+            if (result?.cursor) {
+                cursor = result.cursor;
+            } else {
+                haveMore.value = false;
+            }
+            notes.value = notes.value.concat(result.list);
+        } else {
+            haveMore.value = false;
+        }
         loading.value = false;
     }
 };

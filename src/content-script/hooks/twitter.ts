@@ -1,6 +1,6 @@
 import Main, { Hook } from '../index';
 import { createApp, App } from 'vue';
-import ElementPlus, { ElMessage, MessageHandle } from 'element-plus';
+import ElementPlus, { ElMessage, MessageHandler } from 'element-plus';
 
 import { upload } from '@/common/ipfs';
 import { bucket, getSettings, key, store } from '@/common/store';
@@ -137,7 +137,7 @@ class TwitterHook {
         const settings = await getSettings();
         const handle = settings.handle;
         const syncing = settings.syncing;
-        let notice: MessageHandle | undefined;
+        let notice: MessageHandler | undefined;
 
         if (handle && syncing === true) {
             if (attachmentUrls) {
@@ -207,7 +207,7 @@ class TwitterHook {
         const settings = await getSettings();
         const handle = settings.handle;
         const syncing = settings.syncing;
-        let notice: MessageHandle | undefined;
+        let notice: MessageHandler | undefined;
         if (handle && syncing === true) {
             // attachments
             notice = ElMessage.warning({

@@ -80,7 +80,7 @@ document.addEventListener('keyup', () => {
     }, 0);
 });
 
-(<any>window).cssc = {
+(window as any).cssc = {
     checkAvailable,
 };
 </script>

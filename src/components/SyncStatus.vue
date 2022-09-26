@@ -82,14 +82,14 @@ async function setStatus(status: string) {
     }
 }
 
-if (!(<any>window).cssc) {
-    (<any>window).cssc = {};
+if (!(window as any).cssc) {
+    (window as any).cssc = {};
 }
-if (!(<any>window).cssc.updateSyncing) {
-    (<any>window).cssc.updateSyncing = {};
+if (!(window as any).cssc.updateSyncing) {
+    (window as any).cssc.updateSyncing = {};
 }
-(<any>window).cssc.updateSyncing[props.link] = setStatus;
-if ((<any>window).cssc.syncing === props.link) {
+(window as any).cssc.updateSyncing[props.link] = setStatus;
+if ((window as any).cssc.syncing === props.link) {
     setStatus('syncing');
 }
 </script>

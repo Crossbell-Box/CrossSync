@@ -13,8 +13,10 @@ import ChildProcess from 'child_process';
 
 // const production = process.env.NODE_ENV === 'production';
 
-const appVersion = JSON.stringify(process.env.npm_package_version);
+const appVersion = process.env.npm_package_version;
 const commitHash = ChildProcess.execSync('git rev-parse --short HEAD').toString();
+
+console.log(`Building CrossSync version: v${appVersion} #${commitHash}`);
 
 export default defineConfig({
     build: {
@@ -59,7 +61,7 @@ export default defineConfig({
         }),
     ],
     define: {
-        __APP_VERSION__: appVersion,
-        __COMMIT_HASH__: commitHash,
+        __APP_VERSION__: JSON.stringify(appVersion),
+        __COMMIT_HASH__: JSON.stringify(commitHash),
     },
 });

@@ -27,6 +27,14 @@
                         </div>
                     </div>
                 </el-card>
+                <el-card shadow="hover" class="cursor-pointer">
+                    <div class="flex flex-row" style="justify-content: space-between">
+                        <div class="flex">Show CrossSync notes only</div>
+                        <div class="flex">
+                            <el-switch class="switch h-6" v-model="isNotesCSSCOnly" @change="setNotesCSSCOnly" />
+                        </div>
+                    </div>
+                </el-card>
             </el-col>
         </div>
     </div>
@@ -42,6 +50,7 @@ const router = useRouter();
 const store = useStore();
 
 const isSyncing = ref(store.state.settings.syncing && !!store.state.settings.handle);
+const isNotesCSSCOnly = ref(store.state.settings.notesShowCSSCOnly);
 
 if (store.state.settings.address) {
     if (!store.state.characters?.list.length) {
@@ -68,8 +77,15 @@ const setSyncing = async () => {
     });
 };
 
+const setNotesCSSCOnly = async () => {
+    await store.dispatch('setSettings', {
+        notesShowCSSCOnly: isNotesCSSCOnly.value,
+    });
+};
+
 watchEffect(() => {
     isSyncing.value = store.state.settings.syncing && !!store.state.settings.handle;
+    isNotesCSSCOnly.value = store.state.settings.notesShowCSSCOnly;
 });
 </script>
 

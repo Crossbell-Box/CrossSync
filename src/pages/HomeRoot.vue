@@ -62,6 +62,11 @@ const load = async () => {
             identity: store.state.settings.handle!,
             platform: 'Crossbell',
             source: 'Crossbell Note',
+            ...(store.state.settings.notesShowCSSCOnly && {
+                filter: {
+                    applications: ['CrossSync'],
+                },
+            }),
             cursor,
         });
         notes.value = notes.value.concat(result?.list || []);

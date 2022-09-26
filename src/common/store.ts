@@ -7,6 +7,7 @@ import type { Profiles } from 'unidata.js';
 
 export interface Settings {
     syncing: boolean | string;
+    notesShowCSSCOnly: boolean;
     address?: string;
     handle?: string;
 }
@@ -17,6 +18,7 @@ export const getSettings = async (): Promise<Settings> =>
     Object.assign(
         {
             syncing: true,
+            notesShowCSSCOnly: true,
         },
         await bucket.get(),
     );
@@ -58,6 +60,7 @@ export const store = createStore<State>({
             state.characters = undefined;
             state.settings = {
                 syncing: true,
+                notesShowCSSCOnly: true,
             };
             await bucket.clear();
         },

@@ -83,7 +83,7 @@ const tweet = () => {
     const text = encodeURIComponent(
         `#OwnMyTweets I'm proudly syncing my Tweet to blockchain and truly owning my tweet!`,
     );
-    window.open(`https://twitter.com/compose/tweet`);
+    window.open(`https://twitter.com/intent/tweet?text=${text}`);
 };
 </script>
 

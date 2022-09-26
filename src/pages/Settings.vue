@@ -28,7 +28,7 @@
             </el-card>
             <el-card shadow="hover" class="cursor-pointer">
                 <div class="flex flex-row" style="justify-content: space-between">
-                    <div class="flex">Show CrossSync notes only</div>
+                    <div class="flex">Only show notes from CrossSync</div>
                     <div class="flex">
                         <el-switch class="switch h-6" v-model="isNotesCSSCOnly" @change="setNotesCSSCOnly" />
                     </div>

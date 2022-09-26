@@ -4,7 +4,7 @@
             <div class="w-10 h-10 mr-3" v-if="character.avatars?.[0]">
                 <img class="rounded-full" :src="character.avatars?.[0]" />
             </div>
-            <div class="flex-1">
+            <div class="flex-1 break-all">
                 <div class="mb-1">
                     <span class="font-bold align-middle">{{ character.name || character.username }}</span>
                     <span class="text-gray-500 ml-1 align-middle" v-if="character.username"
@@ -106,7 +106,6 @@ const props = defineProps({
     },
 });
 
-const note = props.note;
 const character = props.character;
 
 const getHost = (url: string) => {

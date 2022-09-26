@@ -9,7 +9,12 @@ import { crx } from '@crxjs/vite-plugin';
 import manifest from './manifest';
 import { viteCommonjs } from '@originjs/vite-plugin-commonjs';
 
+import ChildProcess from 'child_process';
+
 // const production = process.env.NODE_ENV === 'production';
+
+const appVersion = JSON.stringify(process.env.npm_package_version);
+const commitHash = ChildProcess.execSync('git rev-parse --short HEAD').toString();
 
 export default defineConfig({
     build: {
@@ -53,4 +58,8 @@ export default defineConfig({
             },
         }),
     ],
+    define: {
+        __APP_VERSION__: appVersion,
+        __COMMIT_HASH__: commitHash,
+    },
 });

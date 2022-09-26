@@ -6,3 +6,7 @@ declare module '*.vue' {
     const component: DefineComponent<{}, {}, any>;
     export default component;
 }
+
+// Version related
+declare const __APP_VERSION__: string;
+declare const __COMMIT_HASH__: string;

@@ -22,7 +22,7 @@ specifiers:
   bind-decorator: 1.0.11
   browserify-zlib: 0.2.0
   buffer: 6.0.3
-  crossbell.js: 0.10.32
+  crossbell.js: 0.10.34
   element-plus: 2.2.17
   ethers: 5.7.1
   events: 3.3.0
@@ -63,7 +63,7 @@ dependencies:
   axios: 0.27.2
   bind-decorator: 1.0.11
   buffer: 6.0.3
-  crossbell.js: 0.10.32_undici@5.10.0
+  crossbell.js: 0.10.34_node-fetch@3.2.10
   element-plus: 2.2.17_vue@3.2.39
   ethers: 5.7.1
   events: 3.3.0
@@ -1258,31 +1258,6 @@ packages:
     resolution: {integrity: sha512-/kSXhY692qiV1MXu6EeOZvg5nECLclxNXcKCxJ3cXQgYuRymRHpdx/t7JXfsK+JLjwA1e1c1/SBrlQYpusC29Q==}
     dev: false
 
-  /@multiformats/mafmt/11.0.3_undici@5.10.0:
-    resolution: {integrity: sha512-DvCQeZJgaC4kE3BLqMuW3gQkNAW14Z7I+yMt30Ze+wkfHkWSp+bICcHGihhtgfzYCumHA/vHlJ9n54mrCcmnvQ==}
-    engines: {node: '>=16.0.0', npm: '>=7.0.0'}
-    dependencies:
-      '@multiformats/multiaddr': 11.0.0_undici@5.10.0
-    transitivePeerDependencies:
-      - supports-color
-      - undici
-    dev: false
-
-  /@multiformats/multiaddr/11.0.0_undici@5.10.0:
-    resolution: {integrity: sha512-NfOx/RF7TmGeCiQ5rmpvU7Ny7VKfmIG2jP2XSebTCv78vGuSRQ1YF+5UEKWft2Kjhtj1Xaq7dvgB9SeLp+BYSw==}
-    engines: {node: '>=16.0.0', npm: '>=7.0.0'}
-    dependencies:
-      dns-over-http-resolver: 2.1.0_undici@5.10.0
-      err-code: 3.0.1
-      is-ip: 5.0.0
-      multiformats: 9.8.1
-      uint8arrays: 3.1.0
-      varint: 6.0.0
-    transitivePeerDependencies:
-      - supports-color
-      - undici
-    dev: false
-
   /@nodelib/fs.scandir/2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -2382,13 +2357,6 @@ packages:
       wrap-ansi: 5.1.0
     dev: false
 
-  /clone-regexp/3.0.0:
-    resolution: {integrity: sha512-ujdnoq2Kxb8s3ItNBtnYeXdm07FcU0u8ARAT1lQ2YdMwQC+cdiXX8KoqMVuglztILivceTtp4ivqGSmEmhBUJw==}
-    engines: {node: '>=12'}
-    dependencies:
-      is-regexp: 3.1.0
-    dev: false
-
   /clone/2.1.2:
     resolution: {integrity: sha512-3Pe/CF1Nn94hyhIYpjtiLhdCoEoz0DqQ+988E9gmeEdQZlojxnOb74wctFyuwWQHzqyf9X7C7MG8juUpqBJT8w==}
     engines: {node: '>=0.8'}
@@ -2440,11 +2408,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
-
-  /convert-hrtime/5.0.0:
-    resolution: {integrity: sha512-lOETlkIeYSJWcbbcvjRKGxVMXJR+8+OQb/mTPbA4ObPMytYIsUbuOE0Jzy60hjARYszq1id0j8KgVhC+WGZVTg==}
-    engines: {node: '>=12'}
-    dev: false
 
   /convert-source-map/1.8.0:
     resolution: {integrity: sha512-+OQdjP49zViI/6i7nIJpA8rAl4sV/JdPfU9nZs3VqOwGIgizICvuN2ru6fMd+4llL0tar18UYJXfZ/TWtmhUjA==}
@@ -2538,20 +2501,20 @@ packages:
       - utf-8-validate
     dev: false
 
-  /crossbell.js/0.10.32_undici@5.10.0:
-    resolution: {integrity: sha512-iy6S6OPzChEfyypyERkZg9LZrlvHLnJt2rUoveNdEFbeWpzbI6IkIyjKYORIr3QzapjSyOlz4W4CvW/OeoRYyw==}
+  /crossbell.js/0.10.34_node-fetch@3.2.10:
+    resolution: {integrity: sha512-B9+U/GPnw3/19tPI9YsouGKqmY32tXf1G0EVPKkE/GzbUvE+TzWNdMnBq8Vo24KNraLY9HnWVQXJ3iN54jDfCA==}
     dependencies:
       async-retry: 1.3.3
       ethers: 5.7.1
       fetch-undici: 3.0.1
-      is-ipfs: 7.0.2_undici@5.10.0
+      is-ipfs: 6.0.2_node-fetch@3.2.10
       query-string: 7.1.1
       ts-mixer: 6.0.1
       web3-providers-ws: 1.8.0
     transitivePeerDependencies:
       - bufferutil
+      - node-fetch
       - supports-color
-      - undici
       - utf-8-validate
     dev: false
 
@@ -2737,18 +2700,6 @@ packages:
     transitivePeerDependencies:
       - node-fetch
       - supports-color
-    dev: false
-
-  /dns-over-http-resolver/2.1.0_undici@5.10.0:
-    resolution: {integrity: sha512-eb8RGy6k54JdD7Rjw8g65y1MyA4z3m3IIYh7uazkgZuKIdFn8gYt8dydMm3op+2UshDdk9EexrXcDluKNY/CDg==}
-    engines: {node: '>=16.0.0', npm: '>=7.0.0'}
-    dependencies:
-      debug: 4.3.4
-      native-fetch: 4.0.2_undici@5.10.0
-      receptacle: 1.3.2
-    transitivePeerDependencies:
-      - supports-color
-      - undici
     dev: false
 
   /dom-serializer/2.0.0:
@@ -3901,11 +3852,6 @@ packages:
   /function-bind/1.1.1:
     resolution: {integrity: sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==}
 
-  /function-timeout/0.1.1:
-    resolution: {integrity: sha512-0NVVC0TaP7dSTvn1yMiy6d6Q8gifzbvQafO46RtLG/kHJUBNd+pVRGOBoK44wNBvtSPUJRfdVvkFdD3p0xvyZg==}
-    engines: {node: '>=14.16'}
-    dev: false
-
   /function.prototype.name/1.1.5:
     resolution: {integrity: sha512-uN7m/BzVKQnCUF/iW8jYea67v++2u7m5UgENbHRtdDVclOUP+FMPlCNdmk0h/ysGyo2tavMJEDqJAkJdRa1vMA==}
     engines: {node: '>= 0.4'}
@@ -4145,11 +4091,6 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /ip-regex/5.0.0:
-    resolution: {integrity: sha512-fOCG6lhoKKakwv+C6KdsOnGvgXnmgfmp0myi3bcNwj3qfwPAxRKWEuFhvEFF7ceYIz6+1jRZ+yguLFAmUNPEfw==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
-    dev: false
-
   /is-arguments/1.1.1:
     resolution: {integrity: sha512-8Q7EARjzEnKpt/PCD7e1cgUS0a6X8u5tdSiMqXhojOdoV9TsMsiO+9VLC5vAmO8N7/GmXn7yjR8qnA6bVAEzfA==}
     engines: {node: '>= 0.4'}
@@ -4251,14 +4192,6 @@ packages:
       ip-regex: 4.3.0
     dev: false
 
-  /is-ip/5.0.0:
-    resolution: {integrity: sha512-uhmKwcdWJ1nTmBdoBxdHilfJs4qdLBIvVHKRels2+UCZmfcfefuQWziadaYLpN7t/bUrJOjJHv+R1di1q7Q1HQ==}
-    engines: {node: '>=14.16'}
-    dependencies:
-      ip-regex: 5.0.0
-      super-regex: 0.2.0
-    dev: false
-
   /is-ipfs/6.0.2_node-fetch@3.2.10:
     resolution: {integrity: sha512-RinUnsggL4hlLoHlZcvs2+92OE46Uflg/YVU1m5fXhyDBS/zh3bq+i6Aw7IbzJZ9oZXJx26TgxpqCuCr+LH/DA==}
     engines: {node: '>=14.0.0', npm: '>=6.0.0'}
@@ -4271,20 +4204,6 @@ packages:
     transitivePeerDependencies:
       - node-fetch
       - supports-color
-    dev: false
-
-  /is-ipfs/7.0.2_undici@5.10.0:
-    resolution: {integrity: sha512-JhWGU7eBZA/ZphQ+/Q4JNFXx9IPI5WC8wXgbFjMcyPeyn9b+QZgKBEOEqeTADk5cT5yUN5v/HYfPlJRdtu5vfQ==}
-    engines: {node: '>=16.0.0', npm: '>=7.0.0'}
-    dependencies:
-      '@multiformats/mafmt': 11.0.3_undici@5.10.0
-      '@multiformats/multiaddr': 11.0.0_undici@5.10.0
-      iso-url: 1.2.1
-      multiformats: 9.8.1
-      uint8arrays: 3.1.0
-    transitivePeerDependencies:
-      - supports-color
-      - undici
     dev: false
 
   /is-negative-zero/2.0.2:
@@ -4310,11 +4229,6 @@ packages:
     dependencies:
       call-bind: 1.0.2
       has-tostringtag: 1.0.0
-    dev: false
-
-  /is-regexp/3.1.0:
-    resolution: {integrity: sha512-rbku49cWloU5bSMI+zaRaXdQHXnthP6DZ/vLnfdSKyL4zUzuWnomtOEiZZOd+ioQ+avFo/qau3KPTc7Fjy1uPA==}
-    engines: {node: '>=12'}
     dev: false
 
   /is-shared-array-buffer/1.0.2:
@@ -4914,14 +4828,6 @@ packages:
       node-fetch: '*'
     dependencies:
       node-fetch: 3.2.10
-    dev: false
-
-  /native-fetch/4.0.2_undici@5.10.0:
-    resolution: {integrity: sha512-4QcVlKFtv2EYVS5MBgsGX5+NWKtbDbIECdUXDBGDMAZXq3Jkv9zf+y8iS7Ub8fEdga3GpYeazp9gauNqXHJOCg==}
-    peerDependencies:
-      undici: '*'
-    dependencies:
-      undici: 5.10.0
     dev: false
 
   /needle/3.1.0:
@@ -5950,15 +5856,6 @@ packages:
       supports-color: 5.5.0
     dev: false
 
-  /super-regex/0.2.0:
-    resolution: {integrity: sha512-WZzIx3rC1CvbMDloLsVw0lkZVKJWbrkJ0k1ghKFmcnPrW1+jWbgTkTEWVtD9lMdmI4jZEz40+naBxl1dCUhXXw==}
-    engines: {node: '>=14.16'}
-    dependencies:
-      clone-regexp: 3.0.0
-      function-timeout: 0.1.1
-      time-span: 5.1.0
-    dev: false
-
   /supports-color/5.5.0:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}
     engines: {node: '>=4'}
@@ -6005,13 +5902,6 @@ packages:
   /through/2.3.8:
     resolution: {integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==}
     dev: true
-
-  /time-span/5.1.0:
-    resolution: {integrity: sha512-75voc/9G4rDIJleOo4jPvN4/YC4GRZrY8yy1uU4lwrB3XEQbWve8zXoO5No4eFrGcTAMYyoY67p8jRQdtA1HbA==}
-    engines: {node: '>=12'}
-    dependencies:
-      convert-hrtime: 5.0.0
-    dev: false
 
   /to-fast-properties/2.0.0:
     resolution: {integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==}

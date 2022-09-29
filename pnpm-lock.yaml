@@ -22,7 +22,7 @@ specifiers:
   bind-decorator: 1.0.11
   browserify-zlib: 0.2.0
   buffer: 6.0.3
-  crossbell.js: 0.10.34
+  crossbell.js: 0.10.35
   element-plus: 2.2.17
   ethers: 5.7.1
   events: 3.3.0
@@ -63,7 +63,7 @@ dependencies:
   axios: 0.27.2
   bind-decorator: 1.0.11
   buffer: 6.0.3
-  crossbell.js: 0.10.34_node-fetch@3.2.10
+  crossbell.js: 0.10.35_node-fetch@3.2.10
   element-plus: 2.2.17_vue@3.2.40
   ethers: 5.7.1
   events: 3.3.0
@@ -2560,8 +2560,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /crossbell.js/0.10.34_node-fetch@3.2.10:
-    resolution: {integrity: sha512-B9+U/GPnw3/19tPI9YsouGKqmY32tXf1G0EVPKkE/GzbUvE+TzWNdMnBq8Vo24KNraLY9HnWVQXJ3iN54jDfCA==}
+  /crossbell.js/0.10.35_node-fetch@3.2.10:
+    resolution: {integrity: sha512-u/GsjPj1V3j19bC4MQSm9WTNhn33n30OGgyDpDzkrvU96HNYmAg4xszi8S1xH9Z4ZzBW+99kKOGzxzK9w3ccgw==}
     dependencies:
       async-retry: 1.3.3
       ethers: 5.7.1

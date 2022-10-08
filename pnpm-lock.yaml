@@ -2,7 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@crxjs/vite-plugin': 1.0.14
-  '@element-plus/icons-vue': 2.0.9
+  '@element-plus/icons-vue': 2.0.10
   '@extend-chrome/storage': 1.5.0
   '@fortawesome/fontawesome-svg-core': 6.2.0
   '@fortawesome/free-brands-svg-icons': 6.2.0
@@ -52,7 +52,7 @@ specifiers:
   web3modal: 1.9.9
 
 dependencies:
-  '@element-plus/icons-vue': 2.0.9_vue@3.2.40
+  '@element-plus/icons-vue': 2.0.10_vue@3.2.40
   '@extend-chrome/storage': 1.5.0
   '@fortawesome/fontawesome-svg-core': 6.2.0
   '@fortawesome/free-brands-svg-icons': 6.2.0
@@ -466,8 +466,8 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
-  /@element-plus/icons-vue/2.0.9_vue@3.2.40:
-    resolution: {integrity: sha512-okdrwiVeKBmW41Hkl0eMrXDjzJwhQMuKiBOu17rOszqM+LS/yBYpNQNV5Jvoh06Wc+89fMmb/uhzf8NZuDuUaQ==}
+  /@element-plus/icons-vue/2.0.10_vue@3.2.40:
+    resolution: {integrity: sha512-ygEZ1mwPjcPo/OulhzLE7mtDrQBWI8vZzEWSNB2W/RNCRjoQGwbaK4N8lV4rid7Ts4qvySU3njMN7YCiSlSaTQ==}
     peerDependencies:
       vue: ^3.2.0
     dependencies:
@@ -2831,7 +2831,7 @@ packages:
       vue: ^3.2.0
     dependencies:
       '@ctrl/tinycolor': 3.4.1
-      '@element-plus/icons-vue': 2.0.9_vue@3.2.40
+      '@element-plus/icons-vue': 2.0.10_vue@3.2.40
       '@floating-ui/dom': 1.0.2
       '@popperjs/core': /@sxzz/popperjs-es/2.11.7
       '@types/lodash': 4.14.184

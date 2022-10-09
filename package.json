@@ -13,7 +13,7 @@
         "**/*": "prettier --write --ignore-unknown"
     },
     "dependencies": {
-        "@element-plus/icons-vue": "2.0.9",
+        "@element-plus/icons-vue": "2.0.10",
         "@extend-chrome/storage": "1.5.0",
         "@fortawesome/fontawesome-svg-core": "6.2.0",
         "@fortawesome/free-brands-svg-icons": "6.2.0",

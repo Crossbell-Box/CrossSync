@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import { connect as w3mConnect } from '@/common/wallet';
+import { connect as wConn } from '@/common/wallet';
 import { useStore } from '@/common/store';
 import { ref } from 'vue';
 import Unidata from 'unidata.js';
@@ -42,7 +42,7 @@ const connect = async (force = true) => {
     isConnecting.value = true;
 
     try {
-        const provider = await w3mConnect(force);
+        const provider = await wConn(force);
         if (provider) {
             ElMessage.success('Wallet connected successfully, start system initializing...');
             window.unidata = new Unidata({

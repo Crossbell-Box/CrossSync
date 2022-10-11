@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { connect as w3mConnect } from '@/common/wallet';
+import { connect as wConn } from '@/common/wallet';
 import { useStore } from '@/common/store';
 import { useRouter } from 'vue-router';
 import Unidata from 'unidata.js';
@@ -17,7 +17,7 @@ const init = async () => {
     const loading = ElLoading.service({
         lock: true,
     });
-    const provider = await w3mConnect(false);
+    const provider = await wConn(false);
     if (provider) {
         window.unidata = new Unidata({
             ethereumProvider: provider,

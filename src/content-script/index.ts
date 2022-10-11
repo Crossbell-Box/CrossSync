@@ -1,7 +1,7 @@
 import '@/common/polyfill';
 import { observe } from '@/common/utils';
 import '@/common/locationChange';
-import { connect as w3mConnect } from '@/common/wallet';
+import { connect as wConn } from '@/common/wallet';
 import Unidata from 'unidata.js';
 import TwitterHook from './hooks/twitter';
 import AsyncLock from 'async-lock';
@@ -49,7 +49,7 @@ class CrossSyncContentScript {
         await this.lock.acquire('getUnidata', async () => {
             if (!this.unidata) {
                 try {
-                    const provider = await w3mConnect(force); // Metamask
+                    const provider = await wConn(force); // Metamask
                     if (provider) {
                         this.address =
                             (

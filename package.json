@@ -34,9 +34,9 @@
         "process": "0.11.10",
         "unidata.js": "0.7.2",
         "util": "0.12.5",
-        "vue": "3.2.40",
+        "vue": "3.2.41",
         "vue-router": "4.1.5",
-        "vuex": "4.0.2"
+        "vuex": "4.1.0"
     },
     "devDependencies": {
         "@crxjs/vite-plugin": "1.0.14",

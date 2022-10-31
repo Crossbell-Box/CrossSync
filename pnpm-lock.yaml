@@ -17,7 +17,7 @@ specifiers:
   '@vitejs/plugin-vue': 3.1.2
   async-lock: 1.3.2
   autoprefixer: 10.4.12
-  axios: 1.1.2
+  axios: 1.1.3
   bind-decorator: 1.0.11
   browserify-zlib: 0.2.0
   buffer: 6.0.3
@@ -57,7 +57,7 @@ dependencies:
   '@fortawesome/free-solid-svg-icons': 6.2.0
   '@fortawesome/vue-fontawesome': 3.0.1_ehtls4nlds6e63ahmro7mfqbhy
   async-lock: 1.3.2
-  axios: 1.1.2
+  axios: 1.1.3
   bind-decorator: 1.0.11
   buffer: 6.0.3
   crossbell.js: 0.10.35_node-fetch@3.2.10
@@ -1723,8 +1723,8 @@ packages:
       - debug
     dev: false
 
-  /axios/1.1.2:
-    resolution: {integrity: sha512-bznQyETwElsXl2RK7HLLwb5GPpOLlycxHCtrpDR/4RqqBzjARaOTo3jz4IgtntWUYee7Ne4S8UHd92VCuzPaWA==}
+  /axios/1.1.3:
+    resolution: {integrity: sha512-00tXVRwKx/FZr/IDVFt4C+f9FYairX517WoGCL6dpOntqLkZofjhu43F/Xl44UOpqa+9sLFDrG/XAnFsUYgkDA==}
     dependencies:
       follow-redirects: 1.15.1
       form-data: 4.0.0

@@ -8,6 +8,7 @@ import { bucket, getSettings, key, store } from '@/common/store';
 import SyncToggleButton from '@/components/SyncToggle.vue';
 import SyncStatus from '@/components/SyncStatus.vue';
 import type { NoteInput } from 'unidata.js';
+import { ErrorAddressChanged, ErrorXSyncActivated } from '@/common/disableSyncingErrors';
 
 let syncToggleApp: App<Element> | null = null;
 let crossSyncToggleEl: HTMLDivElement;
@@ -282,9 +283,35 @@ class TwitterHook {
         // this.main.xlog('info', 'Now address is: '+ this.main.address);
         if (settings.syncing !== false && settings.address && this.main.address) {
             if (settings.address.toLowerCase() !== this.main.address.toLowerCase()) {
-                newStatus = 'Address changed.';
+                newStatus = ErrorAddressChanged;
                 this.main.xlog('warn', `Old address: ${settings.address}, now: ${this.main.address}`);
             }
+            // Check xSync status
+            {
+                const handle = settings.handle;
+                // Get id from indexer
+                const { characterId } = await fetch(`https://indexer.crossbell.io/v1/handles/${handle}/character`).then(
+                    (res) => res.json(),
+                );
+                this.main.xlog('info', `Character ${handle}'s id is ${characterId}`);
+                // Check with ID
+                const accountResults = await fetch(`https://opsync.crossbell.io/v1/${characterId}/account`).then(
+                    (res) => res.json(),
+                );
+                if (Array.isArray(accountResults.result)) {
+                    for (const account of accountResults.result) {
+                        if (account.platform === 'twitter') {
+                            this.main.xlog(
+                                'warn',
+                                'xLog already activated, disable CrossSync to prevent duplicate syncing.',
+                            );
+                            newStatus = ErrorXSyncActivated;
+                            break;
+                        }
+                    }
+                }
+            }
+
             if (newStatus !== '') {
                 this.main.xlog('warn', newStatus);
                 settings.syncing = newStatus;

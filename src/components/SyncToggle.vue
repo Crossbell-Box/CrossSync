@@ -28,6 +28,7 @@ import { bucket, getSettings } from '@/common/store';
 import { ref } from 'vue';
 import logo from '../assets/logo.svg?raw';
 import { ElMessage } from 'element-plus';
+import { ErrorAddressChanged, ErrorXSyncActivated } from '@/common/disableSyncingErrors';
 
 const isSyncing = ref<boolean | string>('Loading...');
 const available = ref(false);
@@ -39,8 +40,17 @@ const toggleSyncing = async () => {
         });
     }
     if (typeof settings.syncing === 'string') {
+        let errMsg: string = 'Unknown error';
+        switch (settings.syncing) {
+            case ErrorAddressChanged:
+                errMsg = `Please switch and connet your wallet account ${settings.address} and refresh the page.`;
+                break;
+            case ErrorXSyncActivated:
+                errMsg = `CrossSync is disabled to prevent duplicate post since you've enabled xSync.`;
+                break;
+        }
         ElMessage.warning({
-            message: `Please switch and connet your wallet account ${settings.address} and refresh the page.`,
+            message: errMsg,
         });
     } else {
         settings.syncing = !settings.syncing;

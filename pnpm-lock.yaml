@@ -22,7 +22,7 @@ specifiers:
   browserify-zlib: 0.2.0
   buffer: 6.0.3
   crossbell.js: 0.10.38
-  element-plus: 2.2.19
+  element-plus: 2.11.1
   ethers: 5.7.2
   events: 3.3.0
   husky: 8.0.1
@@ -61,7 +61,7 @@ dependencies:
   bind-decorator: 1.0.11
   buffer: 6.0.3
   crossbell.js: 0.10.38_node-fetch@3.2.10
-  element-plus: 2.2.19_vue@3.2.41
+  element-plus: 2.11.1_vue@3.2.41
   ethers: 5.7.2
   events: 3.3.0
   lodash-es: 4.17.21
@@ -428,6 +428,14 @@ packages:
 
   /@element-plus/icons-vue/2.0.10_vue@3.2.41:
     resolution: {integrity: sha512-ygEZ1mwPjcPo/OulhzLE7mtDrQBWI8vZzEWSNB2W/RNCRjoQGwbaK4N8lV4rid7Ts4qvySU3njMN7YCiSlSaTQ==}
+    peerDependencies:
+      vue: ^3.2.0
+    dependencies:
+      vue: 3.2.41
+    dev: false
+
+  /@element-plus/icons-vue/2.3.2_vue@3.2.41:
+    resolution: {integrity: sha512-OzIuTaIfC8QXEPmJvB4Y4kw34rSXdCJzxcD1kFStBvr8bK6X1zQAYDo0CNMjojnfTqRQCJ0I7prlErcoRiET2A==}
     peerDependencies:
       vue: ^3.2.0
     dependencies:
@@ -2198,8 +2206,8 @@ packages:
     engines: {node: '>= 12'}
     dev: false
 
-  /dayjs/1.11.3:
-    resolution: {integrity: sha512-xxwlswWOlGhzgQ4TKzASQkUhqERI3egRNqgV4ScR8wlANA/A9tZ7miXa44vTTKEq5l7vWoL5G57bG3zA+Kow0A==}
+  /dayjs/1.11.13:
+    resolution: {integrity: sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==}
     dev: false
 
   /de-indent/1.0.2:
@@ -2333,20 +2341,20 @@ packages:
     resolution: {integrity: sha512-x+JnqyluoJv8I0U9gVe+Sk2st8vF0CzMt78SXxuoWCooLLY2k5VerIBdpvG7ql6GKI4dzNnPjmqgDJ76EdaAKw==}
     dev: true
 
-  /element-plus/2.2.19_vue@3.2.41:
-    resolution: {integrity: sha512-uN0gt9lUus/IHzu5J6vkbYoYJgUtU05osdtFv9RO27bHKOG5GN7dH6uA3OKfkQQ6R2sV8ZxY1rc9PH1X8Dgrow==}
+  /element-plus/2.11.1_vue@3.2.41:
+    resolution: {integrity: sha512-weYFIniyNXTAe9vJZnmZpYzurh4TDbdKhBsJwhbzuo0SDZ8PLwHVll0qycJUxc6SLtH+7A9F7dvdDh5CnqeIVA==}
     peerDependencies:
       vue: ^3.2.0
     dependencies:
       '@ctrl/tinycolor': 3.4.1
-      '@element-plus/icons-vue': 2.0.10_vue@3.2.41
+      '@element-plus/icons-vue': 2.3.2_vue@3.2.41
       '@floating-ui/dom': 1.0.2
       '@popperjs/core': /@sxzz/popperjs-es/2.11.7
       '@types/lodash': 4.14.184
       '@types/lodash-es': 4.17.6
       '@vueuse/core': 9.2.0_vue@3.2.41
       async-validator: 4.2.5
-      dayjs: 1.11.3
+      dayjs: 1.11.13
       escape-html: 1.0.3
       lodash: 4.17.21
       lodash-es: 4.17.21
@@ -4005,6 +4013,7 @@ packages:
   /node-domexception/1.0.0:
     resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
     engines: {node: '>=10.5.0'}
+    deprecated: Use your platform's native DOMException instead
     dev: false
 
   /node-fetch/3.2.10:
